@@ -43,7 +43,7 @@ Vue.prototype.$echarts = Echarts;
 import VueAwesomeSwiper from "vue-awesome-swiper";
 Vue.use(VueAwesomeSwiper);
 
-// require("swiper/swiper-bundle.min.css");
+require("swiper/swiper-bundle.min.css");
 
 
 import VueClipboard from 'vue-clipboard2'
