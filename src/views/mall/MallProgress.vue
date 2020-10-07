@@ -2,9 +2,9 @@
   <div class="mallProgress">
         
         <div class="progressBox">
-            <div class="realProgress"></div>
+            <div class="realProgress" :style="{width:getWidth()+'%'}"></div>
         </div>
-        <div class="progressTipBox">32.6%</div>
+        <div class="progressTipBox" :style="{left:getWidth()+'%'}">{{getProgressVal()}}%</div>
   </div>
 </template>
 <script>
@@ -14,6 +14,16 @@ export default {
         progress:{
              type:Number,
              default:0.0
+        }
+    },
+    methods:{
+        getWidth(){
+            var width = this.progress/1000*100;
+            return width;
+        },
+        getProgressVal(){
+           var val = this.progress/1000*100;
+           return val.toFixed(1);
         }
     }
 }
@@ -45,6 +55,7 @@ export default {
           left: 0.5rem;
           top: 0.16rem;
           width: 0.96rem;
+          margin-left: -0.48rem;
           height: 0.54rem;
           background: url(../../assets/img/orders/rediu@2x.png) no-repeat;
           background-size: 100% 100%;

@@ -50,16 +50,16 @@
                          <!-- end -->
             
                          <div class="precentBox">
-                               <div class="precebtTip">总量：500台</div>
+                               <div class="precebtTip">总量：1000台</div>
                                <div class="precentView">
-                                    <MallProgress></MallProgress>
+                                    <MallProgress :progress="sz_exist_buy"></MallProgress>
                                </div>
                          </div>
                          <!-- end -->
 
                          <div class="buyMoney">
                              <span style="font-size:0.26rem;color:#2C395B;">金额:</span>
-                               600.00 USDT
+                               {{sz_all_usdt.toFixed(2)}} USDT
                          </div>
                          <!-- end -->
                          <div class="buyNumBox">
@@ -87,6 +87,7 @@ import { getAssets } from "../../api/user/user";
 import { Dialog } from "vant";
 import AppTabBar from '../../component/TabBar/TabBar';
 import MallProgress from './MallProgress';
+import request from "../../api/request";
 export default {
   name: "mall",
   components: {
@@ -106,7 +107,10 @@ export default {
       show: false, //显示合约详情
       rate: null,
       currentRate: 1, //当前折扣
-      exist_buy: null
+      exist_buy: null,
+
+      sz_exist_buy:0,
+      sz_all_usdt:0,//
     };
   },
   created() {
@@ -126,6 +130,9 @@ export default {
       }
     }
   },
+  mounted(){
+      this.getPowerPriceAPI();
+  },
   methods: {
     tabAction(index){
           if(index==0){
@@ -139,85 +146,47 @@ export default {
           }
     },
     back() {
-      if (window.history.length <= 1) {
-        this.$router.push({ path: "/home" });
-        return false;
-      } else {
-        this.$router.go(-1);
-      }
+          if (window.history.length <= 1) {
+            this.$router.push({ path: "/home" });
+            return false;
+          } else {
+            this.$router.go(-1);
+          } 
     },
     addCount() {
-      this.amount++;
-      this.getCurrentRate(this.amount);
+          this.amount++;
+          this.getCurrentRate(this.amount);
     },
     reduceCount() {
-      if (this.amount > 0) {
-        this.amount--;
-      } else {
-        this.$toast({
-          message: "不能小于0"
-        });
-      }
-      this.getCurrentRate(this.amount);
+          if (this.amount > 0) {
+            this.amount--;
+          } else {
+            this.$toast({
+              message: "不能小于0"
+            });
+          }
+          this.getCurrentRate(this.amount);
     },
     getCurrentRate(v) {
-      let arr = this.rate.filter((item, index) => {
-        return v >= item.power;
-      });
-      let len = arr.length - 1;
-      this.currentRate = arr[len] ? arr[len].rate : 1;
-    },
-    getPrices() {
-      //合约价格
-      getPrice().then(res => {
-        let data = res.data.Data;
-        let arr = [];
-        if (res.data.Code == 0) {
-          this.all_usdt = data.all_usdt;
-          this.ehex = data.ehex;
-          this.usdt = data.usdt;
-          //从大到小排序
-          this.rate = data.rate.sort(this.compare("rate"));
-          this.exist_buy = data.exist_buy;
-        }
-        this.rate.forEach((item, index) => {
-          arr.push(item.rate);
-        });
-      });
-      //个人资产
-      getAssets().then(res => {
-        let data = res.data.Data;
-        if (res.data.Code == 0) {
-          this.my_usdt = data.assets.usdt.toFixed(2);
-          this.my_ehex = data.assets.ehex.toFixed(2);
-        }
-      });
-    },
-    BuyPower() {
-      Dialog.confirm({
-        title: "确认购买",
-        message: "确认购买" + this.amount + "TB"
-      })
-        .then(() => {
-          let buy_type = Number(this.buy_type);
-          getOrder({
-            amount: this.amount,
-            buy_type: buy_type
-          }).then(res => {
-            if (res.data.Code == 0) {
-              this.$toast("购买成功");
-              this.$router.push("/home");
-            }
+          let arr = this.rate.filter((item, index) => {
+            return v >= item.power;
           });
-        })
-        .catch(() => {
-          this.$toast("取消购买");
-        });
+          let len = arr.length - 1;
+          this.currentRate = arr[len] ? arr[len].rate : 1;
     },
-    compare(cls) {
-      return function(a, b) {
-        return b[cls] - a[cls];
-      };
+    //获取我的资产
+    getPowerPriceAPI(){
+         let that = this;
+          request.get(`/power/price`).then((res=>{
+                  console.log('res',res);
+                  let data = res.data.Data;
+                  if (res.data.Code == 0) {
+                      this.sz_exist_buy = data.exist_buy;
+                      this.sz_all_usdt = data.all_usdt;
+                  }else{
+                    
+                  }
+          }));
     }
   }
 };
