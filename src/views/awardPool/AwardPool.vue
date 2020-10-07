@@ -6,9 +6,6 @@
             <div class="contentTxt">
                     <div class="awardPool-title"></div>
                     <div class="buy">立即<br />抢购</div>
-                    <!-- <div class="progress">
-                        <div class="count">已售<span>725</span><span>725/1000</span></div>
-                    </div> -->
                     <div class="buyProgressBox">
                         <div class="buyProgressTop">
                             <div class="textLeft">
@@ -328,22 +325,23 @@ export default {
   width:100%;
   height: 3.92rem;
   background: linear-gradient(62deg, #28261e, #201e18);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  border: 1px solid #000;
+  // display: flex;
+  // align-items: flex-end;
+  // justify-content: center;
+  // border: 1px solid #000;
   overflow: hidden;
   .banner {
     margin-left:0.2rem;
     margin-right:0.2rem;
-    width: 100%;
-    // margin-top:1rem;
-    height: 3.23rem;
+    // width: 100%;
+    margin-top:0.6rem;
+    height: 3.33rem;
     border-top-left-radius:0.1rem;
     border-top-right-radius:0.1rem;
     border: 1px solid #000;
     background: url(../../assets/img/awardPool/pool_banner.png) no-repeat center;
     background-size: 100% 100%;
+  
     .contentTxt {
       clear: both;
       width: 100%;
