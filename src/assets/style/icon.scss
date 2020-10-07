@@ -1,0 +1,40 @@
+.icon-home-active{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/home-active',png, 1.147rem, 1.04rem, no-repeat, center)
+}
+.icon-home{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/home',png, 1.147rem, 1.04rem, no-repeat, center)
+}
+.icon-mall-active{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/mall-active',png, 1.147rem, 1.04rem, no-repeat, center)
+}
+.icon-mall{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/mall',png, 1.147rem, 1.04rem, no-repeat, center)
+}
+.icon-my-active{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/my-active',png, 1.147rem, 1.04rem, no-repeat, center)
+}
+.icon-my{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/my',png, 1.147rem, 1.04rem, no-repeat, center)
+}
+.icon-awardPool{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/awardPool',png, 1.147rem, 1.04rem, no-repeat, center)
+}
+.icon-awardPool-active{
+  width: 1.147rem;
+  height: 1.04rem;
+  @include imgRetina('icon/awardPool-active',png, 1.147rem, 1.04rem, no-repeat, center)
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta content="telephone=no,email=no" name="format-detection" />
+  <meta name="referer" content="origin" />
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title></title>
+  
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but vue-demo doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!--查看手机 conslog-->
+  <!-- <script src="https://cdn.bootcss.com/vConsole/3.3.0/vconsole.min.js"></script>
+  <script>
+    var vConsole = new VConsole();
+  </script> -->
+
+
+  <!-- built files will be auto injected -->
+  <!--手机调试-->
+  <% if (VUE_APP_ERUDA === 'true') { %>
+  <script src="//cdn.bootcss.com/eruda/1.5.2/eruda.min.js"></script>
+  <script>
+    window.eruda.init();
+  </script>
+  <% } %>
+  <script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+  <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101886721"
+    data-redirecturi="http://qq.ydu6.com/#/qq/callback" charset="utf-8"></script>
+</body>
+
+</html>

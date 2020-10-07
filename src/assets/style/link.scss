@@ -1,0 +1,162 @@
+.add-link{
+  width: 18.364rem;
+  .van-field__error-message{
+    position: absolute;
+    right: 0.178rem;
+    top: 0;
+    font-size: 0.356rem;
+  }
+  .van-dialog__header{
+    font-size: 0.747rem;
+    color: #2C2C2C;
+    font-weight: 700;
+    margin-top: 1.209rem;
+    line-height: 0.747rem;
+  }
+  .van-dialog__content{
+    margin-top: 1.333rem;
+    margin-bottom: 0.711rem;
+    .van-field__label{
+      text-align: right;
+      color: #2C2C2C;
+    }
+    .van-cell{
+      padding: 0;
+      width: 16.8rem;
+      height: 1.031rem;
+      line-height: 1.031rem;
+
+      font-size: 0.462rem;
+      margin: 0 0.782rem 0.871rem 0.782rem;
+    }
+    .van-cell__value{
+      border: 1px solid #B6B4BA;
+      padding-left: 0.711rem;
+      padding-right: 1.244rem;
+      font-size: 0.356rem;
+    }
+    .text_area{
+      height: 3.111rem;
+      .van-cell__value{
+        width: 13.973rem!important;
+        height: 3.111rem;
+        border: 1px solid #B6B4BA;
+      }
+      .van-field__body{
+        height: 3.111rem;
+        font-size: 0.356rem!important;
+        textarea{
+          height: 3.111rem;
+          font-size: 0.356rem!important;
+          line-height: 0.676rem;
+          color: #2C2C2C;
+        }
+      }
+
+    }
+  }
+  .van-uploader{
+
+    margin-left: 0.356rem;
+    .van-uploader__upload{
+      width: 4.089rem;
+      height: 4.089rem;
+      background-color: #fff;
+      border: 1px solid #B6B4BA;
+      .van-uploader__upload-icon{
+        font-size: 1.138rem;
+        color: #88888E;
+        font-weight: 200;
+      }
+    }
+  }
+
+}
+.load-file{
+
+  margin-left: 0.782rem;
+  .file-title{
+    display: inline-block;
+    width: 2.789rem;
+    text-align: right;
+    color: #2C2C2C;
+    font-size: 0.462rem;
+  }
+
+}
+.dialog-footer{
+  width: 11.804rem;
+  height: 1.778rem;
+  margin-left: 3.289rem;
+  margin-top: 1.12rem;
+}
+//声明
+.show-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #B6B4B9;
+  font-size: 0.32rem;
+  margin-top: 0.889rem;
+  .open {
+    color: #D62727;
+    margin-left: 0.729rem;
+    font-size: 0.356rem;
+  }
+}
+
+.dialog-footer {
+  text-align: center;
+}
+//详细声明
+.show-notice-detail {
+  color: #87898D;
+  font-size: 0.32rem;
+  line-height: 0.48rem;
+  width: 13.422rem;
+  margin-left: 1.653rem;
+  margin-top: 1.6rem;
+}
+
+.p_notice {
+  margin:0.533rem 0;
+}
+
+.close {
+  text-align: center;
+  .iconfont{
+    font-size: 0.32rem;
+    margin-left: 0.213rem;
+  }
+}
+.van-picker__toolbar{
+  height: 0.982rem;
+  font-size: 0.32rem;
+  justify-content: center;
+  margin-top: 0.711rem;
+  button{
+    font-size:0.356rem;
+    width: 3.556rem;
+    justify-content: center;
+    padding: .5rem;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    border-radius: 0.356rem;
+  }
+  button:nth-child(1){
+    margin-right: 0.444rem;
+  }
+  .van-picker__confirm{
+    background-color: #3094F8;
+    color: #fff;
+  }
+}
+.van-picker-column{
+  font-size: 0.356rem;
+  .van-picker-column__item{
+    height: 0.782rem;
+  }
+  .van-picker-column__item--selected{
+  }
+}

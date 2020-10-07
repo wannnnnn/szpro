@@ -1,0 +1,89 @@
+/* common.scss */
+$bgColor:#f2f3f8;
+$basePadding:0.96rem;
+$orderBr:0.267rem;
+$orderCC:#2f94f8;
+$orderUb:#b5b4b9;
+$borderColorDetail:#88888E;
+@mixin font-dpr($font-size){
+  font-size: $font-size;
+
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
+}
+/*使用@include font-dpr(16px);*/
+@mixin imgRetina($image, $extension, $width, $height, $position: center, $repeat: no-repeat) {
+  background: url('~assets/img/'+ $image + '.' + $extension) $repeat $position;
+
+  @media
+  screen and (-webkit-min-device-pixel-ratio: 2),
+  screen and (   min--moz-device-pixel-ratio: 2),
+  screen and (   -moz-min-device-pixel-ratio: 2),
+  screen and (     -o-min-device-pixel-ratio: 2/1),
+  screen and (        min-device-pixel-ratio: 2),
+  screen and (             min-resolution: 192dpi),
+  screen and (             min-resolution: 2dppx)
+  {
+    background: url('~assets/img/'+ $image + '@2x' + '.' + $extension) $repeat $position;
+    background-size: $width $height;
+  }
+  @media
+  screen and (-webkit-min-device-pixel-ratio: 3),
+  screen and (   min--moz-device-pixel-ratio: 3),
+  screen and (   -moz-min-device-pixel-ratio: 3),
+  screen and (     -o-min-device-pixel-ratio: 3/1),
+  screen and (        min-device-pixel-ratio: 3),
+  screen and (             min-resolution: 288dpi),
+  screen and (             min-resolution: 3dppx)
+  {
+    background: url('~assets/img/'+ $image + '@3x' + '.' + $extension) $repeat $position;
+    background-size: $width $height;
+  }
+}
+
+/*.bg-image {
+  @include imgRetina(images/waterlily, jpg, 200px, 200px, no-repeat, center);
+  height: 200px;
+  width: 200px;
+}*/
+/*文字一行超出显示省略号*/
+@mixin ellipsis () {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/*多行文字超出显示省略号*/
+@mixin ellipsisMultiline($number: 1) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: $number;
+}
+//修改input placeholder颜色
+@mixin placeholderColor($color: #fff) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: $color;
+  }
+
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $color;
+  }
+}
