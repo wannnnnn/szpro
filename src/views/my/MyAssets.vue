@@ -140,11 +140,10 @@ export default {
 .wrap{
     position: absolute;
     left: 0;
-    top: 0;
+    top: 1.2rem;
     bottom: 1.04rem;
     width: 100%;
     overflow: auto;
-    margin-top:1.2rem;
     padding-bottom: 0.5rem;
 }
 .wrapBg{
@@ -176,7 +175,7 @@ export default {
         padding-bottom: 0.46rem;
         padding-right: 0.23rem;
         padding-left: 0.23rem;
-        height: 4.15rem;
+        height: 5.15rem;
         background: #FFFFFF;
         box-shadow: 0px 10px 40px 0px rgba(130, 149, 180, 0.17);
         border-radius: 0.24rem;
