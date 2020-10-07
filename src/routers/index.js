@@ -12,6 +12,7 @@ const AwardPool = () => import('@/views/awardPool/AwardPool');
 const My = () => import('@/views/my/My');
 const Agreement = () => import('@/views/my/Agreement');
 const MyAssets = () => import('@/views/my/MyAssets');
+const MyOrders = () => import('@/views/my/MyOrders');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
 const Error = () => import('@/views/error');
@@ -66,6 +67,14 @@ const routes = [{
     component: MyAssets,
     meta: {
       title: '我的资产',
+      requireAuth: true
+    }
+  },, {
+    path: '/myOrders',
+    name: 'myOrders',
+    component: MyOrders,
+    meta: {
+      title: '订单管理',
       requireAuth: true
     }
   },  {
