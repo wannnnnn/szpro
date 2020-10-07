@@ -40,32 +40,32 @@
                  </div>
 
                  <div class="listBox">
-                       <div class="itemCell">
+                       <div class="itemCell" @click="pushItemAction(1)">
                             <div class="cellIcon"><img src="../../assets/img/my/list7@2x.png" alt=""></div>
                             <div class="cellTxt">资产管理</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
-                       <div class="itemCell">
+                       <div class="itemCell" @click="pushItemAction(2)">
                             <div class="cellIcon"><img src="../../assets/img/my/list1@2x.png" alt=""></div>
                             <div class="cellTxt">订单管理</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
-                       <div class="itemCell">
+                       <div class="itemCell" @click="pushItemAction(3)">
                             <div class="cellIcon"><img src="../../assets/img/my/list3@2x.png" alt=""></div>
                             <div class="cellTxt">奖励收益</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
-                       <div class="itemCell">
+                       <div class="itemCell" @click="pushItemAction(4)">
                             <div class="cellIcon"><img src="../../assets/img/my/list6@2x.png" alt=""></div>
                             <div class="cellTxt">邀请好友</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
-                       <div class="itemCell">
+                       <div class="itemCell" @click="pushItemAction(5)">
                             <div class="cellIcon"><img src="../../assets/img/my/list2@2x.png" alt=""></div>
                             <div class="cellTxt">实名认证</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
-                       <div class="itemCell">
+                       <div class="itemCell" @click="pushItemAction(6)">
                             <div class="cellIcon"><img src="../../assets/img/my/list4@2x.png" alt=""></div>
                             <div class="cellTxt">退出登录</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
@@ -121,6 +121,37 @@ export default {
         },
         pushLogin(){
             this.$router.push('/login');
+        },
+        pushItemAction(index){
+            if(this.loginFlag){
+                //资产管理
+                 if(index==1){
+                     this.$router.push('/myAssets');
+                 }
+                 //订单管理
+                 else if(index==2){
+
+                 }
+                 //算力管理
+                 else if(index==3){
+
+                 }
+                 //邀请好友
+                 else if(index==4){
+
+                 }
+                 //实名认证
+                 else if(index==5){
+
+                 }
+                 //退出登录
+                 else if(index==6){
+
+                 }
+
+            }else{
+                this.$router.push('/login');
+            }
         },
         getPhoneDes(){
            if(this.phone.length!=11){
