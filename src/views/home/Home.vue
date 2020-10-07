@@ -18,42 +18,42 @@
                         <!-- 选项box -->
                         <div class="itemBox">
                               <div class="item">
-                                   <div class="itemLogo"><img src="../../assets/img/home/power.png" alt=""></div>
+                                   <div class="itemLogo"><img src="../../assets/img/home/power@2x.png" alt=""></div>
                                    <div  class="itemCount">
                                         {{total_power}}<span style="font-size:0.13rem;">PB</span>
                                    </div>
                                    <div class="itemDes">全网算力</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/award.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/award@2x.png" alt=""></div>
                                    <div  class="itemCount">
                                        {{reward_per_block}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">每区奖励</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/count.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/count@2x.png" alt=""></div>
                                    <div  class="itemCount">
                                         {{num_per24h}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">24H区块产出量</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/24H.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/24H@2x.png" alt=""></div>
                                    <div  class="itemCount">
                                         {{reward_per24h}}
                                    </div>
                                    <div class="itemDes">24H区块奖励</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/pledge.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/pledge@2x.png" alt=""></div>
                                   <div  class="itemCount">
                                         {{pledge_now}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">当前质押量</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/Fil.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/Fil@2x.png" alt=""></div>
                                   <div  class="itemCount">
                                        {{total_pledge}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
@@ -63,7 +63,7 @@
                          <!-- 矿池数据 -->
                         <div class="poolCountBox">
                                 <div  class="title">
-                                    <div  class="titleImg"><img src="../../assets/img/home/icon.png" alt=""></div> 
+                                    <div  class="titleImg"><img src="../../assets/img/home/icon@2x.png" alt=""></div> 
                                     <span style="margin-left:0.1rem;">矿池数据</span>
                                 </div>
                                 <div class="poolCountItemBox">
@@ -340,19 +340,19 @@ export default {
                 }
             }
              .poolCountItem:nth-child(1) {
-                background: url(../../assets/img/home/1.png); 
+                background: url(../../assets/img/home/1@2x.png); 
                 background-size: 100% 100%;
              }
              .poolCountItem:nth-child(2) {
-                background: url(../../assets/img/home/2.png); 
+                background: url(../../assets/img/home/2@2x.png); 
                 background-size: 100% 100%;
              }
              .poolCountItem:nth-child(3) {
-                background: url(../../assets/img/home/3.png); 
+                background: url(../../assets/img/home/3@2x.png); 
                 background-size: 100% 100%;
              }
              .poolCountItem:nth-child(4) {
-                background: url(../../assets/img/home/4.png); 
+                background: url(../../assets/img/home/4@2x.png); 
                 background-size: 100% 100%;
              }
             

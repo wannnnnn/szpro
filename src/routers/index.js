@@ -10,6 +10,7 @@ const Home = () => import('@/views/home/Home');
 const Mall = () => import('@/views/mall/Mall');
 const AwardPool = () => import('@/views/awardPool/AwardPool');
 const My = () => import('@/views/my/My');
+const Agreement = () => import('@/views/my/Agreement');
 const MyAssets = () => import('@/views/my/MyAssets');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
@@ -67,7 +68,15 @@ const routes = [{
       title: '我的资产',
       requireAuth: true
     }
-  },   {
+  },  {
+    path: '/agreement',
+    name: 'agreement',
+    component: Agreement,
+    meta: {
+      title: '云算力租赁协议',
+      requireAuth: true
+    }
+  },    {
     path: '/login',
     name: 'login',
     component: Login,
