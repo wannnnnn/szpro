@@ -61,7 +61,6 @@ export default {
           background-size: 100% 100%;
          line-height: 0.42rem;
          font-size:0.2rem;
-         font-family: Source Han Sans CN;
          font-weight: 400;
          color: #FFFFFF;
     }

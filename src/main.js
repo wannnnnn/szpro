@@ -17,6 +17,12 @@ import './styles/main.less';
 // import Vant from 'vant';
 import 'vant/lib/index.css';
 
+import VueLoading from './plugin/loading'
+Vue.use(VueLoading, {
+    container: '',
+})
+
+
 // Vue.use(Vant);
 
 import {Toast} from "mint-ui";

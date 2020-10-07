@@ -70,13 +70,69 @@
                                 </div>
                          </div>
                          <!-- end -->
-                         <div class="buyBtn">
+                         <div class="buyBtn" @click="isShowConfimModel=true">
                               <div class="btn">确定</div>
                          </div>
                    </div>
               </div>  
          </div>
          <AppTabBar :tabIndex='1' @tabAction="tabAction"></AppTabBar>
+
+         <!-- 确认订单 -->
+         <div id="confimModel" v-show="isShowConfimModel">
+              <div class="modelContent">
+                    <div class="modelContentTitle">确认订单
+                         <div class="closeBtn" @click="isShowConfimModel=false">
+                              <div class="closeInner"><img src="../../assets/img/close_gray.png" alt=""></div>
+                         </div>
+                    </div>
+                    <div class="txtItem" style="margin-top:0.3rem;">
+                         <div class="textItemLeft">合约名称：</div>
+                         <div class="textItemVal">合盈云算Filecoin 160T/台 3年合约</div>
+                    </div>
+                     <div class="txtItem">
+                         <div class="textItemLeft">合约期限：</div>
+                         <div class="textItemVal">一年一签，服务器物权属于用户</div>
+                    </div>
+                     <div class="txtItem">
+                         <div class="textItemLeft">软件服务费：</div>
+                         <div class="textItemVal">filecoin挖矿产出20%</div>
+                    </div>
+                     <div class="txtItem">
+                         <div class="textItemLeft">结算周期：</div>
+                         <div class="textItemVal">T+1</div>
+                     </div>
+                     <div class="txtItem">
+                         <div class="textItemLeft">单价：</div>
+                         <div class="textItemVal">${{sz_all_usdt}}/台</div>
+                     </div>
+                     <div class="buyNumItem">
+                          <div class="buyNumItemLeft">购买数量：</div>
+                           <div class="buyNumWrap">
+                                  <div class="buyNumLess" @click="reduceCount()">-</div>
+                                  <div class="buyNumCount">{{amount}}</div>
+                                  <div class="buyNumAdd" @click="addCount()">+</div>
+                            </div>
+                     </div>
+                     <div class="line"></div>
+                      <div class="txtItem">
+                         <div class="textItemLeft">总计金额</div>
+                         <div class="textItemVal" style="color:#608AFF;font-size:0.4rem;font-weight: normal;">{{amount*sz_all_usdt}} USDT</div>
+                     </div>
+                     <div class="xieyibox">
+                           <div class="checkBox"><img src="../../assets/img/mall/check_un.png" alt=""></div>
+                           <div class="xieyiTitle">
+                                我已阅读并同意
+                                <span style="color:#7288FE;">《用户云算力租赁协议》</span>
+                            </div> 
+                    </div>
+                     <div class="buyBtn" @click="buyPowerAPI()">
+                          <div class="btnTxt">立即购买</div>
+
+                      </div>
+              </div>
+              <div class="maskView" @click="isShowConfimModel=false"></div>
+         </div>
     </div>
     
 </template>
@@ -97,38 +153,13 @@ export default {
   data() {
     return {
       amount: 1,
-      buy_type: "1",
-      all_usdt: null,
-      ehex: null,
-      usdt: null,
-      deposit_addr: null,
-      my_usdt: 0, //我的资产
-      my_ehex: 0, //我的资产
-      show: false, //显示合约详情
-      rate: null,
-      currentRate: 1, //当前折扣
-      exist_buy: null,
-
       sz_exist_buy:0,
       sz_all_usdt:0,//
+      isShowConfimModel:false,
     };
   },
   created() {
     // this.getPrices();
-  },
-  computed: {
-    getLargeDiscount() {
-      if (this.rate != null) {
-        let r = this.rate[this.rate.length - 1].rate || 1;
-        return r;
-      }
-    },
-    getPercentage() {
-      if (this.exist_buy != null) {
-        let p = this.exist_buy / 20 || 0;
-        return p;
-      }
-    }
   },
   mounted(){
       this.getPowerPriceAPI();
@@ -165,18 +196,10 @@ export default {
               message: "不能小于0"
             });
           }
-          this.getCurrentRate(this.amount);
-    },
-    getCurrentRate(v) {
-          let arr = this.rate.filter((item, index) => {
-            return v >= item.power;
-          });
-          let len = arr.length - 1;
-          this.currentRate = arr[len] ? arr[len].rate : 1;
     },
     //获取我的资产
     getPowerPriceAPI(){
-         let that = this;
+          let that = this;
           request.get(`/power/price`).then((res=>{
                   console.log('res',res);
                   let data = res.data.Data;
@@ -184,6 +207,21 @@ export default {
                       this.sz_exist_buy = data.exist_buy;
                       this.sz_all_usdt = data.all_usdt;
                   }else{
+                    
+                  }
+          }));
+    },
+    //购买
+    buyPowerAPI(){
+          let that = this;
+          request.post(`/power/buy`,{
+            amount:this.amount,
+          }).then((res=>{
+                  console.log('res',res);
+                  let data = res.data.Data;
+                  if (res.data.Code == 0) {
+                      
+                  }else if(res.data.Code==2002){
                     
                   }
           }));
@@ -389,7 +427,7 @@ export default {
              margin-top: 0.3rem;
              width: 100%;
              height: 0.8rem;
-              .buyNumWrap{
+             .buyNumWrap{
                 margin: 0 auto;
                 width: 2.77rem;
                 height: 0.73rem;
@@ -441,5 +479,199 @@ export default {
               }
         }
     }
+}
+
+
+
+//确认订单的modal
+#confimModel{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1991;
+  //弹窗内容
+  .modelContent{
+     z-index:1992;
+     position: absolute;
+     left:0;
+     bottom: 0;
+     width:100%;
+     height:9.6rem; 
+     border-radius: 0.15rem 0.15rem 0px 0px;
+     background: #fff;
+     animation: contentViewKeyAnimation 0.5s;
+     overflow: hidden;
+     .modelContentTitle{
+         margin-left: 0.3rem;
+         margin-right: 0.3rem;
+         height: 1.09rem;
+         font-size:0.32rem;
+         font-family: PingFangSC;
+         font-weight: 400;
+         color: #343434;
+         line-height: 1.09rem;
+         text-align: center;
+         border-bottom:1px solid #E6E6E6;
+         position: relative;
+         .closeBtn{
+             position: absolute;
+             right: 0.2rem;
+             top: 0.3rem;
+             width: 0.5rem;
+             height: 0.5rem;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             .closeInner{
+                  width: 0.3rem;
+                  height: 0.3rem;
+                  display: flex;
+                  align-items: center;
+                  img{
+                    width: 100%;
+                    height: 100%;
+                  }
+             }
+             
+         }
+     }
+     .txtItem{
+         margin-left: 0.3rem;
+         margin-right: 0.3rem;
+         margin-top: 0.3rem;
+         height:0.5rem;
+         line-height: 0.5rem;
+         overflow: hidden;
+         .textItemLeft{
+            float: left;
+            font-size: 0.3rem;
+            color: #667096;
+         }
+         .textItemVal{
+            float: right;
+            font-size: 0.3rem;
+            color: #2D3A5C;
+         }
+     }
+     .buyNumItem{
+         margin-left: 0.3rem;
+         margin-right: 0.3rem;
+         margin-top: 0.2rem;
+         height:0.8rem;
+         line-height: 0.8rem;
+         overflow: hidden;
+         .buyNumItemLeft{
+            float: left;
+            font-size: 0.3rem;
+            color: #667096;
+         }
+         .buyNumWrap{
+                float: right;
+                width: 2.77rem;
+                height: 0.73rem;
+                background: #FFFFFF;
+                border: 1px solid #BDC3D7;
+                border-radius: 0.05rem;
+                display: flex;
+                align-items: center;
+                .buyNumLess{
+                  width: 0.7rem;
+                  height: 0.73rem;
+                  line-height: 0.73rem;
+                  text-align: center;
+                  border-right: 1px solid #BDC3D7;
+                }
+                .buyNumCount{
+                    width: 1.37rem;
+                    height: 0.73rem;
+                    line-height: 0.73rem;
+                    text-align: center;
+                    font-size: 0.36rem;
+                    font-family: Source Han Sans CN;
+                    font-weight: bold;
+                    color: #2C395B;
+                }
+                .buyNumAdd{
+                  width: 0.7rem;
+                  height: 0.73rem;
+                  line-height: 0.73rem;
+                  text-align: center;
+                    border-left: 1px solid #BDC3D7;
+                }
+        }
+     }
+     .line{
+         margin-left: 0.3rem;
+         margin-right: 0.3rem;
+         margin-top: 0.3rem;
+         height: 1px;
+         background: #E6E6E6;
+     }
+     .xieyibox{
+         margin-left: 0.3rem;
+         margin-right: 0.3rem;
+         margin-top: 0.3rem;
+         height:0.5rem;
+         overflow: hidden;
+         .checkBox{
+             margin-top: 0.1rem;
+             float: left;
+             width: 0.3rem;
+             height: 0.3rem;
+             display: flex;
+             align-items: center;
+             overflow: hidden;
+             img{
+                width: 100%;
+                height: 100%;
+             }
+         }
+         .xieyiTitle{
+            float: left;
+            margin-left: 0.37rem;
+            margin-top: 0.1rem;
+            height: 0.3rem;
+            line-height: 0.3rem;
+            font-size: 0.26rem;
+         }
+     }
+     .buyBtn{
+        margin-left: 0.8rem;
+        margin-right: 0.8rem;
+        margin-top: 0.38rem;
+        height: 0.88rem;
+        height:0.88rem;
+        background: linear-gradient(0deg, #307AF4, #84C4FF);
+        border-radius: 0.44rem;
+        .btnTxt{
+            width: 100%;
+            height: 0.88rem;
+            line-height: 0.88rem;
+            text-align: center;
+            color: white;
+            font-size: 0.34rem;
+        }
+    }
+  }
+  @keyframes  contentViewKeyAnimation{
+      0%{
+         transform: scale(0);
+      }
+      150%{
+         transform: scale(1)z
+      }
+  }
+  .maskView{
+     position: absolute;
+     z-index: -1;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     opacity: 0.3;
+  }
 }
 </style>
