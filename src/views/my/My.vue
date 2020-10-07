@@ -126,11 +126,11 @@ export default {
             if(this.loginFlag){
                 //资产管理
                  if(index==1){
-                     this.$router.push('/myAssets');
+                    this.$router.push('/myAssets');
                  }
                  //订单管理
                  else if(index==2){
-
+                    this.$router.push('/myOrders');
                  }
                  //算力管理
                  else if(index==3){
