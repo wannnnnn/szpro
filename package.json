@@ -28,6 +28,7 @@
     "echarts-liquidfill": "^2.0.6",
     "fastclick": "^1.0.6",
     "js-cookie": "^2.2.1",
+    "js-qrcode": "^1.0.0",
     "lib-flexible": "^0.3.2",
     "mint-ui": "^2.2.13",
     "save": "^2.4.0",

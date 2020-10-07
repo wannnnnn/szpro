@@ -29,11 +29,11 @@
                         </div>
                     </div>
                     <div class="mBtnWap">
-                        <div class="mBtn">
+                        <div class="mBtn" @click="pushAction(1,0)">
                             <div class="btn">充币</div>
                         </div>
 
-                        <div class="mBtn">
+                        <div class="mBtn" @click="pushAction(2,0)">
                             <div class="btn">提币</div>
                         </div>
                     </div>
@@ -64,11 +64,11 @@
                         </div>
                     </div>
                     <div class="mBtnWap">
-                        <div class="mBtn">
+                        <div class="mBtn" @click="pushAction(1,1)">
                             <div class="btn">充币</div>
                         </div>
 
-                        <div class="mBtn">
+                        <div class="mBtn" @click="pushAction(2,1)">
                             <div class="btn">提币</div>
                         </div>
                     </div>
@@ -95,25 +95,33 @@ export default {
         }
     },
     mounted(){
-        this.getHpDataAPI();
+        this.getMyAssetsAPI();
     },
     methods:{
          handleLeft(){
              this.$router.go(-1);
          },
-         getHpDataAPI(){
+         getMyAssetsAPI(){
                 let that = this;
-                request.get(`/net_data/net_info`).then((res=>{
+                request.get(`/user/assets`).then((res=>{
                         console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
-                          
-
                             
                         }else{
                           
                         }
                 }));
+        },
+        pushAction(index,val){
+            //充值
+            if(index==1){
+                this.$router.push('/recharge');
+            }
+            //提现
+            else{
+                this.$router.push('/withdrawal');
+            }
         }
     }
 }
@@ -140,11 +148,10 @@ export default {
 .wrap{
     position: absolute;
     left: 0;
-    top: 1.2rem;
-    bottom: 1.04rem;
+    top: 1.02rem;
+    bottom:0;
     width: 100%;
     overflow: auto;
-    padding-bottom: 0.5rem;
 }
 .wrapBg{
     position: absolute;
