@@ -32,11 +32,11 @@ request.interceptors.response.use(
   res => {
     Vue.loading.end();
     if (res.data.Code != 0) {
-      Toast({
-        message: res.data.Msg || "Error",
-        type: "error",
-        duration: 1000
-      });
+      // Toast({
+      //   message: res.data.Msg || "Error",
+      //   type: "error",
+      //   duration: 1000
+      // });
       if (res.data.Code == 2000) {
         removeToken();
         store.dispatch("user/resetToken").then(() => {
