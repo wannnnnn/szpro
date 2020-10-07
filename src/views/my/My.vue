@@ -17,10 +17,10 @@
                                       <!-- <div class="levelIcon"><img src="../../assets/img/awardPool/v2@2x.png" alt=""></div> -->
                                  </div>
                                  <div class="userInfoPromote">
-                                      <div class="zigou">自购 <span>{{self_buy}}/3</span></div>
-                                      <div class="promoteBox">未达标</div>
-                                      <div class="tuiguang">推广 <span>{{extend_buy}}/3</span></div>
-                                      <div class="promoteBox">未达标</div>
+                                      <div class="zigou">自购 <span>{{self_buy}}</span></div>
+                                      <!-- <div class="promoteBox">未达标</div> -->
+                                      <div class="tuiguang">推广 <span>{{extend_buy}}</span></div>
+                                      <!-- <div class="promoteBox">未达标</div> -->
                                  </div>
                              </div>
                        </div>
@@ -28,11 +28,11 @@
                        <div class="userCoinNumBox">
                              <div class="userCoinNumItem">
                                    <div class="title">Fil算力</div>
-                                   <div class="val">0.00 TB</div>
+                                   <div class="val">{{fil.toFixed(2)}} TB</div>
                              </div>
                              <div class="userCoinNumItem">
                                     <div class="title">奖励收益</div>
-                                    <div class="val">0.00 Fil</div>
+                                    <div class="val">{{power.toFixed(2)}} Fil</div>
                              </div>
                        </div>
 
@@ -94,12 +94,15 @@ export default {
             extend_buy:0,//推广
             self_buy:0,//自购
             level:0,
+            power:0,//算力
+            fil:0,//收益
         }
     },
     mounted(){
         if(localStorage.getItem('loginFlag')=='logined'){
             this.loginFlag = true;
             this.getUserInfoAPI();
+            this.getMyAssetsAPI();
         }else{
             this.loginFlag = false;
         }
@@ -137,6 +140,19 @@ export default {
                             this.extend_buy = data.extend_buy;
                             this.self_buy = data.self_buy;
                             this.level = data.level;
+                        }else{
+                          
+                        }
+                }));
+        },
+        getMyAssetsAPI(){
+                let that = this;
+                request.get(`/user/assets`).then((res=>{
+                        console.log('res',res);
+                        let data = res.data.Data;
+                        if (res.data.Code == 0) {
+                             this.power = data.assets.power;
+                             this.fil = data.assets.fil;
                         }else{
                           
                         }

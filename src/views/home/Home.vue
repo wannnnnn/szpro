@@ -20,42 +20,42 @@
                               <div class="item">
                                    <div class="itemLogo"><img src="../../assets/img/home/power.png" alt=""></div>
                                    <div  class="itemCount">
-                                        {{data_all_calculate}}<span style="font-size:0.13rem;">PB</span>
+                                        {{total_power}}<span style="font-size:0.13rem;">PB</span>
                                    </div>
                                    <div class="itemDes">全网算力</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/award.png" alt=""></div>
                                    <div  class="itemCount">
-                                       {{data_all_calculate}}<span style="font-size:0.13rem;">FIL</span>
+                                       {{reward_per_block}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">每区奖励</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/count.png" alt=""></div>
                                    <div  class="itemCount">
-                                        {{data_all_calculate}}<span style="font-size:0.13rem;">FIL</span>
+                                        {{num_per24h}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">24H区块产出量</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/24H.png" alt=""></div>
                                    <div  class="itemCount">
-                                        {{data_all_calculate}}
+                                        {{reward_per24h}}
                                    </div>
                                    <div class="itemDes">24H区块奖励</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/pledge.png" alt=""></div>
                                   <div  class="itemCount">
-                                        {{data_all_calculate}}<span style="font-size:0.13rem;">FIL</span>
+                                        {{pledge_now}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">当前质押量</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/Fil.png" alt=""></div>
                                   <div  class="itemCount">
-                                       {{data_all_calculate}}<span style="font-size:0.13rem;">FIL</span>
+                                       {{total_pledge}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">Fil质押量</div>
                               </div>
@@ -69,19 +69,19 @@
                                 <div class="poolCountItemBox">
                                        <div class="poolCountItem">
                                            <div class="text">矿池有效算力</div>
-                                           <div class="count">{{data_all_calculate}}<span>FiL</span></div>
+                                           <div class="count">{{pool_power}}<span>FiL</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                             <div class="text">24H平均收益</div>
-                                            <div class="count">{{data_all_calculate}}<span>FiL</span></div>
+                                            <div class="count">{{pool_reward_per24h}}<span>FiL</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                              <div class="text">Fil质押量</div>
-                                             <div class="count">{{data_all_calculate}}<span>FiL</span></div>
+                                             <div class="count">{{pool_pledge}}<span>FiL</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                               <div class="text">24H产出量</div>
-                                              <div class="count">{{data_all_calculate}}<span>FiL</span></div>
+                                              <div class="count">{{pool_num_per24h}}<span>FiL</span></div>
                                        </div>
                                     
                                 </div>
@@ -99,6 +99,7 @@
 
 <script>
 import AppTabBar from '../../component/TabBar/TabBar';
+import request from "../../api/request";
 export default {
     name: "home",
     components: {
@@ -106,15 +107,20 @@ export default {
     },
     data(){
         return{
-            data_all_calculate:'--',//全网算力
-            data_every_reward:'--',//每区奖励
-            data_24h_output_block:'--',//24H区块产出量
-            data_24h_block_reward:'--',//24H区块奖励
-            data_current_pledge_count:'--',//当前质押量
-            data_fil_pledge_count:'--',//Fil质押量
-            data_effective_calculate:'--',//矿池有效算力
-            data_24h_average_return:'--',//24H平均收益
+            total_power:0,//全网算力
+            reward_per_block:0,//每区奖励
+            reward_per24h:0,//  //24小时区块奖励
+            num_per24h:0,////24小时区块产出量
+            pledge_now:0,// //当前质押量
+            total_pledge:0,////FIL质押量
+            pool_power:0, //矿池有效算力
+            pool_reward_per24h:0, //24H平均收益
+            pool_pledge:0, //FIL质押量
+            pool_num_per24h:0,//24H产出量
         }
+    },
+    mounted(){
+        this.getHpDataAPI();
     },
     methods:{
         tabAction(index){
@@ -127,6 +133,38 @@ export default {
              }else{
                 this.$router.push('/my');
              }
+        },
+         getHpDataAPI(){
+                let that = this;
+                request.get(`/net_data/net_info`).then((res=>{
+                        console.log('res',res);
+                        let data = res.data.Data;
+                        if (res.data.Code == 0) {
+                            this.total_power = this.getValDelRem(data.total_power);
+                            this.reward_per_block = this.getValDelRem(data.reward_per_block);
+                            this.reward_per24h = this.getValDelRem(data.reward_per24h);
+                            this.num_per24h = this.getValDelRem(data.num_per24h);
+                            this.pledge_now = this.getValDelRem(data.pledge_now);
+                            this.pool_power = this.getValDelRem(data.pool_power);
+                            this.pool_reward_per24h = this.getValDelRem(data.pool_reward_per24h);
+                            this.pool_pledge = this.getValDelRem(data.pool_pledge);
+                            this.pool_num_per24h = this.getValDelRem(data.pool_num_per24h);
+
+                            
+                        }else{
+                          
+                        }
+                }));
+        },
+        getValDelRem(val){
+           
+            var list = val.split(" "); 
+           
+            if(list.length>0){
+                return list[0];
+            }else{
+                return 0;
+            }
         }
     }
 }
