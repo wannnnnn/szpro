@@ -13,6 +13,8 @@ const My = () => import('@/views/my/My');
 const Agreement = () => import('@/views/my/Agreement');
 const MyAssets = () => import('@/views/my/MyAssets');
 const MyOrders = () => import('@/views/my/MyOrders');
+const Recharge = () => import('@/views/my/Recharge');
+const Withdrawal = () => import('@/views/my/Withdrawal');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
 const Error = () => import('@/views/error');
@@ -61,7 +63,8 @@ const routes = [{
       title: '个人中心',
       requireAuth: true
     }
-  }, {
+  }, 
+  {
     path: '/myAssets',
     name: 'myAssets',
     component: MyAssets,
@@ -69,7 +72,8 @@ const routes = [{
       title: '我的资产',
       requireAuth: true
     }
-  },, {
+  }, 
+  {
     path: '/myOrders',
     name: 'myOrders',
     component: MyOrders,
@@ -77,7 +81,26 @@ const routes = [{
       title: '订单管理',
       requireAuth: true
     }
-  },  {
+  },   
+  {
+    path: '/recharge',
+    name: 'recharge',
+    component:Recharge,
+    meta: {
+      title: '充币',
+      requireAuth: true
+    }
+  },  
+  {
+    path: '/withdrawal',
+    name: 'withdrawal',
+    component: Withdrawal,
+    meta: {
+      title: '提币',
+      requireAuth: true
+    }
+  },  
+  {
     path: '/agreement',
     name: 'agreement',
     component: Agreement,
@@ -85,7 +108,8 @@ const routes = [{
       title: '云算力租赁协议',
       requireAuth: true
     }
-  },    {
+  },    
+  {
     path: '/login',
     name: 'login',
     component: Login,
