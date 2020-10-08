@@ -2,7 +2,39 @@
     <div class="page">
         <Header title="收益明细" @handleLeft="handleLeft()"></Header>
         <div class="wrap">
-              
+               <div class="tabBarView">
+                   <div class="tabBarItem" :class="{tabBarItemAct:tabBarIndex==0}" @click="changeTabBarAction(0)">
+                         FIL算力
+                         <div class="line" v-show="tabBarIndex==0"></div>
+                   </div>
+                   <div class="tabBarItem" :class="{tabBarItemAct:tabBarIndex==1}" @click="changeTabBarAction(1)">
+                        奖励池收益
+                        <div class="line" v-show="tabBarIndex==1"></div>
+                   </div>
+               </div>
+               <!-- 列表 -->
+               <div class="listBox">
+                     <!-- FIL算力 -->
+                     <div class="filCalculateListBox" v-show="tabBarIndex==0">
+                           <div class="filItem" v-for="n in 20">
+                                 <div class="filItemLeft">
+                                      <div class="text1">活动奖励</div>
+                                      <div class="text2">2020-09-14</div>
+                                 </div>
+                                 <div class="filItemRight">0.01TB</div>
+                           </div>
+                     </div>
+                     <!-- 奖励池收益 -->
+                     <div class="poolIncomeListBox" v-show="tabBarIndex==1">
+                           <div class="filItem" v-for="n in 20">
+                                 <div class="filItemLeft">
+                                      <div class="text1">收益</div>
+                                      <div class="text2">2020-09-14</div>
+                                 </div>
+                                 <div class="filItemRight">0.01TB</div>
+                           </div>
+                     </div>
+               </div>
         </div> 
    
     </div>
@@ -19,22 +51,19 @@ export default {
     },
     data(){
         return{
-            coinNum:'',
-            coinAddress:'',//地址
-            userPhone:'',//手机号码
-            userCode:'',//验证码：
-            isValidateing:false,//是否在验证中
-            buttonName: "获取验证码",
-            isDisabled: false, //验证码再次发送
-            time: 60,
+            list:[],
+            tabBarIndex:0,
         }
     },
     mounted(){
-        this.getHpDataAPI();
+        // this.getHpDataAPI();
     },
     methods:{
          handleLeft(){
              this.$router.go(-1);
+         },
+         changeTabBarAction(index){
+             this.tabBarIndex = index;
          },
          getMsgAPI(){
             if(this.isDisabled){
@@ -79,6 +108,7 @@ export default {
 <style lang="less" scoped>
 .page{
    background: rgba(239, 240, 249, 1);
+   background: #fff;
 }
 
 .header{
@@ -101,7 +131,136 @@ export default {
     bottom: 0;
     width: 100%;
     overflow: auto;
-    padding-bottom: 0.5rem;
+}
+.tabBarView{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 0.93rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #E6E6E6;
+    .tabBarItem{
+        flex: 1;
+        height: 100%;
+        height: 0.93rem;
+        font-size: 0.3rem;
+        font-family: PingFang SC;
+        font-weight: 500;
+        line-height: 0.93rem;
+        color:#999999;
+        text-align: center;
+        position: relative;
+        .line{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width:100%;
+            height:0.05rem;
+            background: #608AFF;
+        }
+    }
+    .tabBarItemAct{
+        color: #333333;
+    }
+}
+.listBox{
+    position: absolute;
+    left: 0;
+    top:0.93rem;
+    width: 100%;
+    bottom: 0;
+    overflow: auto;
+    .filCalculateListBox{
+         width: 100%;
+         overflow: hidden;
+         .filItem{
+             margin-left: 0.3rem;
+             margin-right: 0.3rem;
+             height: 1.16rem;
+             border-bottom:1px solid #E6E6E6;
+             .filItemLeft{
+                 float: left;
+                 height: 100%;
+                 text-align: left;
+                 .text1{
+                     margin-top: 0.24rem;
+                     height: 0.3rem;
+                     font-size: 0.28rem;
+                     font-family: Source Han Sans CN;
+                     font-weight: 400;
+                     color: #0B0C12;
+                     line-height:0.3rem;
+                 }
+                  .text2{
+                     margin-top: 0.1rem;
+                     height: 0.3rem;
+                     font-size: 0.24rem;
+                     font-family: Source Han Sans CN;
+                     font-weight: 400;
+                     color: #5A6375;
+                     line-height:0.3rem;
+                 }
+             }
+             .filItemRight{
+                 float: right;
+                 height: 100%;
+                 margin-right: 0.1rem;
+                 font-size:0.28rem;
+                 font-family: Source Han Sans CN;
+                 font-weight: bold;
+                 color: #0B0C12;
+                 line-height:1.16rem;
+
+             }
+         }
+    }
+
+    .poolIncomeListBox{
+          width: 100%;
+          overflow: hidden;
+         .filItem{
+             margin-left: 0.3rem;
+             margin-right: 0.3rem;
+             height: 1.16rem;
+             border-bottom:1px solid #E6E6E6;
+             .filItemLeft{
+                 float: left;
+                 height: 100%;
+                 text-align: left;
+                 .text1{
+                     margin-top: 0.24rem;
+                     height: 0.3rem;
+                     font-size: 0.28rem;
+                     font-family: Source Han Sans CN;
+                     font-weight: 400;
+                     color: #0B0C12;
+                     line-height:0.3rem;
+                 }
+                  .text2{
+                     margin-top: 0.1rem;
+                     height: 0.3rem;
+                     font-size: 0.24rem;
+                     font-family: Source Han Sans CN;
+                     font-weight: 400;
+                     color: #5A6375;
+                     line-height:0.3rem;
+                 }
+             }
+             .filItemRight{
+                 float: right;
+                 height: 100%;
+                 margin-right: 0.1rem;
+                 font-size:0.28rem;
+                 font-family: Source Han Sans CN;
+                 font-weight: bold;
+                 color: #0B0C12;
+                 line-height:1.16rem;
+
+             }
+         }
+    }
 }
 
 

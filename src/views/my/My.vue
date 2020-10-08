@@ -134,7 +134,7 @@ export default {
                  }
                  //算力管理
                  else if(index==3){
-
+                    this.$router.push('/incomeDetail');
                  }
                  //邀请好友
                  else if(index==4){
