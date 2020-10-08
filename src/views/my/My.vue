@@ -138,7 +138,7 @@ export default {
                  }
                  //邀请好友
                  else if(index==4){
-
+                    this.$router.push('/invateFriends');
                  }
                  //实名认证
                  else if(index==5){

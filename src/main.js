@@ -9,7 +9,6 @@ import router from './routers/';
 // import './routers/intercept';
 import store from './stores';
 import * as filters from './filters/';
-import './services';
 // import 'lib-flexible';
 
 import './styles/main.less';

@@ -219,8 +219,8 @@ Filecoin服务器合约挖矿收益以Filecoin结算，挖矿产出收益T+1进�
 </template>
 
 <script>
-import { getOrder, getPrice } from "../../api/goods/goods";
-import { getAssets } from "../../api/user/user";
+
+
 import { Dialog, Toast } from "vant";
 import AppTabBar from '../../component/TabBar/TabBar';
 import MallProgress from './MallProgress';

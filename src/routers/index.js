@@ -16,6 +16,7 @@ const MyOrders = () => import('@/views/my/MyOrders');
 const Recharge = () => import('@/views/my/Recharge');
 const Withdrawal = () => import('@/views/my/Withdrawal');
 const IncomeDetail = () => import('@/views/my/IncomDetail');
+const InvateFriends = () => import('@/views/my/InvateFriends');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
 const Error = () => import('@/views/error');
@@ -69,6 +70,15 @@ const routes = [{
     path: '/myAssets',
     name: 'myAssets',
     component: MyAssets,
+    meta: {
+      title: '我的资产',
+      requireAuth: true
+    }
+  }, 
+  {
+    path: '/invateFriends',
+    name: 'invateFriends',
+    component: InvateFriends,
     meta: {
       title: '我的资产',
       requireAuth: true

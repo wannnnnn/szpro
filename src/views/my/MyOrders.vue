@@ -4,36 +4,36 @@
             <div class="wrap">
             <!-- 内容部分 -->
             <div class="wrapTxt">
-                <div class="mallBox">
+                <div class="mallBox" v-for="(obj,index) in list" :key="index">
                     <div class="mallTitleBox">
                         <div class="mallTitleLeft">
                             <div class="titleBox">
                                 <div class="title">合盈云算 Filecoin(第一期)</div>
                             </div>
                         </div>
-                        <div class="mallTitleRight">
+                        <!-- <div class="mallTitleRight">
                             <div class="titleBox">
                                 <div class="title">进行中</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="tipBox">
                         <div class="tipItem">
                             <div class="tipTitle">订单时间：</div>
-                            <div class="tipDes">0</div>
+                            <div class="tipDes">{{getTimeFormater(obj.create_time)}}</div>
                         </div>
                         <div class="tipItem">
                                 <div class="tipTitle">单价：</div>
-                                <div class="tipDes">0</div>
+                                <div class="tipDes">{{obj.price}} USDT/TB</div>
                         </div>
                         <div class="tipItem">
                                 <div class="tipTitle">数量：</div>
-                                <div class="tipDes">0</div>
+                                <div class="tipDes">{{obj.miner_num}}</div>
                         </div>
                         <div class="tipItem">
                                 <div class="tipTitle">支付金额：</div>
-                                <div class="tipDes">0</div>
+                                <div class="tipDes">{{obj.usdt_amount}} USDT</div>
                         </div>
                     </div>
                 </div>
@@ -49,6 +49,7 @@
 <script>
 import Header from './common/NavView';
 import request from "../../api/request";
+import { formateDate } from "../../utils/time";
 export default {
     name: "myOrders",
     components: {
@@ -56,23 +57,30 @@ export default {
     },
     data(){
         return{
-            index:0,
+            list:[],//列表
         }
     },
     mounted(){
-        this.getHpDataAPI();
+        this.getListAPI();
     },
     methods:{
          handleLeft(){
              this.$router.go(-1);
          },
-         getHpDataAPI(){
+         getTimeFormater(time){
+             if(time){
+                 let timeStr = formateDate(time, "yyyy-MM-dd hh:mm");
+                 return timeStr;
+             }
+             return '';
+         },
+         getListAPI(){
                 let that = this;
-                request.get(`/net_data/net_info`).then((res=>{
+                request.get(`/power/list?index=1`).then((res=>{
                         console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
-                          
+                            this.list = data;
 
                             
                         }else{
@@ -106,7 +114,7 @@ export default {
     position: absolute;
     left: 0;
     top: 1.2rem;
-    bottom: 1.04rem;
+    bottom: 0;
     width: 100%;
     overflow: auto;
     padding-bottom: 0.5rem;
