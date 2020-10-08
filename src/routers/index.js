@@ -14,6 +14,7 @@ const Agreement = () => import('@/views/my/Agreement');
 const MyAssets = () => import('@/views/my/MyAssets');
 const Recharge = () => import('@/views/my/Recharge');
 const Withdrawal = () => import('@/views/my/Withdrawal');
+const IncomeDetail = () => import('@/views/my/IncomDetail');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
 const Error = () => import('@/views/error');
@@ -87,6 +88,15 @@ const routes = [{
     component: Withdrawal,
     meta: {
       title: '提币',
+      requireAuth: true
+    }
+  },  
+  {
+    path: '/incomeDetail',
+    name: 'incomeDetail',
+    component: IncomeDetail,
+    meta: {
+      title: '收益明细',
       requireAuth: true
     }
   },  
