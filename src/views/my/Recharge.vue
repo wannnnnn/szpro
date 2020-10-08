@@ -11,9 +11,13 @@
                  <!-- 内容部分 -->
                  <div class="wrapTxt">
                       <div class="chrageBox">
-                            <div class="coinInfo">
+                            <div class="coinInfo" v-show="type==1">
                                  <div class="coinIcon"><img src="../../assets/img/asset/USDT@2x.png" alt=""></div>
                                  <div class="coinTitle">USDT</div>
+                            </div>
+                             <div class="coinInfo" v-show="type==2">
+                                 <div class="coinIcon"><img src="../../assets/img/asset/FIL@2x.png" alt=""></div>
+                                 <div class="coinTitle">FIL</div>
                             </div>
                             <div class="coinName">
                                  <div class="coinNameLeft">链名</div>
@@ -61,11 +65,20 @@ export default {
     data(){
         return{
             address:'OIJKJIJIJIKJKHJIFYHJKWHFUH',
+            type:1,//类型
         }
     },
     mounted(){
         this.getHpDataAPI();
-        this.makeCode(this.address);
+        
+        if (this.$route.query.address) {
+           this.address = this.$route.query.address;
+           this.makeCode(this.address);
+        }
+         if (this.$route.query.type) {
+           this.type = this.$route.query.type;
+        }
+        
     },
     methods:{
          handleLeft(){

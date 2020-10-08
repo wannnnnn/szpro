@@ -34,7 +34,7 @@
                             <div class="img" :class="getLevelImg(obj.level)"></div>
                             V{{obj.level}} 奖励池
                           </div>
-                          <div class="poolPercent" id="liquidFill"></div> 
+                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill"></div> 
                           <div class="group">
                                 <div class="item">
                                     <div class="count">{{obj.today_fil}} Fil</div>
@@ -163,6 +163,19 @@ export default {
                 str = 'level2Line';
             }else{
                 str = 'level3Line';
+            }
+        }
+        return str;
+    },
+    getLevelPoolPercent(level){
+        var str = '';
+        if(level){
+            if(level==1){
+                str = 'level1PoolPercent';
+            }else if(level==2){
+                str = 'level2PoolPercent';
+            }else{
+                str = 'level3PoolPercent';
             }
         }
         return str;
@@ -354,7 +367,19 @@ export default {
           height: 2.71rem;
           width: 2.71rem;
           margin-top: 0.4rem;
-          border: 1px solid #000;
+          // border: 1px solid #000;
+      }
+      .level1PoolPercent{
+           background: url(../../assets/img/awardPool/v1_pool.png) no-repeat center;
+           background-size: 100% 100%;
+      }
+      .level2PoolPercent{
+           background: url(../../assets/img/awardPool/v2_pool.png) no-repeat center;
+           background-size: 100% 100%;
+      }
+      .level3PoolPercent{
+           background: url(../../assets/img/awardPool/v3_pool.png) no-repeat center;
+           background-size: 100% 100%;
       }
       .group {
         display: flex;

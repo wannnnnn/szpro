@@ -14,7 +14,9 @@
                              <div class="loginedWrap" v-show="loginFlag">
                                  <div class="userInfoLevel">
                                       <div class="phoneNum">{{getPhoneDes()}}</div>
-                                      <!-- <div class="levelIcon"><img src="../../assets/img/awardPool/v2@2x.png" alt=""></div> -->
+                                      <div class="levelIcon" v-show="level==1"><img src="../../assets/img/awardPool/V1@2x.png" alt=""></div>
+                                      <div class="levelIcon" v-show="level==2"><img src="../../assets/img/awardPool/v2@2x.png" alt=""></div>
+                                      <div class="levelIcon" v-show="level==3"><img src="../../assets/img/awardPool/v3@2x.png" alt=""></div>
                                  </div>
                                  <div class="userInfoPromote">
                                       <div class="zigou">自购 <span>{{self_buy}}</span></div>
@@ -73,7 +75,22 @@
                  </div>
             </div>
             <AppTabBar :tabIndex='3' @tabAction="tabAction"></AppTabBar>
+
+
+             <!-- 推出登录 -->
+            <div id="loginOutModel" v-show="isShowLoginOutModel">
+                <div class="modelContent">
+                        <div class="title">是否真的退出登录?</div>
+                        <div class="btnBox">
+                            <div class="btnItem" style="border-right: 1px  solid #F7F8FC;" @click="isShowLoginOutModel=false">取消</div>
+                            <div class="btnItem" style="color: #007AFF;" @click="loginOut()">退出</div>
+                        </div>
+                </div>
+                <div class="maskView" @click="isShowLoginOutModel=false"></div>
+            </div>
       </div>
+
+      
 
       
 </template>
@@ -96,6 +113,7 @@ export default {
             level:0,
             power:0,//算力
             fil:0,//收益
+            isShowLoginOutModel:false,
         }
     },
     mounted(){
@@ -122,6 +140,11 @@ export default {
         pushLogin(){
             this.$router.push('/login');
         },
+        loginOut(){
+            this.isShowLoginOutModel = false;
+            this.loginFlag = false;
+            localStorage.removeItem('loginFlag');
+        },
         pushItemAction(index){
             if(this.loginFlag){
                 //资产管理
@@ -142,11 +165,11 @@ export default {
                  }
                  //实名认证
                  else if(index==5){
-
+                    this.$router.push('/idIdentity');
                  }
                  //退出登录
                  else if(index==6){
-
+                      this.isShowLoginOutModel = true;
                  }
 
             }else{
@@ -171,6 +194,8 @@ export default {
                             this.extend_buy = data.extend_buy;
                             this.self_buy = data.self_buy;
                             this.level = data.level;
+
+                            localStorage.setItem('myPhone',this.phone);
                         }else{
                           
                         }
@@ -380,4 +405,70 @@ export default {
     }
 }
 
+
+//推出登录的modal
+#loginOutModel{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1991;
+  //弹窗内容
+  .modelContent{
+     z-index:1992;
+     position: absolute;
+     left:50%;
+     top: 50%;;
+     width:5.4rem;
+     height:2.8rem; 
+     margin-left: -2.7rem;
+     margin-top: -1.4rem;
+     border-radius: 0.15rem ;
+     background: #fff;
+     animation: contentViewKeyAnimation 0.5s;
+     overflow: hidden;
+     .title{
+        width: 100%;
+        height: 1.92rem;
+        line-height: 1.92rem;
+        text-align: center;
+        border-bottom: 1px  solid #F7F8FC;
+     }
+     .btnBox{
+        width: 100%;
+        height: 0.88rem;
+        display: flex;
+        align-items: center;
+        .btnItem{
+            flex: 1;
+            height: 100%;
+            color:#70747C;
+            font-size: 0.34rem;
+            line-height: 0.88rem;
+            text-align: center;
+            font-weight: bold;
+        }
+     }
+     
+  }
+  @keyframes  contentViewKeyAnimation{
+      0%{
+         transform: scale(0);
+      }
+      150%{
+         transform: scale(1)z
+      }
+  }
+  .maskView{
+     position: absolute;
+     z-index: -1;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     opacity: 0.3;
+  }
+}
 </style>

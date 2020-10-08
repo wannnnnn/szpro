@@ -42,7 +42,6 @@
 
 <script>
 import rules from "../../utils/rules";
-
 import { setToken, getToken } from "../../utils/auth";
 import request from "../../api/request";
 import {Toast} from "vant";

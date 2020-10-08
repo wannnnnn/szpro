@@ -37,6 +37,8 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="loadingMoreBtn" v-show="isLoadingMore1" @click="getListMoreAPI()">加载更多</div>
             
             </div> 
         </div> 
@@ -58,6 +60,8 @@ export default {
     data(){
         return{
             list:[],//列表
+            isLoadingMore1:false,
+            pageIndex1:1,
         }
     },
     mounted(){
@@ -76,15 +80,39 @@ export default {
          },
          getListAPI(){
                 let that = this;
+                this.pageIndex1 = 1;
                 request.get(`/power/list?index=1`).then((res=>{
                         console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
-                            this.list = data;
-
-                            
-                        }else{
-                          
+                            var list =  res.data.Data;
+                            this.list = list;
+                            if(list.length>=20){
+                                this.isLoadingMore1 = true;
+                            }else{
+                                this.isLoadingMore1 = false;
+                            }
+                             
+                        }
+                }));
+        },
+        getListMoreAPI(){
+                let that = this;
+                this.pageIndex1 = this.pageIndex1+1;
+                request.get(`/power/list?index=`+this.pageIndex1).then((res=>{
+                        let data = res.data.Data;
+                        if (res.data.Code == 0) {
+                            var list =  res.data.Data;
+                            for(var i=0;i<list.length;i++){
+                                var obj = list[i];
+                                this.list.push(obj);
+                            }
+                            if(list.length>=20){
+                                this.isLoadingMore1 = true;
+                            }else{
+                                this.isLoadingMore1 = false;
+                            }
+                             
                         }
                 }));
         }
@@ -227,6 +255,18 @@ export default {
                 }
             }
         }
+    }
+    .loadingMoreBtn{
+        margin: 0 auto;
+        margin-top: 0.2rem;
+        width: 6rem;
+        height: 0.8rem;
+        border: 2px solid #F5F5F5;
+        border-radius:0.1rem;
+        line-height: 0.8rem;
+        font-size: 0.28rem;
+        color: #B6B6B9;
+        background: #fff;
     }
 }
 

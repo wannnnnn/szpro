@@ -17,7 +17,7 @@
               <div class="inputWrap">
                     <div class="moneyBox">
                          <div class="left">USDT</div>
-                         <div class="right">余额：0</div>
+                         <div class="right">余额：{{usdt.toFixed(2)}}</div>
                     </div>
                       <!-- 数量 -->
                     <div class="inputBox">
@@ -36,14 +36,14 @@
                         </div>
                     </div> 
                     <div class="shouxufei">提币手续费：3USDT</div>
-                    <div class="botInoutBox">
+                    <!-- <div class="botInoutBox">
                         <div class="inoutLeft">手机号：</div>
                         <div class="inputRight">
                                <div class="inputClass">
                                     <input  type="number" class="inputVal" v-model="userPhone" placeholder="请输入您绑定的手机号">
                                 </div>
                         </div>
-                    </div>
+                    </div> -->
                      <div class="botInoutBox">
                         <div class="inoutLeft">验证码：</div>
                         <div class="inputRight">
@@ -62,7 +62,7 @@
                         为保障资金安全，当您账户安全策略变更、密码修改、我们会对提币进行人工审核，请耐心等待工作人员电话或邮件联系。请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
                     </div>
                 </div>
-                 <div class="loginBtn" @click="loginAPI()" >
+                 <div class="loginBtn" @click="tibiAPI()" >
                     <div class="btnTxt">提币</div>
                 </div>
         </div> 
@@ -74,6 +74,7 @@
 <script>
 import Header from './common/NavView';
 import request from "../../api/request";
+import { Toast } from "vant";
 export default {
     name: "home",
     components: {
@@ -81,7 +82,7 @@ export default {
     },
     data(){
         return{
-            coinNum:'',
+            coinNum:0,
             coinAddress:'',//地址
             userPhone:'',//手机号码
             userCode:'',//验证码：
@@ -89,15 +90,70 @@ export default {
             buttonName: "获取验证码",
             isDisabled: false, //验证码再次发送
             time: 60,
+            usdt:0,
         }
     },
     mounted(){
-        this.getHpDataAPI();
+        this.getMyAssetsAPI();
+        this.userPhone = localStorage.getItem('myPhone');
     },
     methods:{
          handleLeft(){
              this.$router.go(-1);
          },
+         getMyAssetsAPI(){
+                let that = this;
+                request.get(`/user/assets`).then((res=>{
+                        console.log('res',res);
+                        let data = res.data.Data;
+                        if (res.data.Code == 0) {
+                             this.usdt = data.assets.usdt;
+                        }
+                }));
+        },
+        tibiAPI(){
+            if(this.coinNum<=0){
+                 this.$toast({
+                    message: "提币不能低于3USDT"
+                });
+                return;
+            }
+             if(this.coinNum>this.usdt){
+                 this.$toast({
+                    message: "提币数量大于资产数量"
+                });
+                return;
+            }
+            if(this.coinAddress.length==0){
+                 this.$toast({
+                    message: "请输入或粘贴钱包地址"
+                });
+                return;
+            }
+            if(this.userCode.length!=6){
+                 this.$toast({
+                    message: "输入6位短信验证码"
+                });
+                return;
+            }
+            let that = this;
+            request.post(`/withdraw/commit`, 
+            { 
+              amount:this.coinNum,
+              to_address:this.coinAddress, 
+              code:this.userCode,
+            }).then((res=>{
+                   console.log('res',res);
+                
+                    if (res.data.Code == 0) {
+                        
+                    }else{
+                        this.$toast({
+                        message: res.data.Msg
+                        });
+                    }
+            }));
+        },
          getMsgAPI(){
             if(this.isDisabled){
                 return;
@@ -244,7 +300,7 @@ export default {
      margin: 0 auto;
     margin-top: 0.3rem;
     width:6.8rem;
-    height: 5.95rem;
+    height: 4.95rem;
     background: #FFFFFF;
     border-radius: 0.15rem;
     overflow: hidden;
@@ -331,7 +387,8 @@ export default {
   }
   .tip{
        margin-top: 0.3rem;
-       margin-left: 0.5rem;
+       margin-left: 0.3rem;
+       margin-top: 0.2rem;
        width: 100%;
        text-align: left;
         height: 0.4rem;
@@ -345,7 +402,7 @@ export default {
   .shouxufei{
          margin-left: 0.3rem;
          margin-right: 0.3rem;
-         margin-top: 0.12rem;
+         margin-top: 0.22rem;
         height: 0.3rem;
         font-size:0.22rem;
         font-family: PingFang SC;

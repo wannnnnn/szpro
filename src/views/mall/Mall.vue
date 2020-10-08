@@ -285,7 +285,7 @@ export default {
           }else if(index==2){
               this.$router.push('/register');
           }else if(index==3){
-              this.$router.push('/charge');
+              this.$router.push('/recharge');
           }else if(index==4){
               this.$router.push('/agreement');
           }

@@ -17,11 +17,11 @@
                     <div class="tipBox">
                         <div class="tipItem">
                             <div class="tipTitle">总资产</div>
-                            <div class="tipDes">0</div>
+                            <div class="tipDes">{{usdt.toFixed(2)}}</div>
                         </div>
                         <div class="tipItem">
                                 <div class="tipTitle">可用</div>
-                                <div class="tipDes">0</div>
+                                <div class="tipDes">{{usdt.toFixed(2)}}</div>
                         </div>
                         <div class="tipItem">
                                 <div class="tipTitle">冻结余额</div>
@@ -52,11 +52,11 @@
                     <div class="tipBox">
                         <div class="tipItem">
                             <div class="tipTitle">总资产</div>
-                            <div class="tipDes">0</div>
+                            <div class="tipDes">{{fil.toFixed(2)}}</div>
                         </div>
                         <div class="tipItem">
                                 <div class="tipTitle">可用</div>
-                                <div class="tipDes">0</div>
+                                <div class="tipDes">{{fil.toFixed(2)}}</div>
                         </div>
                         <div class="tipItem">
                                 <div class="tipTitle">冻结余额</div>
@@ -64,11 +64,11 @@
                         </div>
                     </div>
                     <div class="mBtnWap">
-                        <div class="mBtn" @click="pushAction(1,1)">
+                        <div class="mBtn unBtn" >
                             <div class="btn">充币</div>
                         </div>
 
-                        <div class="mBtn" @click="pushAction(2,1)">
+                        <div class="mBtn unBtn" >
                             <div class="btn">提币</div>
                         </div>
                     </div>
@@ -92,6 +92,9 @@ export default {
     data(){
         return{
             index:0,
+            fil:0,
+            usdt:0,
+            deposit_addr:'',
         }
     },
     mounted(){
@@ -107,7 +110,9 @@ export default {
                         console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
-                            
+                             this.fil = data.assets.fil;
+                             this.usdt = data.assets.usdt;
+                             this.deposit_addr = data.assets.deposit_addr;
                         }else{
                           
                         }
@@ -116,7 +121,8 @@ export default {
         pushAction(index,val){
             //充值
             if(index==1){
-                this.$router.push('/recharge');
+                // this.$router.push('/recharge');
+                 this.$router.push({ path: '/recharge', query: { type:index,address:this.deposit_addr}});
             }
             //提现
             else{
@@ -262,7 +268,11 @@ export default {
                 font-weight: 400;
                 color: #FFFFFF;
               }
-        }
+             
+           }
+            .unBtn{
+                  background: #E2E2E2;
+            }
         }
         
     }

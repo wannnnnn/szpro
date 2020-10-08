@@ -4,7 +4,8 @@
         <div class="wrap">
                <div class="tabBarView">
                    <div class="tabBarItem" :class="{tabBarItemAct:tabBarIndex==0}" @click="changeTabBarAction(0)">
-                         FIL算力
+                         <!-- FIL算力 -->
+                         矿池收益
                          <div class="line" v-show="tabBarIndex==0"></div>
                    </div>
                    <div class="tabBarItem" :class="{tabBarItemAct:tabBarIndex==1}" @click="changeTabBarAction(1)">
@@ -16,24 +17,26 @@
                <div class="listBox">
                      <!-- FIL算力 -->
                      <div class="filCalculateListBox" v-show="tabBarIndex==0">
-                           <div class="filItem" v-for="n in 20">
+                           <div class="filItem" v-for="(obj,index) in filList" :key="index">
                                  <div class="filItemLeft">
-                                      <div class="text1">活动奖励</div>
-                                      <div class="text2">2020-09-14</div>
+                                      <div class="text1">矿池收益</div>
+                                      <div class="text2">{{getTimeFormater(obj.create_time)}}</div>
                                  </div>
-                                 <div class="filItemRight">0.01TB</div>
+                                 <div class="filItemRight">{{obj.get_coin}} FIL</div>
                            </div>
                      </div>
                      <!-- 奖励池收益 -->
                      <div class="poolIncomeListBox" v-show="tabBarIndex==1">
-                           <div class="filItem" v-for="n in 20">
+                           <div class="filItem" v-for="(obj,m) in incomeList" :key="m">
                                  <div class="filItemLeft">
-                                      <div class="text1">收益</div>
-                                      <div class="text2">2020-09-14</div>
+                                      <div class="text1">V{{obj.level}}奖励池收益</div>
+                                      <div class="text2">{{getTimeFormater(obj.create_time)}}</div>
                                  </div>
-                                 <div class="filItemRight">0.01TB</div>
+                                 <div class="filItemRight">{{obj.get_coin}} FIL</div>
                            </div>
                      </div>
+                     <div class="loadingMoreBtn" v-show="tabBarIndex==0&&isLoadingMore1" @click="getFilListMoreAPI()">加载更多</div>
+                     <div class="loadingMoreBtn" v-show="tabBarIndex==1&&isLoadingMore2" @click="getIncomeMoreListAPI()">加载更多</div>
                </div>
         </div> 
    
@@ -44,6 +47,7 @@
 <script>
 import Header from './common/NavView';
 import request from "../../api/request";
+import { formateDate } from "../../utils/time";
 export default {
     name: "incomeDetail",
     components: {
@@ -51,12 +55,18 @@ export default {
     },
     data(){
         return{
-            list:[],
+            filList:[],//列表
+            incomeList:[],//收益列表
             tabBarIndex:0,
+            isLoadingMore1:false,
+            isLoadingMore2:false,
+            pageIndex1:1,
+            pageIndex2:1,
         }
     },
     mounted(){
-        // this.getHpDataAPI();
+        this.getFilListAPI();
+        this.getIncomeListAPI();
     },
     methods:{
          handleLeft(){
@@ -65,39 +75,89 @@ export default {
          changeTabBarAction(index){
              this.tabBarIndex = index;
          },
-         getMsgAPI(){
-            if(this.isDisabled){
-                return;
-            }
-            
+         getTimeFormater(time){
+             if(time){
+                 let timeStr = formateDate(time, "yyyy-MM-dd hh:mm");
+                 return timeStr;
+             }
+             return '';
+         },
+         getFilListAPI(){
             let that = this;
-            request.post(`/account/send_code`, 
-            { 
-              account:this.userPhone 
-            }).then((res=>{
+            this.pageIndex1 = 1;
+            request.get(`/record/pool_list?index=1`).then((res=>{
                 console.log('res',res);
                 
-                if (res.data.Code == 0) {
-                        that.isValidateing = true;
-                        that.isDisabled = true;
-                        let interval = window.setInterval(function() {
-                        that.buttonName = "重新发送(" + that.time + "s)";
-                        --that.time;
-                        if (that.time < 0) {
-                            that.buttonName = "获取验证码";
-                            that.time = 60;
-                            that.isDisabled = false;
-                            window.clearInterval(interval);
-                            that.isValidateing = false;
+                    if (res.data.Code == 0) {
+                        var list =  res.data.Data;
+                        this.filList = list;
+                        if(list.length>=20){
+                            this.isLoadingMore1 = true;
+                        }else{
+                            this.isLoadingMore1 = false;
                         }
-                        }, 1000);
-                        this.$toast({
-                        message: "发送成功!"
-                        });
-                    }else{
-                        this.$toast({
-                        message: res.data.Msg
-                        });
+                    }
+            }));
+        },
+        getFilListMoreAPI(){
+            let that = this;
+            this.pageIndex1 = this.pageIndex1+1;
+            request.get(`/record/pool_list?index=`+this.pageIndex1).then((res=>{
+                console.log('res',res);
+                
+                    if (res.data.Code == 0) {
+                        
+                        var list =  res.data.Data;
+                        for(var i=0;i<list.length;i++){
+                            var obj = list[i];
+                           this.filList.push(obj);
+                        }
+                        if(list.length>=20){
+                            this.isLoadingMore1 = true;
+                        }else{
+                            this.isLoadingMore1 = false;
+                        }
+                        
+                    }
+            }));
+        },
+        getIncomeListAPI(){
+            let that = this;
+             this.pageIndex2 = 1;
+            request.get(`/record/reward_list?index=1`).then((res=>{
+                console.log('res',res);
+                
+                    if (res.data.Code == 0) {
+                      
+                        var list =  res.data.Data;
+                        this.incomeList = list;
+                        if(list.length>=20){
+                            this.isLoadingMore2 = true;
+                        }else{
+                            this.isLoadingMore2 = false;
+                        }
+                    }
+            }));
+        },
+        getIncomeMoreListAPI(){
+            let that = this;
+            this.pageIndex2 = this.pageIndex2+1;
+            request.get(`/record/pool_list?index=`+this.pageIndex2).then((res=>{
+                console.log('res',res);
+                
+                    if (res.data.Code == 0) {
+                        
+                        var list =  res.data.Data;
+                        for(var i=0;i<list.length;i++){
+                            var obj = list[i];
+                           this.incomeList.push(obj);
+                        }
+                        if(list.length>=20){
+                            this.isLoadingMore2 = true;
+                        }else{
+                            this.isLoadingMore2 = false;
+                        }
+                        
                     }
             }));
         },
@@ -260,6 +320,18 @@ export default {
 
              }
          }
+    }
+
+    .loadingMoreBtn{
+        margin: 0 auto;
+        margin-top: 0.2rem;
+        width: 6rem;
+        height: 0.8rem;
+        border: 2px solid #F5F5F5;
+        border-radius:0.1rem;
+        line-height: 0.8rem;
+        font-size: 0.28rem;
+        color: #B6B6B9;
     }
 }
 
