@@ -12,6 +12,7 @@ const AwardPool = () => import('@/views/awardPool/AwardPool');
 const My = () => import('@/views/my/My');
 const Agreement = () => import('@/views/my/Agreement');
 const MyAssets = () => import('@/views/my/MyAssets');
+const MyOrders = () => import('@/views/my/MyOrders');
 const Recharge = () => import('@/views/my/Recharge');
 const Withdrawal = () => import('@/views/my/Withdrawal');
 const IncomeDetail = () => import('@/views/my/IncomDetail');
@@ -72,7 +73,16 @@ const routes = [{
       title: '我的资产',
       requireAuth: true
     }
-  },  
+  }, 
+  {
+    path: '/myOrders',
+    name: 'myOrders',
+    component: MyOrders,
+    meta: {
+      title: '订单管理',
+      requireAuth: true
+    }
+  },   
   {
     path: '/recharge',
     name: 'recharge',
@@ -108,7 +118,8 @@ const routes = [{
       title: '云算力租赁协议',
       requireAuth: true
     }
-  },    {
+  },    
+  {
     path: '/login',
     name: 'login',
     component: Login,
