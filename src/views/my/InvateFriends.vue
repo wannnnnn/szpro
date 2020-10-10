@@ -46,17 +46,13 @@
                <div class="modelContent">
                      <div class="shareTitle1">分享</div>
                      <div class="shareBoxs">
-                         <div class="shareBoxItem">
+                         <div class="shareBoxItem" v-clipboard:copy="share_url" v-clipboard:success="onCopy" v-clipboard:error="onError">
                               <div class="logo"><img src="../../assets/img/friends/share_wechat.png" alt=""></div>
                               <div class="iteTxt">微信</div>
                          </div>
-                         <div class="shareBoxItem">
-                             <div class="logo"><img src="../../assets/img/friends/share_wechat_fri.png" alt=""></div>
-                              <div class="iteTxt">朋友圈</div>
-                         </div>
-                         <div class="shareBoxItem">
-                             <div class="logo"><img src="../../assets/img/friends/share_sina.png" alt=""></div>
-                              <div class="iteTxt">微博</div>
+                         <div class="shareBoxItem" style="margin-left:1.2rem;" v-clipboard:copy="share_url" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                             <div class="logo"><img src="../../assets/img/friends/share_link.png" alt=""></div>
+                              <div class="iteTxt">复制链接</div>
                          </div>
                      </div>
                      <div class="qucanlBtn" @click="isShowShareModel=false">取消分享</div>
@@ -107,7 +103,17 @@ export default {
 				height: 138
 			});
 			qr.make(text);
-		 },
+         },
+         onCopy: function (e) {
+              this.$toast({
+                message: "复制成功"
+              });
+		},
+		onError: function (e) {
+			this.$toast({
+                message: "复制失败"
+              });
+		},
          getShareInfoAPI(){
             let that = this;
             request.get(`/user/invite_code`).then((res=>{
@@ -116,6 +122,9 @@ export default {
                    if (res.data.Code == 0) {
                         this.invite_code = data.invite_code;
                         this.share_url = data.url;
+                        this.share_num = data.share_num;
+                        this.share_buy_num = data.share_buy_num;
+                        this.share_income = data.share_income;
                         this.makeCode(this.share_url);
                     }else{
                        
@@ -152,16 +161,12 @@ export default {
     bottom: 0;
     width: 100%;
     overflow: auto;
-    background: url(../../assets/img/friends/bg.png) no-repeat;
+    background: url(../../assets/img/friends/bg.png) no-repeat center;
     background-size: 100% 100%;
 }
 .friends {
     width: 100%;
     overflow: hidden;
-    // display: flex;
-    // justify-content: center;
-    // flex-wrap: wrap;
-    // border: 1px solid #000;
     .h-title {
         margin: 0 auto;
         margin-top:0.78rem;
@@ -326,9 +331,9 @@ export default {
          height: 1.5rem;
          display: flex;
          align-items: center;
-         justify-content: space-between;
+         justify-content: center;
          .shareBoxItem{
-             width: 1rem;
+             width: 1.6rem;
              height: 1.5rem;
              .logo{
                  margin: 0 auto;

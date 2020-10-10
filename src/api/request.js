@@ -5,6 +5,8 @@ import { Toast } from "vant";
 import Vue from 'vue';
 const request = axios.create({
   baseURL: "http://112.125.27.11/api/v1/", //网络请求
+  //192.168.1.124:5002
+  // baseURL: "http://192.168.1.124:5002/api/v1/", //网络请求
   // baseURL:'/api',//本地json数据
   timeout: 5000
 });

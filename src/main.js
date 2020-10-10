@@ -8,8 +8,13 @@ import App from './App.vue';
 import router from './routers/';
 // import './routers/intercept';
 import store from './stores';
+// import cordova from './utils/cordova';
+// import cameraindex from './utils/cameraindex.js'
 import * as filters from './filters/';
 // import 'lib-flexible';
+import Echarts from "echarts";
+Vue.prototype.$echarts = Echarts;
+// Vue.prototype.$cordova = cordova;
 
 import './styles/main.less';
 
@@ -37,8 +42,7 @@ Vue.config.errorHandler = (err, vm, info) => {
 Vue.config.devtools = process.env.NODE_ENV === 'development';
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
-import Echarts from "echarts";
-Vue.prototype.$echarts = Echarts;
+
 import VueAwesomeSwiper from "vue-awesome-swiper";
 Vue.use(VueAwesomeSwiper);
 

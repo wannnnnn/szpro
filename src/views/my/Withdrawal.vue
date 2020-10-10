@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <Header title="提币" @handleLeft="handleLeft()"></Header>
+        <Header title="提币" @handleLeft="handleLeft()" :isShowWithDrawl="true" @handleWithDrawl="handleWithDrawl()"></Header>
         <div class="wrap">
               <div class="withdrawStyleBox">
                     <div class="styleBox">
@@ -10,7 +10,9 @@
                      <div class="coinInfo">
                             <div class="coinIcon"><img src="../../assets/img/asset/USDT@2x.png" alt=""></div>
                             <div class="coinTitle">USDT</div>
-                            <div class="coinStyle">ERC20</div>
+                            <div class="coinStyle" :class="{coinStyleAct:usdtTypeListIndex==1}" @click="changeUsetType(1)">TRC20</div>
+                            <div class="coinStyle" style="margin-right:0.2rem;" :class="{coinStyleAct:usdtTypeListIndex==0}" @click="changeUsetType(0)">ERC20</div>
+                            
                     </div>
               </div>
               <!-- end -->
@@ -32,10 +34,10 @@
                        <!-- 数量 -->
                     <div class="inputBox">
                         <div class="inputClass">
-                            <input  type="number" class="inputVal" v-model="coinAddress" placeholder="请输入或粘贴钱包地址">
+                            <input  type="text" class="inputVal" v-model="coinAddress" placeholder="请输入或粘贴钱包地址">
                         </div>
                     </div> 
-                    <div class="shouxufei">提币手续费：3USDT</div>
+                    <div class="shouxufei">提币手续费：{{min_usdt}}USDT</div>
                     <!-- <div class="botInoutBox">
                         <div class="inoutLeft">手机号：</div>
                         <div class="inputRight">
@@ -66,6 +68,9 @@
                     <div class="btnTxt">提币</div>
                 </div>
         </div> 
+
+
+           
    
     </div>
 </template>
@@ -91,15 +96,31 @@ export default {
             isDisabled: false, //验证码再次发送
             time: 60,
             usdt:0,
+            usdtTypeList:['ERC20','TRC20'],
+            usdtTypeListIndex:0,//
+            coin_type:'ETH',
+            min_usdt:3,
         }
     },
     mounted(){
         this.getMyAssetsAPI();
         this.userPhone = localStorage.getItem('myPhone');
+        this.getPowerPriceAPI();
     },
     methods:{
          handleLeft(){
              this.$router.go(-1);
+         },
+         handleWithDrawl(){
+             this.$router.push('/withdrawalRecord');
+         },
+         changeUsetType(index){
+             this.usdtTypeListIndex = index;
+             if(index==0){
+                 this.coin_type = 'ETH';
+             }else{
+                 this.coin_type = 'TRX';
+             }
          },
          getMyAssetsAPI(){
                 let that = this;
@@ -111,11 +132,22 @@ export default {
                         }
                 }));
         },
+        getPowerPriceAPI(){
+                let that = this;
+                request.get(`/power/price`).then((res=>{
+                        console.log('res',res);
+                        let data = res.data.Data;
+                        if (res.data.Code == 0) {
+                             this.min_usdt = data.withdraw_fee;
+                        }
+                }));
+        },
         tibiAPI(){
-            if(this.coinNum<=0){
+            if(this.coinNum<this.min_usdt){
                  this.$toast({
-                    message: "提币不能低于3USDT"
+                    message: '提币不能低于'+this.min_usdt+'USDT'
                 });
+                
                 return;
             }
              if(this.coinNum>this.usdt){
@@ -136,17 +168,22 @@ export default {
                 });
                 return;
             }
+            
             let that = this;
             request.post(`/withdraw/commit`, 
             { 
-              amount:this.coinNum,
+              amount:parseFloat(this.coinNum),
               to_address:this.coinAddress, 
               code:this.userCode,
+              coin_type:this.coin_type
             }).then((res=>{
                    console.log('res',res);
                 
                     if (res.data.Code == 0) {
-                        
+                        this.$toast({
+                            message: "充值成功"
+                        });
+                        this.getMyAssetsAPI();
                     }else{
                         this.$toast({
                         message: res.data.Msg
@@ -286,12 +323,16 @@ export default {
             float: right;
             width: 1rem;
             height: 0.4rem;
-            border: 1px solid #608AFF;
+            border: 1px solid #B5B4B9;
             border-radius: 0.05rem;
             line-height: 0.4rem;
             text-align: center;
-            color: #608AFF;
+            color:#B5B4B9;
             font-size: 0.26rem;
+        }
+        .coinStyleAct{
+            color: #608AFF;
+            border: 1px solid #608AFF;
         }
     }
 
@@ -333,7 +374,6 @@ export default {
       margin-right: 0.3rem;
       margin-top: 0.3rem;
       height: 0.68rem;
-    //   border: 1px solid #000;
       position: relative;
       border-bottom: 1px solid #EBEBEB;
       .regionBox{
@@ -518,26 +558,29 @@ export default {
   }
 
   input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-               -webkit-appearance: none;
-            }
-            input {
-               -moz-appearance: textfield;
-            }
-            input::-webkit-input-placeholder {
-               color: #cccccc;
-            }
-            input::-moz-placeholder {
-               color: #cccccc;
-            }
-            input:-moz-placeholder {
-               color: #cccccc;
-            }
-            input:-ms-input-placeholder {
-               color: #cccccc;
-            }
-            input:focus {
-            //    border: 1px solid #383b45;
-            }
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input {
+    -moz-appearance: textfield;
+}
+input::-webkit-input-placeholder {
+    color: #cccccc;
+}
+input::-moz-placeholder {
+    color: #cccccc;
+}
+input:-moz-placeholder {
+    color: #cccccc;
+}
+input:-ms-input-placeholder {
+    color: #cccccc;
+}
+input:focus {
+//    border: 1px solid #383b45;
+}
+
+
+
 
 </style>

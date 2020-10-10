@@ -58,6 +58,8 @@ export default {
 
 <style lang="less">
 #app {
+  margin: 0;
+  padding: 0;
   font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

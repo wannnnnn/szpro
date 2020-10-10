@@ -2,35 +2,35 @@
     <div class="app-tabbar">
           <!-- 首页 -->
           <div class="tabbar-item" @click="itemAction(0)">
-                <div class="tabbar-logo">
-                      <img src="../../assets/img/icon/home-active@2x.png"  v-if="index==0">
-                      <img src="../../assets/img/icon/home@2x.png"  v-else>
+                <div class="tabbar-logo" >
+                      <img style="width:0.4rem;height:0.39rem;" src="../../assets/img/icon/home-active.png"  v-if="index==0">
+                      <img style="width:0.4rem;height:0.39rem;" src="../../assets/img/icon/home.png"  v-else>
                 </div>
                 <div class="tabbarTitle" :class="{titleAct:index==0}">首页</div>
           </div>
          
            <!-- 云算力 -->
           <div class="tabbar-item" @click="itemAction(1)">
-                <div class="tabbar-logo">
-                      <img src="../../assets/img/icon/mall-active@2x.png"  v-if="index==1">
-                      <img src="../../assets/img/icon/mall@2x.png"  v-else>
+                <div class="tabbar-logo" >
+                      <img style="width:0.41rem;height:0.4rem;" src="../../assets/img/icon/mall-active.png"  v-if="index==1">
+                      <img style="width:0.41rem;height:0.4rem;" src="../../assets/img/icon/mall.png"  v-else>
                 </div>
                 <div class="tabbarTitle" :class="{titleAct:index==1}">云算力</div>
           </div>
            <!-- 奖励池 -->
           <div class="tabbar-item" @click="itemAction(2)">
-                <div class="tabbar-logo">
-                      <img src="../../assets/img/icon/awardPool-active@2x.png"  v-if="index==2">
-                      <img src="../../assets/img/icon/awardPool@2x.png"  v-else>
+                <div class="tabbar-logo" >
+                      <img style="width:0.35rem;height:0.38rem;" src="../../assets/img/icon/awardPool-active.png"  v-if="index==2">
+                      <img style="width:0.35rem;height:0.38rem;" src="../../assets/img/icon/awardPool.png"  v-else>
                 </div>
                 <div class="tabbarTitle" :class="{titleAct:index==2}">奖励池</div>
           </div>
 
             <!-- 首页 -->
           <div class="tabbar-item" @click="itemAction(3)">
-                <div class="tabbar-logo">
-                      <img src="../../assets/img/icon/my-active@2x.png"  v-if="index==3">
-                      <img src="../../assets/img/icon/my@2x.png"  v-else>
+                <div class="tabbar-logo" >
+                      <img style="width:0.39rem;height:0.29rem;" src="../../assets/img/icon/my-active.png"  v-if="index==3">
+                      <img style="width:0.39rem;height:0.29rem;" src="../../assets/img/icon/my.png"  v-else>
                 </div>
                 <div class="tabbarTitle" :class="{titleAct:index==3}">我的</div>
           </div>
@@ -93,10 +93,8 @@ export default {
       img {
         display: inline-block;
         margin: 0 auto;
-        // width: 0.35rem;
-        // height: 0.38rem;
-        width: 0.4rem;
-        height: 0.39rem;
+        width: 0.36rem;
+        height: 0.38rem;
       }
     }
     .tabbarTitle {
@@ -105,7 +103,7 @@ export default {
       height: 0.3rem;
       text-align: center;
       line-height: 1;
-      font-size: 0.28rem;
+      font-size: 0.2rem;
       color: #999;
     }
     //选中

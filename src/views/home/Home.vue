@@ -1,10 +1,16 @@
 <template>
       <div class="page">
+            <div class="homeNav">
+                    <div class="navTxt">合盈云算</div>
+                     <div class="lanaguageItem" @click="isShowLaunagleModel=true">
+                          <div class="logo"><img src="../../assets/img/language.png" alt=""></div>
+                     </div>
+            </div>
             <div class="wrap">
                  <!-- 背景部分 -->
                  <div class="wrapBg">
                      <div class="warpBgImg">
-                         <img src="../../assets/img/home/banner@2x.png" alt="">
+                         <img src="../../assets/img/home/home_banner.png" alt="">
                      </div>
                  </div>
                  <!-- 内容部分 -->
@@ -18,42 +24,42 @@
                         <!-- 选项box -->
                         <div class="itemBox">
                               <div class="item">
-                                   <div class="itemLogo"><img src="../../assets/img/home/power@2x.png" alt=""></div>
+                                   <div class="itemLogo"><img src="../../assets/img/home/power.png" alt=""></div>
                                    <div  class="itemCount">
                                         {{total_power}}<span style="font-size:0.13rem;">PB</span>
                                    </div>
                                    <div class="itemDes">全网算力</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/award@2x.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/award.png" alt=""></div>
                                    <div  class="itemCount">
                                        {{reward_per_block}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">每区奖励</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/count@2x.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/count.png" alt=""></div>
                                    <div  class="itemCount">
                                         {{num_per24h}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">24H区块产出量</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/24H@2x.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/24H.png" alt=""></div>
                                    <div  class="itemCount">
                                         {{reward_per24h}}
                                    </div>
                                    <div class="itemDes">24H区块奖励</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/pledge@2x.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/pledge.png" alt=""></div>
                                   <div  class="itemCount">
                                         {{pledge_now}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">当前质押量</div>
                               </div>
                               <div class="item">
-                                  <div class="itemLogo"><img src="../../assets/img/home/Fil@2x.png" alt=""></div>
+                                  <div class="itemLogo"><img src="../../assets/img/home/Fil.png" alt=""></div>
                                   <div  class="itemCount">
                                        {{total_pledge}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
@@ -63,7 +69,7 @@
                          <!-- 矿池数据 -->
                         <div class="poolCountBox">
                                 <div  class="title">
-                                    <div  class="titleImg"><img src="../../assets/img/home/icon@2x.png" alt=""></div> 
+                                    <div  class="titleImg"><img src="../../assets/img/home/icon.png" alt=""></div> 
                                     <span style="margin-left:0.1rem;">矿池数据</span>
                                 </div>
                                 <div class="poolCountItemBox">
@@ -91,6 +97,21 @@
                 
             </div>
             <AppTabBar :tabIndex='0' @tabAction="tabAction"></AppTabBar>
+
+
+                <!-- 语言 -->
+            <div id="launagleModel" v-show="isShowLaunagleModel">
+                <div class="modelContent">
+                        <div class="langItem">
+                             切换语言
+                             <div class="cancelItem" @click="isShowLaunagleModel=false">取消</div>
+                             <div class="confimItem" @click="isShowLaunagleModel=false">确定</div>
+                        </div>
+                        <div class="langagueTxtItem" :class="{langagueTxtItemAct:obj==langTxt}" v-for="(obj,index) in langList" :key="index">{{obj}}</div>
+
+                </div>
+                <div class="maskView" @click="isShowLaunagleModel=false"></div>
+            </div>
       </div>
 
       
@@ -117,10 +138,13 @@ export default {
             pool_reward_per24h:0, //24H平均收益
             pool_pledge:0, //FIL质押量
             pool_num_per24h:0,//24H产出量
+            isShowLaunagleModel:false,
+            langList:['简体中文','English'],
+            langTxt:'简体中文',
         }
     },
     mounted(){
-        this.getHpDataAPI();
+        // this.getHpDataAPI();
     },
     methods:{
         tabAction(index){
@@ -174,11 +198,50 @@ export default {
 .page{
     background: red;
 }
-
+.homeNav{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1.15rem;
+   overflow: hidden;
+    z-index: 900;
+    background: #284698;
+    .navTxt{
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 3rem;
+        margin-left: -1.5rem;
+        height: 1.15rem;
+        line-height: 1.15rem;
+        text-align: center;
+        color: #fff;
+        font-size: 0.36rem;
+    }
+    .lanaguageItem{
+        position: absolute;
+        right: 0.2rem;
+        top: 0;
+        width: 0.8rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .logo{
+            width: 0.3rem;
+            height: 0.3rem;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
 .wrap{
     position: absolute;
     left: 0;
-    top: 0;
+    top: 1.15rem;
     bottom: 1.04rem;
     width: 100%;
     background: #fff;
@@ -340,23 +403,110 @@ export default {
                 }
             }
              .poolCountItem:nth-child(1) {
-                background: url(../../assets/img/home/1@2x.png); 
+                background: url(../../assets/img/home/bot_item1.png); 
                 background-size: 100% 100%;
              }
              .poolCountItem:nth-child(2) {
-                background: url(../../assets/img/home/2@2x.png); 
+                background: url(../../assets/img/home/bot_item2.png); 
                 background-size: 100% 100%;
              }
              .poolCountItem:nth-child(3) {
-                background: url(../../assets/img/home/3@2x.png); 
+                background: url(../../assets/img/home/bot_item3.png); 
                 background-size: 100% 100%;
              }
              .poolCountItem:nth-child(4) {
-                background: url(../../assets/img/home/4@2x.png); 
+                background: url(../../assets/img/home/bot_item4.png); 
                 background-size: 100% 100%;
              }
             
         }
     }
+}
+
+
+//语言的modal
+#launagleModel{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1991;
+  //弹窗内容
+  .modelContent{
+     z-index:1992;
+     position: absolute;
+     left:0;
+     bottom:0;
+     width:100%;
+     height:2.5rem; 
+     background: #fff;
+     animation: contentViewKeyAnimation 0.5s;
+     overflow: hidden;
+     .langItem{
+        width: 100%;
+        height: 0.8rem;
+        text-align: center;
+        line-height: 0.8rem;
+        position: relative;
+        font-size: 0.28rem;
+        .cancelItem{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.2rem;
+            height: 0.8rem;
+            text-align: center;
+            line-height: 0.8rem;
+            text-align: center;
+            font-size: 0.26rem;
+        }
+        .confimItem{
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 1.2rem;
+            height: 0.8rem;
+            text-align: center;
+            line-height: 0.8rem;
+            text-align: center;
+            font-size: 0.26rem;
+        }
+     }
+     .langagueTxtItem{
+         width: 100%;
+        height: 0.8rem;
+        text-align: center;
+        line-height: 0.8rem;
+        position: relative;
+        font-size: 0.28rem;
+        border-top: 1px solid rgba(230, 230, 230, 0.3);
+     }
+     .langagueTxtItemAct{
+         color: rgba(96, 138, 255, 1);
+     }
+     
+     
+  }
+  @keyframes  contentViewKeyAnimation{
+      0%{
+        //  transform: scale(0);
+         transform: translate(0);
+      }
+      150%{
+        //  transform: scale(1)z
+         transform: translate(1rem);
+      }
+  }
+  .maskView{
+     position: absolute;
+     z-index: -1;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     opacity: 0.3;
+  }
 }
 </style>

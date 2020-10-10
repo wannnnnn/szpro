@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <Header title="充币" @handleLeft="handleLeft()"></Header>
+        <Header title="充币" :isShowCharge="true" @handleLeft="handleLeft()" @handleCharge="handleCharge()"></Header>
         <div class="wrap">
                 <!-- 背景部分 -->
                  <div class="wrapBg">
@@ -28,7 +28,10 @@
                                 <div class="code" ref="code"></div>
                             </div>
                             <div class="copyBox">
-                                 <div class="addressVal">{{address}}</div>
+                                 <div class="addressVal">
+                                      <div class="text">{{address}}</div>
+                                      <!-- <div class="text">请勿向，上述地址充值任何非USDT资产， 否则资产将不可找回。</div> -->
+                                 </div>
                                  <div class="copyBtn" v-clipboard:copy="address" v-clipboard:success="onCopy" v-clipboard:error="onError">复制地址</div>
                             </div>
                       </div>
@@ -64,17 +67,17 @@ export default {
     },
     data(){
         return{
-            address:'OIJKJIJIJIKJKHJIFYHJKWHFUH',
+            address:'',
             type:1,//类型
         }
     },
     mounted(){
-        this.getHpDataAPI();
-        
-        if (this.$route.query.address) {
-           this.address = this.$route.query.address;
-           this.makeCode(this.address);
-        }
+        this.getMyAssetsAPI();
+        this.makeCode(this.address);
+        // if (this.$route.query.address) {
+        //    this.address = this.$route.query.address;
+        //    this.makeCode(this.address);
+        // }
          if (this.$route.query.type) {
            this.type = this.$route.query.type;
         }
@@ -83,6 +86,9 @@ export default {
     methods:{
          handleLeft(){
              this.$router.go(-1);
+         },
+         handleCharge(){
+             this.$router.push('/rechargeRecord');
          },
          onCopy: function (e) {
               this.$toast({
@@ -94,15 +100,15 @@ export default {
                 message: "复制失败"
               });
 		},
-         getHpDataAPI(){
+        getMyAssetsAPI(){
                 let that = this;
-                request.get(`/net_data/net_info`).then((res=>{
+                request.get(`/user/assets`).then((res=>{
                         console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
-                          
-
-                            
+                             
+                            //  this.address = data.assets.deposit_addr;
+                            //  this.makeCode(this.address);
                         }else{
                           
                         }
@@ -248,28 +254,50 @@ export default {
              margin: 0 auto;
              margin-top: 0.39rem;
              width: 5.9rem;
-             height: 0.6rem;
+             height: 0.88rem;
              background: #F5F6FF;
              display: flex;
              align-items: center;
+            //  border: 1px solid #000;
+             overflow: hidden;
+             position: relative;
              .addressVal{
+                position: absolute;
+                left: 0;
+                top: 0;
                 width: 4.3rem;
-                height: 0.6rem;
-                line-height: 0.6rem; 
-                font-size: 0.24rem;
-                font-weight: 400;
-                color: #13102A;
-                padding-left: 0.2rem;
-                overflow: hidden;
+                height: 0.8rem;
+                .text{
+                    padding-top: 0.1rem;
+                    width: 100%;
+                    height: 100%;
+                     line-height: 0.3rem; 
+                    font-size: 0.24rem;
+                    font-weight: 400;
+                    color: #13102A;
+                    padding-left: 0.1rem;
+                    text-overflow: ellipsis;
+                    word-wrap:break-word;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-align: left;
+                }
+               
              }
              .copyBtn{
+                position: absolute;
+                right: 0;
+                top: 0;                 
                 width: 1.51rem;
-                height: 0.6rem;
+                height: 0.88rem;
                 background: linear-gradient(90deg, #307AF4, #84C4FF);
-                line-height: 0.6rem;
+                line-height: 0.88rem;
                 text-align: center;
                 font-size: 0.28rem;
                 color: #fff;
+                // display: none;
              }
         }
     }

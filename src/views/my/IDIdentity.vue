@@ -74,6 +74,7 @@
 import Header from './common/NavView';
 import request from "../../api/request";
 import { formateDate } from "../../utils/time";
+
 export default {
     name: "ididentifty",
     components: {

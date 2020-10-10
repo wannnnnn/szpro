@@ -11,11 +11,11 @@
                                 <div class="title">合盈云算 Filecoin(第一期)</div>
                             </div>
                         </div>
-                        <!-- <div class="mallTitleRight">
+                        <div class="mallTitleRight">
                             <div class="titleBox">
-                                <div class="title">进行中</div>
+                                <div class="title">完成</div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
 
                     <div class="tipBox">
@@ -214,17 +214,21 @@ export default {
                     width: 1.45rem;
                     height: 0.61rem;
                     padding-right: -0.3rem;
-                    background: url('../../assets/img/orders/running.png') no-repeat center 0px;
+                    background: url('../../assets/img/orders/finish.png') no-repeat center 0px;
                     background-position: center 0px;
                     background-size: cover;
-                    text-indent: -999px;
+                    // text-indent: -999px;
                     align-items: center;
                     .title{
+                        width: 100%;
                         overflow: hidden;
                         font-size: 0.24rem;
                         font-family: PingFang SC;
                         font-weight: 500;
                         color: #FFFFFF;
+                        line-height: 0.51rem;
+                        text-align: center;
+                        padding-left: 0.2rem;
                     }
                 }
             }

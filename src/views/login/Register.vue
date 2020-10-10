@@ -1,8 +1,12 @@
 <template>
-  <div class="register">
+  <div class="register" :style="{width:appWidth+'px',height:appHeight+'px'}">
+    <div class="closeBtn" @click="goBack()">
+         <img src="../../assets/img/close_black.png" alt="">
+    </div>
+    <!-- 内容区域 -->
     <div class="login-content">
       <div class="logo">
-        <img :src="require('../../assets/img/logo/logo1@2x.png')" alt="" />
+        <img :src="require('../../assets/img/logo/app_logo.png')" alt="" />
       </div>
       <!-- 手机号 -->
       <div class="inputBox">
@@ -70,12 +74,18 @@ export default {
       userInviteCode:'',//邀请吗
       isValidateing:false,//是否在验证中
       isCanLogin:false,//是否可以登录
+      appWidth:200,
+      appHeight:100,
     };
   },
-  components:{
-    //   Button
+  mounted(){
+       this.appWidth = document.documentElement.clientWidth;
+       this.appHeight = document.documentElement.clientHeight;
   },
   methods: {
+    goBack(){
+         this.$router.go(-1);
+    },
     getMsgAPI(){
         if(this.isDisabled){
             return;
@@ -158,6 +168,22 @@ export default {
 // @import "assets/style/common";
 .register {
   background-color: #fff;
+  // position: relative;
+}
+.closeBtn{
+    position: absolute;
+    left: 0.26rem;
+    top: 0.63rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+       width: 0.3rem;
+       height: 0.3rem;
+    }
+
 }
 .login-content {
       height: 100%;
@@ -234,8 +260,8 @@ export default {
                 outline: none;
                 -webkit-appearance: none;
                 border: 0;
-                font-size: 15px;
-                padding-left: 10px;
+                font-size:0.3rem;
+                padding-left: 0.1rem;
                 width: 100%;
                 height: 0.8rem;
                 line-height: 0.8rem;
@@ -276,8 +302,8 @@ export default {
                 outline: none;
                 -webkit-appearance: none;
                 border: 0;
-                font-size: 15px;
-                padding: 15px 18px;
+                font-size:0.3rem;
+                padding-left: 0.3rem;
                 width: 100%;
                 height: 0.8rem;
                 line-height: 0.8rem;
@@ -319,8 +345,8 @@ export default {
                 outline: none;
                 -webkit-appearance: none;
                 border: 0;
-                font-size: 15px;
-                padding-left: 10px;
+                font-size:0.3rem;
+                padding-left: 0.1rem;
                 width: 100%;
                 height: 0.8rem;
                 line-height: 0.8rem;

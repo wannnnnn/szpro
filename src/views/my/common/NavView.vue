@@ -7,6 +7,12 @@
         <div class="righteItems" v-show="isShowRight" @click="handleShare()">
              <div class="innerIcon"><img src="../../../assets/img/friends/share_icon.png" alt=""></div>
         </div>
+        <div class="widthWorthItem" v-show="isShowWithDrawl"  @click="handleWithDrawl()">
+            提币记录
+        </div>
+        <div class="widthWorthItem" v-show="isShowCharge"  @click="handleCharge()">
+            充值记录
+        </div>
   </div>
 </template>
 <script>
@@ -20,6 +26,14 @@ export default {
         isShowRight:{
             type:Boolean,
             default:false,
+        },
+        isShowWithDrawl:{
+            type:Boolean,
+            default:false,
+        },
+        isShowCharge:{
+            type:Boolean,
+            default:false,
         }
     },
     methods:{
@@ -28,6 +42,12 @@ export default {
          },
          handleShare(){
              this.$emit("handleShare");
+         },
+         handleWithDrawl(){
+             this.$emit("handleWithDrawl");
+         },
+         handleCharge(){
+             this.$emit("handleCharge");
          }
     }
 }
@@ -90,7 +110,17 @@ export default {
                 height: 100%;   
              }   
         }
-       
+  }
+  .widthWorthItem{
+        position: absolute;
+        top: 0;
+        right: 0.3rem;
+        width: 1.5rem;
+        height: 100%;
+        line-height: 1.04rem;
+        font-size: 0.3rem;
+        text-align: center;
+        overflow: hidden;
   }
  
 }

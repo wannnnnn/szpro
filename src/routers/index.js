@@ -14,13 +14,16 @@ const Agreement = () => import('@/views/my/Agreement');
 const MyAssets = () => import('@/views/my/MyAssets');
 const MyOrders = () => import('@/views/my/MyOrders');
 const Recharge = () => import('@/views/my/Recharge');
+const RechargeRecord = () => import('@/views/my/ChargeRecord');
 const Withdrawal = () => import('@/views/my/Withdrawal');
+const WithdrawalRecord = () => import('@/views/my/WithWorthRecord');
 const IncomeDetail = () => import('@/views/my/IncomDetail');
 const InvateFriends = () => import('@/views/my/InvateFriends');
 const IDIdentity = () => import('@/views/my/IDIdentity');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
 const Error = () => import('@/views/error');
+const TestPool = () => import('@/views/awardPool/testpool');
 Vue.use(Router);
 
 const originalPush = Router.prototype.push
@@ -59,6 +62,14 @@ const routes = [{
       requireAuth: true
     }
   },{
+    path: '/testPool',
+    name: 'testPool',
+    component: TestPool,
+    meta: {
+      title: '奖励池',
+      requireAuth: true
+    }
+  },{
     path: '/my',
     name: 'my',
     component: My,
@@ -91,6 +102,24 @@ const routes = [{
     component: IDIdentity,
     meta: {
       title: '实名认证',
+      requireAuth: true
+    }
+  }, 
+  {
+    path: '/withdrawalRecord',
+    name: 'withdrawalRecord',
+    component: WithdrawalRecord,
+    meta: {
+      title: '提币记录',
+      requireAuth: true
+    }
+  }, 
+  {
+    path: '/rechargeRecord',
+    name: 'rechargeRecord',
+    component: RechargeRecord,
+    meta: {
+      title: '充值记录',
       requireAuth: true
     }
   }, 

@@ -8,21 +8,28 @@
                  <div class="wrapTop">
                        <!-- 用户信息 -->
                        <div class="userInfoBox">
-                             <div class="userPortDiv"><img src="../../assets/img/my/head1@2x.png" alt=""></div>
+                             <div class="userPortDiv"><img src="../../assets/img/my/head1.png" alt=""></div>
                              <div class="unLoginWrap" v-show="!loginFlag" @click="pushLogin()">请登录</div>
                              <!-- 登录后的 -->
                              <div class="loginedWrap" v-show="loginFlag">
                                  <div class="userInfoLevel">
                                       <div class="phoneNum">{{getPhoneDes()}}</div>
+                                      <div class="level0Icon" v-show="level==0"><img src="../../assets/img/awardPool/level0.png" alt=""></div>
                                       <div class="levelIcon" v-show="level==1"><img src="../../assets/img/awardPool/V1@2x.png" alt=""></div>
                                       <div class="levelIcon" v-show="level==2"><img src="../../assets/img/awardPool/v2@2x.png" alt=""></div>
                                       <div class="levelIcon" v-show="level==3"><img src="../../assets/img/awardPool/v3@2x.png" alt=""></div>
                                  </div>
                                  <div class="userInfoPromote">
-                                      <div class="zigou">自购 <span>{{self_buy}}</span></div>
-                                      <!-- <div class="promoteBox">未达标</div> -->
-                                      <div class="tuiguang">推广 <span>{{extend_buy}}</span></div>
-                                      <!-- <div class="promoteBox">未达标</div> -->
+                                      <div class="zigou">自购 <span>{{self_buy}}/{{self_buy_target}}</span></div>
+                                      <div class="promoteBox">
+                                          <img src="../../assets/img/my/yidaobiao.png" v-show="self_buy_target_flag">
+                                          <img src="../../assets/img/my/weidabiao.png" v-show="!self_buy_target_flag">
+                                      </div>
+                                      <div class="tuiguang">推广 <span>{{extend_buy}}/{{extend_buy_target}}</span></div>
+                                      <div class="promoteBox">
+                                          <img src="../../assets/img/my/yidaobiao.png" v-show="extend_target_flag">
+                                          <img src="../../assets/img/my/weidabiao.png" v-show="!extend_target_flag">
+                                      </div>
                                  </div>
                              </div>
                        </div>
@@ -43,32 +50,32 @@
 
                  <div class="listBox">
                        <div class="itemCell" @click="pushItemAction(1)">
-                            <div class="cellIcon"><img src="../../assets/img/my/list7@2x.png" alt=""></div>
+                            <div class="cellIcon"><img src="../../assets/img/my/myicon_01.png" alt=""></div>
                             <div class="cellTxt">资产管理</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
                        <div class="itemCell" @click="pushItemAction(2)">
-                            <div class="cellIcon"><img src="../../assets/img/my/list1@2x.png" alt=""></div>
+                            <div class="cellIcon"><img src="../../assets/img/my/myicon_02.png" alt=""></div>
                             <div class="cellTxt">订单管理</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
                        <div class="itemCell" @click="pushItemAction(3)">
-                            <div class="cellIcon"><img src="../../assets/img/my/list3@2x.png" alt=""></div>
-                            <div class="cellTxt">奖励收益</div>
+                            <div class="cellIcon"><img src="../../assets/img/my/myicon_03.png" alt=""></div>
+                            <div class="cellTxt">收益明细</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
                        <div class="itemCell" @click="pushItemAction(4)">
-                            <div class="cellIcon"><img src="../../assets/img/my/list6@2x.png" alt=""></div>
+                            <div class="cellIcon"><img src="../../assets/img/my/myicon_04.png" alt=""></div>
                             <div class="cellTxt">邀请好友</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
                        <div class="itemCell" @click="pushItemAction(5)">
-                            <div class="cellIcon"><img src="../../assets/img/my/list2@2x.png" alt=""></div>
+                            <div class="cellIcon"><img src="../../assets/img/my/myicon_05.png" alt=""></div>
                             <div class="cellTxt">实名认证</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
                        <div class="itemCell" @click="pushItemAction(6)">
-                            <div class="cellIcon"><img src="../../assets/img/my/list4@2x.png" alt=""></div>
+                            <div class="cellIcon"><img src="../../assets/img/my/myicon_06.png" alt=""></div>
                             <div class="cellTxt">退出登录</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
@@ -88,6 +95,22 @@
                 </div>
                 <div class="maskView" @click="isShowLoginOutModel=false"></div>
             </div>
+
+             <!-- 显示vip的 -->
+            <div id="vipShowModel" v-show="isShowVipShowModel">
+                <div class="vipBigImg">
+                      <img src="../../assets/img/my/vip_big_01.png" v-show="level==1">
+                      <img src="../../assets/img/my/vip_big_02.png" v-show="level==2">
+                      <img src="../../assets/img/my/vip_big_03.png" v-show="level==3">
+                </div>
+                <div class="levelTxt">成功升级为V.{{level}}</div>
+                 <div class="confimBtn">
+                    <div class="btnTxt">确定</div>
+                </div>
+                <div class="maskView" ></div>
+            </div>
+
+
       </div>
 
       
@@ -109,11 +132,17 @@ export default {
             loginFlag:false,//登录状态
             phone:'',
             extend_buy:0,//推广
+            extend_buy_target:0,
+            extend_target_flag:false,
             self_buy:0,//自购
+            self_buy_target:0,//
+            self_buy_target_flag:false,
             level:0,
             power:0,//算力
             fil:0,//收益
             isShowLoginOutModel:false,
+            isShowVipShowModel:false,
+            is_up:1,
         }
     },
     mounted(){
@@ -144,6 +173,14 @@ export default {
             this.isShowLoginOutModel = false;
             this.loginFlag = false;
             localStorage.removeItem('loginFlag');
+            this.extend_buy = 0;
+            this.extend_buy_target = 0;
+            this.self_buy = 0;
+            this.self_buy_target = 0;
+            this.level = 0;
+            this.power = 0;
+            this.fil = 0;
+
         },
         pushItemAction(index){
             if(this.loginFlag){
@@ -187,14 +224,31 @@ export default {
         getUserInfoAPI(){
                 let that = this;
                 request.get(`/user/info`).then((res=>{
-                        console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
                             this.phone = data.phone;
                             this.extend_buy = data.extend_buy;
+                            this.extend_buy_target = data.extend_buy_target;
                             this.self_buy = data.self_buy;
+                            this.self_buy_target = data.self_buy_target;
                             this.level = data.level;
+                            this.is_up = data.is_up;
+                            
+                            if(this.extend_buy>0){
+                                if(this.extend_buy>this.extend_buy_target){
+                                     this.extend_target_flag = true;
+                                }
+                            }
 
+                             if(this.self_buy>0){
+                                if(this.self_buy>this.self_buy_target){
+                                     this.self_buy_target_flag = true;
+                                }
+                            }
+
+                            if(this.is_up==2){
+                                this.isShowVipShowModel = true;
+                            }
                             localStorage.setItem('myPhone',this.phone);
                         }else{
                           
@@ -204,7 +258,6 @@ export default {
         getMyAssetsAPI(){
                 let that = this;
                 request.get(`/user/assets`).then((res=>{
-                        console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
                              this.power = data.assets.power;
@@ -246,7 +299,7 @@ export default {
     .wrapTop{
         width: 100%;
         height:3.5rem;
-        background: url(../../assets/img/my/mybg@2x.png) no-repeat;
+        background: url(../../assets/img/my/mybg.png) no-repeat;
         background-size: 100% 100%;
         background-position-y: 0.2rem;
         overflow: hidden;
@@ -292,8 +345,21 @@ export default {
                         color: #121319;
                     }
                     .levelIcon{
+                        margin-left: 0.2rem;
                         width: 0.6rem;
                         height: 0.6rem;
+                        img{
+                            max-width: 100%;
+                            max-height: 100%;
+                        } 
+                    }
+                    .level0Icon{
+                        margin-left: 0.2rem;
+                         width: 0.98rem;
+                         height: 0.27rem;
+                         display: flex;
+                         align-items: center;
+                         justify-content: center;
                         img{
                             max-width: 100%;
                             max-height: 100%;
@@ -318,12 +384,12 @@ export default {
                     }
                     .promoteBox{
                         margin-left: 0.2rem;
-                        width: 0.88rem;
-                        height:0.3rem;
-                        background: #E3E3E3;
-                        border-radius: 0.15rem;
-                        font-size: 0.24rem;
-                        text-align: center;
+                        width: 0.89rem;
+                        height: 0.31rem;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
                     }
                 }
             }
@@ -333,7 +399,7 @@ export default {
             margin-left: 0.3rem;
             margin-right: 0.3rem;
             height: 1.93rem;
-            background: url(../../assets/img/my/list5@2x.png);
+            background: url(../../assets/img/my/list5.png);
             background-size: 100% 100%;
             display: flex;
             .userCoinNumItem{
@@ -369,13 +435,16 @@ export default {
         .itemCell{
             width: 100%;
             height: 0.96rem;
-            border-bottom:1px solid #E6E6E6;
+            border-bottom:1px solid rgba(230, 230, 230, 0.3);
             overflow: hidden;
             .cellIcon{
                 float: left;
                 margin-top: 0.33rem;
                 width: 0.3rem;
                 height: 0.3rem;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
                 img{
                     width: 100%;
                     height: 100%;
@@ -469,6 +538,74 @@ export default {
      height: 100%;
      background-color: rgb(0, 0, 0);
      opacity: 0.3;
+  }
+}
+
+//显示vip的modal
+#vipShowModel{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1991;
+  //弹窗内容
+  .vipBigImg{
+     z-index:1992;
+     margin: 0 auto;
+     margin-top: 2.7rem;
+     width:4.9rem;
+     height:5.1rem; 
+     overflow: hidden; 
+     img{
+         width: 100%;
+         height: 100%;
+     }
+  }
+  .levelTxt{
+         margin: 0 auto;
+         margin-top: 0.21rem;
+         height:0.3rem;
+         font-size: 0.28rem;
+         font-family: Source Han Sans CN;
+         font-weight: 400;
+         color: #FFFFFF;
+         text-align: center;
+  }
+  .confimBtn{
+      margin-left: 0.8rem;
+      margin-right: 0.8rem;
+      margin-top: 0.37rem;
+      height: 0.88rem;
+      height:0.88rem;
+      background: linear-gradient(0deg, #307AF4, #84C4FF);  
+      border-radius: 0.44rem;
+      .btnTxt{
+          width: 100%;
+          height: 0.88rem;
+          line-height: 0.88rem;
+          text-align: center;
+          color: white;
+          font-size: 0.34rem;
+      }
+  }
+  @keyframes  contentViewKeyAnimation{
+      0%{
+         transform: scale(0);
+      }
+      150%{
+         transform: scale(1)z
+      }
+  }
+  .maskView{
+     position: absolute;
+     z-index: -1;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     opacity: 0.5;
   }
 }
 </style>

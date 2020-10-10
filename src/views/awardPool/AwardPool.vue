@@ -34,7 +34,15 @@
                             <div class="img" :class="getLevelImg(obj.level)"></div>
                             V{{obj.level}} 奖励池
                           </div>
-                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill"></div> 
+                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill" v-if="obj.level==1">
+                               
+                          </div> 
+                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="level" v-else-if="obj.level==2">
+                               
+                          </div> 
+                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill3" v-else-if="obj.level==3">
+                               
+                          </div> 
                           <div class="group">
                                 <div class="item">
                                     <div class="count">{{obj.today_fil}} Fil</div>
@@ -93,6 +101,9 @@ export default {
       },
       sell_num:0,
       level_list:[],
+      level1_pool_rate:0,
+      level2_pool_rate:0,
+      level3_pool_rate:0,
     };
   },
   components: {
@@ -100,6 +111,16 @@ export default {
   },
   mounted() {
      this.getDataAPI();
+    
+    //  setTimeout(() => {
+    //      this.liquidFill();
+    // }, 1000);
+    //  setTimeout(() => {
+    //      this.liquidFills();
+    // }, 1000);
+    //  setTimeout(() => {
+    //      this.liquidFillss();
+    // }, 1000);
   },
   methods: {
     tabAction(index) {
@@ -123,6 +144,26 @@ export default {
                     if (res.data.Code == 0) {
                         this.sell_num = data.sell_num;
                         this.level_list = data.level_list;
+                        var list = data.level_list; 
+                        for(var i=0;i<list.length;i++){
+                            var obj = list[i];
+                            if(i==0){
+                                  this.level1_pool_rate = obj.pool_rate;
+                                  setTimeout(() => {
+                                     this.liquidFill();
+                                  }, 1000);
+                            }else  if(i==1){
+                                  this.level2_pool_rate = obj.pool_rate;
+                                  setTimeout(() => {
+                                     this.liquidFills();
+                                  }, 1000);
+                            }else{
+                                  this.level3_pool_rate = obj.pool_rate;
+                                  setTimeout(() => {
+                                     this.liquidFillss();
+                                  }, 1000);
+                            }
+                        }
                     }else{
                       
                     }
@@ -183,7 +224,256 @@ export default {
      getProgressVal(){
             var width = this.sell_num/1000*100;
             return width;
-      },
+    },
+    liquidFill() {
+      let level1_pool_rate_01 = this.level1_pool_rate+0.03;
+      let level1_pool_rate_02 = this.level1_pool_rate+0.07;
+      let level1_pool_rate_03 = this.level1_pool_rate+0.11;
+
+      //方法
+      var liquid = this.$echarts.init(document.getElementById("liquidFill"));
+      liquid.setOption({
+        series: [
+          {
+            type: "liquidFill",
+            name: " ",
+            data: [
+              {
+                value: this.level1_pool_rate
+              },
+              level1_pool_rate_01,
+              level1_pool_rate_02,
+              level1_pool_rate_03
+            ],
+            label: {
+              normal: {
+                formatter: function(param) {
+                  return "矿池:" + param.value * 100 + "%";
+                },
+                textStyle: {
+                  fontSize: 15,
+                  color: "#404C5A",
+                  fontWeight: 500
+                }
+              }
+            },
+            outline: {
+              //show: true , //是否显示轮廓 布尔值
+              borderDistance: 0, //外部轮廓与图表的距离 数字
+              itemStyle: {
+                //borderColor:'rgba(255,0,0,0.09)', //边框的颜色
+                borderWidth: 0 //边框的宽度
+                //shadowBlur: 5 , //外部轮廓的阴影范围 一旦设置了内外都有阴影
+                //shadowColor: '#000' //外部轮廓的阴影颜色
+              }
+            },
+            backgroundStyle: {
+              color: "#F4F6FF", //图表的背景颜色
+              //borderWidth: '10',//图表的边框宽度
+              //borderColor: '#000',//图表的边框颜色
+              itemStyle: {
+                shadowBlur: 100, //设置无用
+                shadowColor: "#f60", //设置无用
+                opacity: 1 //设置无用
+              }
+            },
+            itemStyle: {
+              opacity: 0.5, //波浪的透明度
+              shadowBlur: 10, //波浪的阴影范围
+              shadowColor: "#4B99E0" //阴影颜色
+            },
+            emphasis: {
+              itemStyle: {
+                opacity: 1 //鼠标经过波浪颜色的透明度
+              }
+            },
+            color: ["#4B99E0", "#4B99E0", "#4B99E0"], //水波的颜色 对应的是data里面值
+            shape: "circle", //水填充图的形状 circle默认圆形  rect圆角矩形  triangle三角形  diamond菱形  pin水滴状 arrow箭头状  还可以是svg的path
+            center: ["50%", "50%"], //图表相对于盒子的位置 第一个是水平的位置 第二个是垂直的值 默认是[50%,50%]是在水平和垂直方向居中 可以设置百分比 也可以设置具体值
+            radius: "80%", //图表的大小 值是圆的直径 可以是百分比 也可以是具体值 100%则占满整个盒子 默认是40%; 百分比下是根据宽高最小的一个为参照依据
+            amplitude: 3, //振幅 是波浪的震荡幅度 可以取具体的值 也可以是百分比 百分比下是按图标的直径来算
+            waveLength: "50%", //波的长度 可以是百分比也可以是具体的像素值  百分比下是相对于直径的 取得越大波浪的起伏越小
+            phase: 0, //波的相位弧度 默认情况下是自动
+            period: (value, index) => {
+              //控制波的移动速度 可以是函数 也可以是数字 两个参数  value 是data数据里面的值 index 是data值的索引
+
+              return index * 2000;
+            },
+            direction: "left", //波移动的速度 两个参数  left 从右往左 right 从左往右
+            waveAnimation: true, //控制波动画的开关  值是布尔值 false 是关闭动画 true 是开启动画 也是默认值
+            animationEasing: "linear", //初始动画
+            animationEasingUpdate: "quarticInOut", //数据更新的动画效果
+            animationDuration: 3000, //初始动画的时长，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更绚丽的初始动画效果
+            animationDurationUpdate: 300 //数据更新动画的时长
+          }
+        ]
+        //backgroundColor: 'rgba(255,0,0,0.1)'容器背景颜色
+      });
+    },
+    liquidFills() {
+       let level1_pool_rate_01 = this.level2_pool_rate+0.03;
+      let level1_pool_rate_02 = this.level2_pool_rate+0.07;
+      let level1_pool_rate_03 = this.level2_pool_rate+0.11;
+      //方法
+      var liquid = this.$echarts.init(document.getElementById("level"));
+      liquid.setOption({
+        series: [
+          {
+            type: "liquidFill",
+            name: " ",
+            data: [
+               {
+                value:this.level2_pool_rate
+              },
+              level1_pool_rate_01,
+              level1_pool_rate_02,
+              level1_pool_rate_03
+            ],
+            label: {
+              normal: {
+                formatter: function(param) {
+                  return "矿池:" + param.value * 100 + "%";
+                },
+                textStyle: {
+                  fontSize: 15,
+                  color: "#404C5A",
+                  fontWeight: 500
+                }
+              }
+            },
+            outline: {
+              borderDistance: 0, //外部轮廓与图表的距离 数字
+              itemStyle: {
+                borderWidth: 0 //边框的宽度
+              }
+            },
+            backgroundStyle: {
+              color: "#FFFAF3", //图表的背景颜色
+              itemStyle: {
+                shadowBlur: 100, //设置无用
+                shadowColor: "#f60", //设置无用
+                opacity: 1 //设置无用
+              }
+            },
+            itemStyle: {
+              opacity: 0.5, //波浪的透明度
+              shadowBlur: 10, //波浪的阴影范围
+              shadowColor: "#F5CA84" //阴影颜色
+            },
+            emphasis: {
+              itemStyle: {
+                opacity: 1 //鼠标经过波浪颜色的透明度
+              }
+            },
+            color: ["#F5CA84", "#F5CA84", "#F5CA84"], //水波的颜色 对应的是data里面值
+            shape: "circle", //水填充图的形状 circle默认圆形  rect圆角矩形  triangle三角形  diamond菱形  pin水滴状 arrow箭头状  还可以是svg的path
+            center: ["50%", "50%"], //图表相对于盒子的位置 第一个是水平的位置 第二个是垂直的值 默认是[50%,50%]是在水平和垂直方向居中 可以设置百分比 也可以设置具体值
+            radius: "80%", //图表的大小 值是圆的直径 可以是百分比 也可以是具体值 100%则占满整个盒子 默认是40%; 百分比下是根据宽高最小的一个为参照依据
+            amplitude: 3, //振幅 是波浪的震荡幅度 可以取具体的值 也可以是百分比 百分比下是按图标的直径来算
+            waveLength: "50%", //波的长度 可以是百分比也可以是具体的像素值  百分比下是相对于直径的 取得越大波浪的起伏越小
+            phase: 0, //波的相位弧度 默认情况下是自动
+            period: (value, index) => {
+              //控制波的移动速度 可以是函数 也可以是数字 两个参数  value 是data数据里面的值 index 是data值的索引
+
+              return index * 2000;
+            },
+            direction: "left", //波移动的速度 两个参数  left 从右往左 right 从左往右
+            waveAnimation: true, //控制波动画的开关  值是布尔值 false 是关闭动画 true 是开启动画 也是默认值
+            animationEasing: "linear", //初始动画
+            animationEasingUpdate: "quarticInOut", //数据更新的动画效果
+            animationDuration: 3000, //初始动画的时长，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更绚丽的初始动画效果
+            animationDurationUpdate: 300 //数据更新动画的时长
+          }
+        ]
+      });
+    },
+    liquidFillss() {
+       let level1_pool_rate_01 = this.level3_pool_rate+0.03;
+      let level1_pool_rate_02 = this.level3_pool_rate+0.07;
+      let level1_pool_rate_03 = this.level3_pool_rate+0.11;
+      //方法
+      var liquid = this.$echarts.init(document.getElementById("liquidFill3"));
+      liquid.setOption({
+        series: [
+          {
+            type: "liquidFill",
+            name: " ",
+            data: [
+               {
+                value: this.level3_pool_rate
+              },
+              level1_pool_rate_01,
+              level1_pool_rate_02,
+              level1_pool_rate_03
+            ],
+            label: {
+              normal: {
+                formatter: function(param) {
+                  return "矿池:" + param.value * 100 + "%";
+                },
+                textStyle: {
+                  fontSize: 15,
+                  color: "#404C5A",
+                  fontWeight: 500
+                }
+              }
+            },
+            outline: {
+              //show: true , //是否显示轮廓 布尔值
+              borderDistance: 0, //外部轮廓与图表的距离 数字
+              itemStyle: {
+                //borderColor:'rgba(255,0,0,0.09)', //边框的颜色
+                borderWidth: 0 //边框的宽度
+                //shadowBlur: 5 , //外部轮廓的阴影范围 一旦设置了内外都有阴影
+                //shadowColor: '#000' //外部轮廓的阴影颜色
+              }
+            },
+            backgroundStyle: {
+              color: "#FBF1FF", //图表的背景颜色
+              //borderWidth: '10',//图表的边框宽度
+              //borderColor: '#000',//图表的边框颜色
+              itemStyle: {
+                shadowBlur: 100, //设置无用
+                shadowColor: "#f60", //设置无用
+                opacity: 1 //设置无用
+              }
+            },
+            itemStyle: {
+              opacity: 0.5, //波浪的透明度
+              shadowBlur: 10, //波浪的阴影范围
+              shadowColor: "#D599E1" //阴影颜色
+            },
+            emphasis: {
+              itemStyle: {
+                opacity: 1 //鼠标经过波浪颜色的透明度
+              }
+            },
+            color: ["#D599E1", "#D599E1", "#D599E1"], //水波的颜色 对应的是data里面值
+            shape: "circle", //水填充图的形状 circle默认圆形  rect圆角矩形  triangle三角形  diamond菱形  pin水滴状 arrow箭头状  还可以是svg的path
+            center: ["50%", "50%"], //图表相对于盒子的位置 第一个是水平的位置 第二个是垂直的值 默认是[50%,50%]是在水平和垂直方向居中 可以设置百分比 也可以设置具体值
+            radius: "80%", //图表的大小 值是圆的直径 可以是百分比 也可以是具体值 100%则占满整个盒子 默认是40%; 百分比下是根据宽高最小的一个为参照依据
+            amplitude: 3, //振幅 是波浪的震荡幅度 可以取具体的值 也可以是百分比 百分比下是按图标的直径来算
+            waveLength: "50%", //波的长度 可以是百分比也可以是具体的像素值  百分比下是相对于直径的 取得越大波浪的起伏越小
+            phase: 0, //波的相位弧度 默认情况下是自动
+            period: (value, index) => {
+              //控制波的移动速度 可以是函数 也可以是数字 两个参数  value 是data数据里面的值 index 是data值的索引
+
+              return index * 2000;
+            },
+            direction: "left", //波移动的速度 两个参数  left 从右往左 right 从左往右
+            waveAnimation: true, //控制波动画的开关  值是布尔值 false 是关闭动画 true 是开启动画 也是默认值
+            animationEasing: "linear", //初始动画
+            animationEasingUpdate: "quarticInOut", //数据更新的动画效果
+            animationDuration: 3000, //初始动画的时长，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更绚丽的初始动画效果
+            animationDurationUpdate: 300 //数据更新动画的时长
+          }
+        ]
+        //backgroundColor: 'rgba(255,0,0,0.1)'容器背景颜色
+      });
+    },
+    getTest(){
+
+    },
   },
 };
 </script>
@@ -207,7 +497,7 @@ export default {
     height: 3.33rem;
     border-top-left-radius: 0.1rem;
     border-top-right-radius: 0.1rem;
-    border: 1px solid #000;
+    // border: 1px solid #000;
     background: url(../../assets/img/awardPool/pool_banner.png) no-repeat center;
     background-size: 100% 100%;
     .contentTxt {
@@ -328,7 +618,7 @@ export default {
 
   .swiper-slide-active {
       margin-right: -0.3rem;
-      // margin-left: -0.3rem;
+      margin-left: -0.3rem;
       transform: scale(1) !important;
       height: 8.07rem !important;
       padding-top: 0 !important;
@@ -354,12 +644,18 @@ export default {
           background-size: 100% 100%;
       }
       .level1Img{
+           width:0.68rem;
+          height: 0.76rem;
           background: url(../../assets/img/awardPool/V1.png) no-repeat center;
       }
       .level2Img{
+           width:0.63rem;
+          height: 0.62rem;
           background: url(../../assets/img/awardPool/v2.png) no-repeat center;
       }
       .level3Img{
+          width:0.79rem;
+          height: 0.74rem;
           background: url(../../assets/img/awardPool/v3.png) no-repeat center;
       }
       .poolPercent{
@@ -367,6 +663,9 @@ export default {
           height: 2.71rem;
           width: 2.71rem;
           margin-top: 0.4rem;
+          line-height: 2.71rem;
+          text-align: center;
+          font-size: 0.5rem;
           // border: 1px solid #000;
       }
       .level1PoolPercent{

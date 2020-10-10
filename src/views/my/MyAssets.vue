@@ -23,10 +23,7 @@
                                 <div class="tipTitle">可用</div>
                                 <div class="tipDes">{{usdt.toFixed(2)}}</div>
                         </div>
-                        <div class="tipItem">
-                                <div class="tipTitle">冻结余额</div>
-                                <div class="tipDes">0</div>
-                        </div>
+                       
                     </div>
                     <div class="mBtnWap">
                         <div class="mBtn" @click="pushAction(1,0)">
@@ -57,10 +54,6 @@
                         <div class="tipItem">
                                 <div class="tipTitle">可用</div>
                                 <div class="tipDes">{{fil.toFixed(2)}}</div>
-                        </div>
-                        <div class="tipItem">
-                                <div class="tipTitle">冻结余额</div>
-                                <div class="tipDes">0</div>
                         </div>
                     </div>
                     <div class="mBtnWap">
@@ -224,10 +217,14 @@ export default {
         }
         .tipBox{
              display: flex;
+             align-items: center;
+             justify-content:space-between;
              .tipItem{
-                flex: 1;
+                // flex: 1;
+                width: 2rem;
                 height: 100%;
                 overflow: hidden;
+                // border: 1px solid #000;
                 .tipTitle{
                      width:100%;
                      font-size:0.26rem;

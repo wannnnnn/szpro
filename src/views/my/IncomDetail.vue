@@ -2,41 +2,26 @@
     <div class="page">
         <Header title="收益明细" @handleLeft="handleLeft()"></Header>
         <div class="wrap">
-               <div class="tabBarView">
-                   <div class="tabBarItem" :class="{tabBarItemAct:tabBarIndex==0}" @click="changeTabBarAction(0)">
-                         <!-- FIL算力 -->
-                         矿池收益
-                         <div class="line" v-show="tabBarIndex==0"></div>
-                   </div>
-                   <div class="tabBarItem" :class="{tabBarItemAct:tabBarIndex==1}" @click="changeTabBarAction(1)">
-                        奖励池收益
-                        <div class="line" v-show="tabBarIndex==1"></div>
-                   </div>
-               </div>
+               
                <!-- 列表 -->
                <div class="listBox">
                      <!-- FIL算力 -->
-                     <div class="filCalculateListBox" v-show="tabBarIndex==0">
+                     <div class="filCalculateListBox">
                            <div class="filItem" v-for="(obj,index) in filList" :key="index">
+                                 <div class="ietmIcon">
+                                      <img src="../../assets/img/my/income_unvip.png" v-show="obj.level==0">
+                                      <img src="../../assets/img/my/income_vip.png" v-show="obj.level!=0">
+                                 </div>
                                  <div class="filItemLeft">
-                                      <div class="text1">矿池收益</div>
+                                      <div class="text1" v-show="obj.level==0">矿池收益</div>
+                                      <div class="text1" v-show="obj.level!=0">V{{obj.level}}活动奖励</div>
                                       <div class="text2">{{getTimeFormater(obj.create_time)}}</div>
                                  </div>
                                  <div class="filItemRight">{{obj.get_coin}} FIL</div>
                            </div>
                      </div>
-                     <!-- 奖励池收益 -->
-                     <div class="poolIncomeListBox" v-show="tabBarIndex==1">
-                           <div class="filItem" v-for="(obj,m) in incomeList" :key="m">
-                                 <div class="filItemLeft">
-                                      <div class="text1">V{{obj.level}}奖励池收益</div>
-                                      <div class="text2">{{getTimeFormater(obj.create_time)}}</div>
-                                 </div>
-                                 <div class="filItemRight">{{obj.get_coin}} FIL</div>
-                           </div>
-                     </div>
-                     <div class="loadingMoreBtn" v-show="tabBarIndex==0&&isLoadingMore1" @click="getFilListMoreAPI()">加载更多</div>
-                     <div class="loadingMoreBtn" v-show="tabBarIndex==1&&isLoadingMore2" @click="getIncomeMoreListAPI()">加载更多</div>
+                     <div class="loadingMoreBtn" v-show="isLoadingMore1" @click="getFilListMoreAPI()">加载更多</div>
+                    
                </div>
         </div> 
    
@@ -56,24 +41,17 @@ export default {
     data(){
         return{
             filList:[],//列表
-            incomeList:[],//收益列表
-            tabBarIndex:0,
             isLoadingMore1:false,
-            isLoadingMore2:false,
             pageIndex1:1,
-            pageIndex2:1,
         }
     },
     mounted(){
         this.getFilListAPI();
-        this.getIncomeListAPI();
+        // this.getIncomeListAPI();
     },
     methods:{
          handleLeft(){
              this.$router.go(-1);
-         },
-         changeTabBarAction(index){
-             this.tabBarIndex = index;
          },
          getTimeFormater(time){
              if(time){
@@ -121,46 +99,6 @@ export default {
                     }
             }));
         },
-        getIncomeListAPI(){
-            let that = this;
-             this.pageIndex2 = 1;
-            request.get(`/record/reward_list?index=1`).then((res=>{
-                console.log('res',res);
-                
-                    if (res.data.Code == 0) {
-                      
-                        var list =  res.data.Data;
-                        this.incomeList = list;
-                        if(list.length>=20){
-                            this.isLoadingMore2 = true;
-                        }else{
-                            this.isLoadingMore2 = false;
-                        }
-                    }
-            }));
-        },
-        getIncomeMoreListAPI(){
-            let that = this;
-            this.pageIndex2 = this.pageIndex2+1;
-            request.get(`/record/pool_list?index=`+this.pageIndex2).then((res=>{
-                console.log('res',res);
-                
-                    if (res.data.Code == 0) {
-                        
-                        var list =  res.data.Data;
-                        for(var i=0;i<list.length;i++){
-                            var obj = list[i];
-                           this.incomeList.push(obj);
-                        }
-                        if(list.length>=20){
-                            this.isLoadingMore2 = true;
-                        }else{
-                            this.isLoadingMore2 = false;
-                        }
-                        
-                    }
-            }));
-        },
     }
 }
 </script>
@@ -192,43 +130,10 @@ export default {
     width: 100%;
     overflow: auto;
 }
-.tabBarView{
-    position: absolute;
-    left: 0;
-    top:0;
-    width: 100%;
-    height: 0.93rem;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #E6E6E6;
-    .tabBarItem{
-        flex: 1;
-        height: 100%;
-        height: 0.93rem;
-        font-size: 0.3rem;
-        font-family: PingFang SC;
-        font-weight: 500;
-        line-height: 0.93rem;
-        color:#999999;
-        text-align: center;
-        position: relative;
-        .line{
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width:100%;
-            height:0.05rem;
-            background: #608AFF;
-        }
-    }
-    .tabBarItemAct{
-        color: #333333;
-    }
-}
 .listBox{
     position: absolute;
     left: 0;
-    top:0.93rem;
+    top:0;
     width: 100%;
     bottom: 0;
     overflow: auto;
@@ -240,7 +145,21 @@ export default {
              margin-right: 0.3rem;
              height: 1.16rem;
              border-bottom:1px solid #E6E6E6;
+             .ietmIcon{
+                 float: left;
+                 width: 0.6rem;
+                 height: 100%;
+                //  border: 1px solid #000;
+                 display: flex;
+                 align-items: center;
+                 justify-content: center;
+                 img{
+                     width: 0.5rem;
+                     height: 0.5rem;
+                 }
+             }
              .filItemLeft{
+                 margin-left: 0.1rem;
                  float: left;
                  height: 100%;
                  text-align: left;
@@ -277,50 +196,6 @@ export default {
          }
     }
 
-    .poolIncomeListBox{
-          width: 100%;
-          overflow: hidden;
-         .filItem{
-             margin-left: 0.3rem;
-             margin-right: 0.3rem;
-             height: 1.16rem;
-             border-bottom:1px solid #E6E6E6;
-             .filItemLeft{
-                 float: left;
-                 height: 100%;
-                 text-align: left;
-                 .text1{
-                     margin-top: 0.24rem;
-                     height: 0.3rem;
-                     font-size: 0.28rem;
-                     font-family: Source Han Sans CN;
-                     font-weight: 400;
-                     color: #0B0C12;
-                     line-height:0.3rem;
-                 }
-                  .text2{
-                     margin-top: 0.1rem;
-                     height: 0.3rem;
-                     font-size: 0.24rem;
-                     font-family: Source Han Sans CN;
-                     font-weight: 400;
-                     color: #5A6375;
-                     line-height:0.3rem;
-                 }
-             }
-             .filItemRight{
-                 float: right;
-                 height: 100%;
-                 margin-right: 0.1rem;
-                 font-size:0.28rem;
-                 font-family: Source Han Sans CN;
-                 font-weight: bold;
-                 color: #0B0C12;
-                 line-height:1.16rem;
-
-             }
-         }
-    }
 
     .loadingMoreBtn{
         margin: 0 auto;
