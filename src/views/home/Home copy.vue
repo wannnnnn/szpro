@@ -2,44 +2,25 @@
       <div class="page">
             <div class="homeNav">
                     <div class="navTxt">合盈云算</div>
-                     <!-- <div class="lanaguageItem" @click="isShowLaunagleModel=true">
+                     <div class="lanaguageItem" @click="isShowLaunagleModel=true">
                           <div class="logo"><img src="../../assets/img/language.png" alt=""></div>
                           <div class="logoTxt">语言</div>
-                     </div> -->
+                     </div>
             </div>
             <div class="wrap">
                  <!-- 背景部分 -->
-                 <!-- <div class="wrapBg">
+                 <div class="wrapBg">
                      <div class="warpBgImg">
                          <img src="../../assets/img/home/home_banner.png" alt="">
                      </div>
-                 </div> -->
+                 </div>
                  <!-- 内容部分 -->
                  <div class="wrapTxt">
-                        <!-- <div class="banner">
+                        <div class="banner">
                             <div class="bannerheader">
                                 <div class="title">国际领先核心技术</div>
                                 <div class="subtitle"> 专注ipfs&amp;filecoin技术应用、软件开发、策略集群挖矿软件开发、存储器研发销售、idc搭建运维等全生态建设服务商。 </div>
                             </div>
-                        </div> -->
-
-
-                        <!-- 轮播图片 -->
-                        <div class="suffuterView">
-                               <swiper :options="swiperOption">
-                                    <swiper-slide v-for="n in 3" :key="n">
-                                        <div class="bannerItem">
-                                              <img src="../../assets/img/home/home_banner_01.png" alt="">
-                                        </div>
-                                    </swiper-slide>
-                               </swiper>    
-                        </div>
-                        <!-- 公告页面 -->
-                        <div class="gonggaoView">
-                             <div class="ggIcon">
-                                  <img src="../../assets/img/home/home_gonggao.png" alt="">
-                             </div>
-                             <div class="ggInfoView">【官方公告】河图超算服务器第一期上线通知</div>
                         </div>
                         <!-- 选项box -->
                         <div class="itemBox">
@@ -148,12 +129,6 @@ export default {
     },
     data(){
         return{
-            swiperOption: {
-                direction: "horizontal",
-                centeredSlides: true,
-                initialSlide: 1,
-                loop: true
-            },
             total_power:0,//全网算力
             reward_per_block:0,//每区奖励
             reward_per24h:0,//  //24小时区块奖励
@@ -230,10 +205,9 @@ export default {
     top: 0;
     width: 100%;
     height: 1.15rem;
-    overflow: hidden;
+   overflow: hidden;
     z-index: 900;
     background: #284698;
-    background: #fff;
     .navTxt{
         position: absolute;
         left: 50%;
@@ -244,8 +218,6 @@ export default {
         line-height: 1.15rem;
         text-align: center;
         color: #fff;
-        color:#343434;
-        font-weight: 500;
         font-size: 0.36rem;
     }
     .lanaguageItem{
@@ -325,55 +297,8 @@ export default {
             }
         }
     }
-    .wrapTxt .suffuterView{
-        width: 100%;
-        height: 3rem;
-        overflow: hidden;
-        .bannerItem{
-            margin-top: -0.1rem;
-            width: 100%;
-            height: 3rem;
-            position: relative;
-            img{
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
-    .wrapTxt .gonggaoView{
-        width: 100%;
-        height: 0.8rem;
-        position: relative;
-        .ggIcon{
-            position: absolute;
-            left: 0.1rem;
-            top: 0;
-            width: 0.5rem;
-            height: 0.8rem;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            img{
-                width: 0.3rem;
-                height: 0.3rem;
-            }
-        }
-        .ggInfoView{
-            position: absolute;
-            left: 0.7rem;
-            right: 0.3rem;
-            height: 100%;
-            line-height: 0.8rem;
-            font-size:0.24rem;
-            font-family: PingFang SC;
-            font-weight: 500;
-            color: #010101;
-            text-align: left;
-        }
-    }
     .wrapTxt .itemBox{
-        // margin-top: 0.2rem;
+        margin-top: 0.2rem;
         display: flex;
         flex-wrap: wrap;
         padding: 0 0.3rem;

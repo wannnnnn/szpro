@@ -246,9 +246,9 @@ export default {
         }
         .qrCodeBox{
              margin: 0 auto;
-            margin-top: 0.26rem;
-            width: 2.4rem;
-            height: 2.4rem;
+             margin-top: 0.26rem;
+             width: 2.4rem;
+             height: 2.4rem;
         }
         .copyBox{
              margin: 0 auto;

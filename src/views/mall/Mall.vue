@@ -1,11 +1,9 @@
 <template>
     <div class="page">
-
         <div class="header">
                 云算力
          </div>
          <div class="wrap">
-            
              <!-- 背景部分 -->
               <div class="wrapBg">
                   <div class="warpBgImg">
@@ -68,6 +66,7 @@
                                      <div class="buyNumCount">{{amount}}</div>
                                      <div class="buyNumAdd" @click="addCount()">+</div>
                                 </div>
+                                <div class="unit">台</div>
                          </div>
                          <!-- end -->
                          <div class="buyBtn" @click="isShowConfimModel=true">
@@ -154,7 +153,7 @@
                <div class="modelContent">
                      <div class="title">登录后才能购买哦</div>
                      <div class="btnBox">
-                         <div class="btnItem" style="border-right: 1px  solid #F7F8FC;" @click="isShowLoginModel=false">注册</div>
+                         <div class="btnItem" style="border-right: 1px  solid #F7F8FC;" @click="pushAction(2)">注册</div>
                          <div class="btnItem" style="color: #007AFF;" @click="pushAction(1)">去登录</div>
                      </div>
                </div>
@@ -560,8 +559,10 @@ export default {
              margin-top: 0.3rem;
              width: 100%;
              height: 0.8rem;
+             display: flex;
+             align-items: center;
+             justify-content: center;
              .buyNumWrap{
-                margin: 0 auto;
                 width: 2.77rem;
                 height: 0.73rem;
                 background: #FFFFFF;
@@ -593,6 +594,12 @@ export default {
                    text-align: center;
                     border-left: 1px solid #BDC3D7;
                 }
+             }
+             .unit{
+                 height: 0.73rem;
+                 line-height: 0.73rem;
+                 margin-left: 0.2rem;
+                 font-size: 0.36rem;
              }
         }
         .buyBtn{

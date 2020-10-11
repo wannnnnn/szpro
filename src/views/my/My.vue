@@ -37,11 +37,11 @@
                        <div class="userCoinNumBox">
                              <div class="userCoinNumItem">
                                    <div class="title">Fil算力</div>
-                                   <div class="val">{{fil.toFixed(2)}} TB</div>
+                                   <div class="val">{{power.toFixed(2)}} TB</div>
                              </div>
                              <div class="userCoinNumItem">
                                     <div class="title">奖励收益</div>
-                                    <div class="val">{{power.toFixed(2)}} Fil</div>
+                                    <div class="val">{{fil.toFixed(2)}} Fil</div>
                              </div>
                        </div>
 
@@ -72,6 +72,11 @@
                        <div class="itemCell" @click="pushItemAction(5)">
                             <div class="cellIcon"><img src="../../assets/img/my/myicon_05.png" alt=""></div>
                             <div class="cellTxt">实名认证</div>
+                            <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
+                       </div>
+                        <div class="itemCell" @click="pushItemAction(7)">
+                            <div class="cellIcon"><img src="../../assets/img/my/myicon_07.png" alt=""></div>
+                            <div class="cellTxt">在线客服</div>
                             <div class="cellHud"><img src="../../assets/img/my/hud_right.png" alt=""></div>
                        </div>
                        <div class="itemCell" @click="pushItemAction(6)">
@@ -207,6 +212,10 @@ export default {
                  //退出登录
                  else if(index==6){
                       this.isShowLoginOutModel = true;
+                 }
+                 //在线客服
+                 else if(index==7){
+                    this.$router.push('/kefu');
                  }
 
             }else{

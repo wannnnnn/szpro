@@ -9,19 +9,23 @@ function upLoaderImg(file) {
   let params = new FormData();
   params.append("file", file);
 
+  
+
   let config = {
     headers: {
       //添加请求头
-      "Content-Type": "multipart/form-data"
+      "Content-Type": "multipart/form-data",
+      "token":getToken()
     }
   };
-  if (store.getters.token) {
-    config.headers["token"] = getToken();
-  }
   return new Promise((resolve, reject) => {
+    var base_url  ="http://112.125.27.11/api/v1/user/upload_pic";//网络请求
+    //192.168.1.124:5002
+    // base_url = "http://192.168.0.106:5002/api/v1/";//网络请求
+
     //把 uploadUrl 换成自己的 上传路径
     axios
-      .post("http://192.168.1.4:5001/api/v1/user/upload_pic", params, config)
+      .post(base_url, params, config)
       .then(res => {
         if (res && res.data && res.data.Code === 0) {
           //如果为真 resolve出去

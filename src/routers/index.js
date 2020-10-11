@@ -19,6 +19,7 @@ const Withdrawal = () => import('@/views/my/Withdrawal');
 const WithdrawalRecord = () => import('@/views/my/WithWorthRecord');
 const IncomeDetail = () => import('@/views/my/IncomDetail');
 const InvateFriends = () => import('@/views/my/InvateFriends');
+const KeFu = () => import('@/views/my/KeFu');
 const Share = () => import('@/views/share/Share');
 const Download = () => import('@/views/share/AppDownLoad');
 const IDIdentity = () => import('@/views/my/IDIdentity');
@@ -121,6 +122,15 @@ const routes = [{
     component: IDIdentity,
     meta: {
       title: '实名认证',
+      requireAuth: true
+    }
+  }, 
+  {
+    path: '/kefu',
+    name: 'kefu',
+    component: KeFu,
+    meta: {
+      title: '在线客服',
       requireAuth: true
     }
   }, 
