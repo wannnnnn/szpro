@@ -19,6 +19,8 @@ const Withdrawal = () => import('@/views/my/Withdrawal');
 const WithdrawalRecord = () => import('@/views/my/WithWorthRecord');
 const IncomeDetail = () => import('@/views/my/IncomDetail');
 const InvateFriends = () => import('@/views/my/InvateFriends');
+const NewsList = () => import('@/views/news/NewsList');
+const NewsDetail = () => import('@/views/news/NewsDetail');
 const KeFu = () => import('@/views/my/KeFu');
 const Share = () => import('@/views/share/Share');
 const Download = () => import('@/views/share/AppDownLoad');
@@ -89,6 +91,24 @@ const routes = [{
       requireAuth: true
     }
   }, 
+  {
+    path: '/newsList',
+    name: 'newsList',
+    component: NewsList,
+    meta: {
+      title: '公告中心',
+      requireAuth: true
+    }
+  },
+  {
+    path: '/newsDetail',
+    name: 'newsDetail',
+    component: NewsDetail,
+    meta: {
+      title: '公告详情',
+      requireAuth: true
+    }
+  },
   {
     path: '/appDownload',
     name: 'appDownload',

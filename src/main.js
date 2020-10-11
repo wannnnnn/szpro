@@ -45,7 +45,6 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 import VueAwesomeSwiper from "vue-awesome-swiper";
 Vue.use(VueAwesomeSwiper);
-
 require("swiper/swiper-bundle.min.css");
 
 

@@ -246,19 +246,19 @@
           <!-- IPFS·Filecoin服务器 -->
          <div id="ipfsModel" v-show="isShowIpfsModel">
                <div class="modelContent">
-                    <div class="modelContentTitle">IPFS·Filecoin服务器
+                    <div class="modelContentTitle">河图超算服务器Filecoin
                          <div class="closeBtn" @click="isShowIpfsModel=false">
                               <div class="closeInner"><img src="../../assets/img/close_gray.png" alt=""></div>
                          </div>
                     </div>
                     <div class="textBox">
                          
-                                服务器售价：78339 USDT /160TB/台（可扩展到576T,扩展部分8T希捷硬盘/2000元）； <br><br>
+                                服务器售价：86686 USDT /160TB/台（可扩展到576T）； <br><br>
 
-1台起购，以1台为单位递增( 78339USDT / 台)<br><br>
+1台起购，以1台为单位递增( 86686USDT / 台)<br><br>
 
-技术服务费<br>
-收取挖矿产出Filecoin数量的20%作为技术服务费。技术服务费包括：矿场维护、矿机部署、矿机维修、技术服务、人力资源支出、社群奖励等费用。<br><br>
+托管运营费<br>
+收取挖矿产出Filecoin数量的30%作为托管运营费。托管运营费包括：矿场维护、矿机部署、矿机维修、技术服务、人力资源支出、社群奖励等费用。<br><br>
 
 服务器合约费用说明<br>
 用户购买矿池的Filecoin服务器合约费用已包含第一年服务期限内的分布式存储服务器租赁费、IP地址费、电费、带宽费、网络安全、矿池挖矿系统使用费等费用。<br><br>
@@ -266,9 +266,9 @@
 服务器有效挖币期为三年，第二年及第三年需按照每5元/T/月收取机房托管服务费，托管服务费须于第二年托管服务开始前7天内缴纳，否则算力合约失效。<br><br>
 
 收益结算<br>
-根据矿池的每日实际挖矿收益及用户购买Filecoin服务器合约的存储容量占矿池总存储容量的比例计算用户每日挖矿收益，扣除矿池收取的技术服务费后即为用户实际获得的挖矿收益。<br>
+根据矿池的每日实际挖矿收益及用户购买Filecoin服务器合约的存储容量占矿池总存储容量的比例计算用户每日挖矿收益，扣除矿池收取的托管运营费后即为用户实际获得的挖矿收益。<br>
 
-用户每天的挖矿收益=用户持有的算力T数（存储空间容量）÷矿池存储空间总容量×矿池每日产币量×（1-技术服务费20%）<br>
+用户每天的挖矿收益=用户持有的算力T数（存储空间容量）÷矿池存储空间总容量×矿池每日产币量×（1-托管运营费30%）<br>
 
 Filecoin服务器合约挖矿收益以Filecoin结算，挖矿产出收益T+1进入用户账户。<br>
 

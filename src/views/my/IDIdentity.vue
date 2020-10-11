@@ -26,6 +26,8 @@
                            </div>
                            <div class="idCardItem" v-if="frontUrl">
                                <div class="logo"><img :src="frontUrl" alt=""></div>
+                               <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadFrontImgAPI($event)">
+                               <div class="delIcon" @click.stop="delFrontImgAction()"><img src="../../assets/img/close_gray_01.png" alt=""></div>
                            </div>
                            <div class="idCardItem" v-if="!backUrl">
                                 <img src="../../assets/img/idcard/idcard_down.png" alt="">
@@ -33,7 +35,10 @@
                                 <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadBackImgAPI($event)">
                            </div>
                             <div class="idCardItem" v-if="backUrl">
-                               <div class="logo"><img :src="backUrl" alt=""></div>
+                               <div class="logo"><img :src="backUrl" alt="">
+                               </div>
+                               <input type="file" accept="image/*" multiple="multiple" class="file" @change.stop="uploadBackImgAPI($event)">
+                               <div class="delIcon" @click.stop="delBackImgAction()"><img src="../../assets/img/close_gray_01.png" alt=""></div>
                            </div>
                        </div>
                  </div>
@@ -114,6 +119,12 @@ export default {
     methods:{
          handleLeft(){
              this.$router.go(-1);
+         },
+         delBackImgAction(){
+             this.backUrl = null;
+         },
+         delFrontImgAction(){
+             this.frontUrl = null;
          },
           uploadFrontImgAPI(event){
              if(event.target.files.length>0){
@@ -331,6 +342,20 @@ export default {
                 height: 100%;
                 width: 100%;
                 opacity: 0;
+            }
+            .delIcon{
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 0.35rem;
+                height: 0.35rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
     }

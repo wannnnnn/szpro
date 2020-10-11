@@ -44,7 +44,6 @@
                                 最小充值金额: 1 USDT,小于最小金额的充值将不会.上账且无法退回。<br>
                                 您的充值地址不会经常改变，可以重复充值;如有更改，我们会尽量通过网站公告或邮件通知您。<br>
                                 请务必确认电脑及浏览器安全，防止信息被篡改或泄露。<br>
-                            
                            </div>
                       </div>
                       <!-- end -->
@@ -57,6 +56,9 @@
                                        </div>
                                        <div class="photoShow" v-if="uploadImgUrl">
                                            <img :src="uploadImgUrl" alt="">
+                                           
+                                           <input type="file" accept="image/*" multiple="multiple" class="file" @change.stop="uploadFrontImgAPI($event)">
+                                           <div class="delIcon" @click.stop="delImgAction()"><img src="../../assets/img/close_gray_01.png" alt=""></div>
                                        </div>
                                    </div>
                               </div>
@@ -89,6 +91,7 @@ export default {
             address:'',
             type:1,//类型
             uploadImgUrl:null,
+            // uploadImgUrl:'https://hyys-1.oss-cn-beijing.aliyuncs.com/user/18137777189/pic/1602428354255.png',
         }
     },
     mounted(){
@@ -119,6 +122,9 @@ export default {
 			this.$toast({
                 message: "复制失败"
               });
+        },
+        delImgAction(){
+            this.uploadImgUrl = null;
         },
         uploadFrontImgAPI(event){
              if(event.target.files.length>0){
@@ -163,8 +169,8 @@ export default {
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
                              
-                            //  this.address = data.assets.deposit_addr;
-                            //  this.makeCode(this.address);
+                             this.address = data.assets.deposit_addr;
+                             this.makeCode(this.address);
                         }else{
                           
                         }
@@ -430,7 +436,7 @@ export default {
                 }
                 .photoShow{
                      position: absolute;
-                    left: 0;
+                     left: 0;
                      top: 0;
                      width: 100%;
                      height: 100%;
@@ -439,6 +445,28 @@ export default {
                          height: auto;
                          max-width: 100%;
                          max-height: 100%;
+                    }
+                     .file{
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        height: 100%;
+                        width: 100%;
+                        opacity: 0;
+                    }
+                    .delIcon{
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: 0.35rem;
+                        height: 0.35rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
                     }
                 }
             }

@@ -8,21 +8,9 @@
                      </div> -->
             </div>
             <div class="wrap">
-                 <!-- 背景部分 -->
-                 <!-- <div class="wrapBg">
-                     <div class="warpBgImg">
-                         <img src="../../assets/img/home/home_banner.png" alt="">
-                     </div>
-                 </div> -->
+
                  <!-- 内容部分 -->
                  <div class="wrapTxt">
-                        <!-- <div class="banner">
-                            <div class="bannerheader">
-                                <div class="title">国际领先核心技术</div>
-                                <div class="subtitle"> 专注ipfs&amp;filecoin技术应用、软件开发、策略集群挖矿软件开发、存储器研发销售、idc搭建运维等全生态建设服务商。 </div>
-                            </div>
-                        </div> -->
-
 
                         <!-- 轮播图片 -->
                         <div class="suffuterView">
@@ -32,10 +20,22 @@
                                               <img src="../../assets/img/home/home_banner_01.png" alt="">
                                         </div>
                                     </swiper-slide>
-                               </swiper>    
+                                    <div class="swiper-pagination"  slot="pagination"></div>
+                                    
+                               </swiper>
+
+                               <!-- <mt-swipe :auto="4000" class="swipe">
+                                    <mt-swipe-item v-for="n in 3" :key="n">
+                                       <img src="../../assets/img/home/home_banner_01.png" alt="">
+                                    </mt-swipe-item>
+                                </mt-swipe> -->
+
+                               <div class="pointView">
+                                     <div class="pointItem" v-for="m in 3" :key="m"></div> 
+                               </div>    
                         </div>
                         <!-- 公告页面 -->
-                        <div class="gonggaoView">
+                        <div class="gonggaoView" @click="pushNewsList()">
                              <div class="ggIcon">
                                   <img src="../../assets/img/home/home_gonggao.png" alt="">
                              </div>
@@ -149,9 +149,15 @@ export default {
     data(){
         return{
             swiperOption: {
-                direction: "horizontal",
-                centeredSlides: true,
+                // direction: "horizontal",
+                // 分页器配置
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                // centeredSlides: true,
                 initialSlide: 1,
+                loopedSlides:3,
                 loop: true
             },
             total_power:0,//全网算力
@@ -183,6 +189,9 @@ export default {
              }else{
                 this.$router.push('/my');
              }
+        },
+        pushNewsList(){
+           this.$router.push('/newsList');
         },
          getHpDataAPI(){
                 let that = this;
@@ -329,8 +338,9 @@ export default {
         width: 100%;
         height: 3rem;
         overflow: hidden;
+        position: relative;
         .bannerItem{
-            margin-top: -0.1rem;
+            margin-top:-1px;
             width: 100%;
             height: 3rem;
             position: relative;
@@ -338,6 +348,28 @@ export default {
                 width: 100%;
                 height: 100%;
             }
+        }
+        .pointView{
+             position: absolute;
+             left: 50%;
+             bottom: 0.2rem;
+             width: 3rem;
+             margin-left: -1.5rem;
+             height: 0.5rem;
+            //  background: red;
+            // border: 1px solid #000;
+             z-index: 20;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             .pointItem{
+                 margin-left: 0.2rem;
+                 width: 0.3rem;
+                 height: 0.3rem;
+                 background: #608AFF;
+                 border-radius:50%;
+                 overflow: hidden;
+             }
         }
     }
     .wrapTxt .gonggaoView{
