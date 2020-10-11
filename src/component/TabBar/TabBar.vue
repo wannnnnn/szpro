@@ -15,7 +15,7 @@
                       <img style="width:0.41rem;height:0.4rem;" src="../../assets/img/icon/mall-active.png"  v-if="index==1">
                       <img style="width:0.41rem;height:0.4rem;" src="../../assets/img/icon/mall.png"  v-else>
                 </div>
-                <div class="tabbarTitle" :class="{titleAct:index==1}">云算力</div>
+                <div class="tabbarTitle" :class="{titleAct:index==1}">产品</div>
           </div>
            <!-- 奖励池 -->
           <div class="tabbar-item" @click="itemAction(2)">
