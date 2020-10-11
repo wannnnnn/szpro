@@ -170,7 +170,7 @@ export default {
         }
     },
     mounted(){
-        // this.getHpDataAPI();
+        this.getHpDataAPI();
     },
     methods:{
         tabAction(index){

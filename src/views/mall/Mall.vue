@@ -326,17 +326,14 @@ export default {
       isShowBuySuccessModel:false,
     };
   },
-  created() {
-    // this.getPrices();
-  },
   mounted(){
-      this.getPowerPriceAPI();
+       this.getPowerPriceAPI();
        if(localStorage.getItem('loginFlag')=='logined'){
             this.loginFlag = true;
-            
         }else{
             this.loginFlag = false;
         }
+        window.addEventListener('scroll',this.handleScroll)
   },
   methods: {
     tabAction(index){
@@ -348,6 +345,14 @@ export default {
               this.$router.push('/awardPool');  
           }else{
               this.$router.push('/my');
+          }
+    },
+    handleScroll(){
+          let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop // 滚动条偏移量
+          if (scrollTop >= 160) {
+              console.log('~~~~~~~');
+          } else {
+             console.log('++++++++');
           }
     },
     changeAgree(){

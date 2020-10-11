@@ -12,7 +12,9 @@
                            <div class="addressBoxLeft">
                                充币来源：{{obj.to_address}}
                            </div>
-                           <div class="addressBoxRight" >完成</div>
+                           <div class="addressBoxRight" v-show="obj.status==1">充值中</div>
+                           <div class="addressBoxRight" v-show="obj.status==2">完成</div>
+                           <div class="addressBoxRight" v-show="obj.status==3">失败</div>
                       </div>
                 </div>  
                 <!-- end -->

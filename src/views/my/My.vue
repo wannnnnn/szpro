@@ -40,7 +40,7 @@
                                    <div class="val">{{power.toFixed(2)}} TB</div>
                              </div>
                              <div class="userCoinNumItem">
-                                    <div class="title">奖励收益</div>
+                                    <div class="title">总收益</div>
                                     <div class="val">{{fil.toFixed(2)}} Fil</div>
                              </div>
                        </div>
