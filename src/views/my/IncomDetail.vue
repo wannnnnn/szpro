@@ -4,7 +4,7 @@
         <div class="wrap">
                
                <!-- 列表 -->
-               <div class="listBox">
+               <div class="listBox" v-show="filList.length>0">
                      <!-- FIL算力 -->
                      <div class="filCalculateListBox">
                            <div class="filItem" v-for="(obj,index) in filList" :key="index">
@@ -22,6 +22,12 @@
                      </div>
                      <div class="loadingMoreBtn" v-show="isLoadingMore1" @click="getFilListMoreAPI()">加载更多</div>
                     
+               </div>
+               <!-- 没有数据 -->
+               <div class="noDataView" v-show="filList.length==0">
+                      <div class="noDataImg">
+                          <div class="txt">暂无收益明细</div>
+                      </div>
                </div>
         </div> 
    
@@ -129,6 +135,33 @@ export default {
     bottom: 0;
     width: 100%;
     overflow: auto;
+}
+.noDataView{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    bottom: 0;  
+    .noDataImg{
+        margin: 0 auto;
+        margin-top: 30%;
+        width: 5.56rem;
+        height: 4.1rem;
+        background: url(../../assets/img/empty_income.png) no-repeat center;
+        background-size: 100% 100%;
+        overflow: hidden;
+        .txt{
+            margin: 0 auto;
+            margin-top: 3.28rem;
+            width: 100%;
+            font-size: 0.3rem;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: #666666;
+            line-height:0.4rem;
+            text-align: center;
+        }
+    }
 }
 .listBox{
     position: absolute;

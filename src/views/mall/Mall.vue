@@ -43,8 +43,8 @@
                                      <div class="tipDes">合约期限</div>
                                </div>
                                <div class="tipItem">
-                                      <div class="tipTitle">20.00%</div>
-                                      <div class="tipDes">软件服务费</div>
+                                      <div class="tipTitle">30.00%</div>
+                                      <div class="tipDes">托管运营费</div>
                                </div>
                          </div>
                          <!-- end -->
@@ -95,8 +95,8 @@
                          <div class="textItemVal">一年一签，服务器物权属于用户</div>
                     </div>
                      <div class="txtItem">
-                         <div class="textItemLeft">软件服务费：</div>
-                         <div class="textItemVal">filecoin挖矿产出20%</div>
+                         <div class="textItemLeft">托管运营费:</div>
+                         <div class="textItemVal">filecoin挖矿产出30%</div>
                     </div>
                      <div class="txtItem">
                          <div class="textItemLeft">结算周期：</div>
@@ -159,6 +159,19 @@
                      </div>
                </div>
                <div class="maskView" @click="isShowLoginModel=false"></div>
+         </div>
+
+          <!-- 购买成功 -->
+         <div id="buySuccessModel" v-show="isShowBuySuccessModel">
+               <div class="buySuccessBg"><img src="../../assets/img/buy_success.png" alt="">
+                     <div class="closeBtn" @click="isShowBuySuccessModel=false">
+                        <img src="../../assets/img/close_gray_01.png" alt="">
+                    </div>
+                    <div class="buySuccessTip">
+                                恭喜您，成功购买<span style="color:#608AFF;">{{amount}}</span>台!</div>
+               </div>
+               
+               <div class="maskView" @click="isShowBuySuccessModel=false"></div>
          </div>
 
 
@@ -242,6 +255,7 @@ export default {
       isShowIpfsModel:false,
       isAgree:false,//是否同意
       loginFlag:false,
+      isShowBuySuccessModel:false,
     };
   },
   created() {
@@ -337,6 +351,8 @@ export default {
                   let data = res.data.Data;
                   if (res.data.Code == 0) {
                       Toast('购买成功');
+                      this.isShowBuySuccessModel = true;
+                      this.isShowConfimModel = false;
                       this.getPowerPriceAPI();
                   }else if(res.data.Code==2002){
                       this.isShowChargeModel = true;
@@ -857,6 +873,75 @@ export default {
      height: 100%;
      background-color: rgb(0, 0, 0);
      opacity: 0.3;
+  }
+}
+
+
+//去充值的modal
+#buySuccessModel{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1991;
+  //弹窗内容
+  .buySuccessBg{
+     z-index:1992;
+     margin: 0 auto;
+     margin-top: 50%;
+     width:5.88rem;
+     height:4.59rem; 
+     overflow: hidden;
+     position: relative;
+     .closeBtn{
+        position: absolute;
+        right: 0.26rem;
+        top: 0.23rem;
+        width: 0.6rem;
+        height: 0.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+        width: 0.3rem;
+        height: 0.3rem;
+        }
+    }
+     img{
+         width: 100%;
+         height: 100%;
+     }
+     .buySuccessTip{
+         position: absolute;
+         left: 0;
+         bottom: 0.8rem;
+         width: 100%;
+         height: 0.5rem;
+         line-height:0.5rem;
+         text-align: center;
+         color: rgba(93, 104, 119, 1);
+         font-size: 0.3rem;
+     }
+     
+  }
+  @keyframes  contentViewKeyAnimation{
+      0%{
+         transform: scale(0);
+      }
+      150%{
+         transform: scale(1)z
+      }
+  }
+  .maskView{
+     position: absolute;
+     z-index: -1;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     opacity: 0.5;
   }
 }
 

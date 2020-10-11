@@ -148,17 +148,17 @@ export default {
                         for(var i=0;i<list.length;i++){
                             var obj = list[i];
                             if(i==0){
-                                  this.level1_pool_rate = obj.pool_rate;
+                                  this.level1_pool_rate = obj.pool_rate/100;
                                   setTimeout(() => {
                                      this.liquidFill();
                                   }, 1000);
                             }else  if(i==1){
-                                  this.level2_pool_rate = obj.pool_rate;
+                                  this.level2_pool_rate = obj.pool_rate/100;
                                   setTimeout(() => {
                                      this.liquidFills();
                                   }, 1000);
                             }else{
-                                  this.level3_pool_rate = obj.pool_rate;
+                                  this.level3_pool_rate = obj.pool_rate/100;
                                   setTimeout(() => {
                                      this.liquidFillss();
                                   }, 1000);

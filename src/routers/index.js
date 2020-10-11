@@ -19,6 +19,8 @@ const Withdrawal = () => import('@/views/my/Withdrawal');
 const WithdrawalRecord = () => import('@/views/my/WithWorthRecord');
 const IncomeDetail = () => import('@/views/my/IncomDetail');
 const InvateFriends = () => import('@/views/my/InvateFriends');
+const Share = () => import('@/views/share/Share');
+const Download = () => import('@/views/share/AppDownLoad');
 const IDIdentity = () => import('@/views/my/IDIdentity');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
@@ -75,6 +77,23 @@ const routes = [{
     component: My,
     meta: {
       title: '个人中心',
+      requireAuth: true
+    }
+  },{
+    path: '/share',
+    name: 'share',
+    component: Share,
+    meta: {
+      title: '注册',
+      requireAuth: true
+    }
+  }, 
+  {
+    path: '/appDownload',
+    name: 'appDownload',
+    component:Download,
+    meta: {
+      title: '下载APP',
       requireAuth: true
     }
   }, 

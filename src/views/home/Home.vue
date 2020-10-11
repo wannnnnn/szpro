@@ -4,6 +4,7 @@
                     <div class="navTxt">合盈云算</div>
                      <div class="lanaguageItem" @click="isShowLaunagleModel=true">
                           <div class="logo"><img src="../../assets/img/language.png" alt=""></div>
+                          <div class="logoTxt">语言</div>
                      </div>
             </div>
             <div class="wrap">
@@ -196,7 +197,7 @@ export default {
 
 <style lang="less" scoped>
 .page{
-    background: red;
+    background: #fff;
 }
 .homeNav{
     position: fixed;
@@ -225,16 +226,23 @@ export default {
         top: 0;
         width: 0.8rem;
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         .logo{
+            margin: 0 auto;
+            margin-top: 0.2rem;
             width: 0.3rem;
             height: 0.3rem;
             img{
                 width: 100%;
                 height: 100%;
             }
+        }
+        .logoTxt{
+            margin: 0 auto;
+            margin-top: 0.2rem;
+            width: 100%;
+            line-height: 0.3rem;
+            font-size: 0.26rem;
+            color: #fff;
         }
     }
 }
