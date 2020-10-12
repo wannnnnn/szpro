@@ -98,7 +98,7 @@ import Header from './common/NavView';
 import request from "../../api/request";
 import upLoaderImg from "../../api/upLoaderImg";
 import { formateDate } from "../../utils/time";
-import { Toast } from "vant";
+import {Toast} from "mint-ui";
 export default {
     name: "ididentifty",
     components: {
@@ -162,15 +162,11 @@ export default {
         },
           submitAPI(){
                 if(!this.frontUrl){
-                    this.$toast({
-                        message: "请上传正面身份证"
-                    });
+                    Toast("请上传正面身份证");
                     return;
                 }
                 if(!this.backUrl){
-                    this.$toast({
-                        message: "请上传反面身份证"
-                    });
+                    Toast("请上传反面身份证");
                     return;
                 }
                 let that = this;
@@ -182,13 +178,9 @@ export default {
                 }).then((res=>{
                         console.log('res',res);
                         if (res.data.Code == 0) {
-                            this.$toast({
-                                message: "提交成功"
-                            });
+                            Toast("提交成功");
                         }else{
-                             this.$toast({
-                                message: res.data.Msg
-                            });
+                            Toast(res.data.Msg);
                         }
                 }));
         },

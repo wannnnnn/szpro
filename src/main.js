@@ -6,20 +6,17 @@ import './utils/rem';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './routers/';
-// import './routers/intercept';
 import store from './stores';
-// import cordova from './utils/cordova';
-// import cameraindex from './utils/cameraindex.js'
+
 import * as filters from './filters/';
-// import 'lib-flexible';
+
 import Echarts from "echarts";
 Vue.prototype.$echarts = Echarts;
-// Vue.prototype.$cordova = cordova;
 
 import './styles/main.less';
 
 // import Vant from 'vant';
-import 'vant/lib/index.css';
+// import 'vant/lib/index.css';
 
 import VueLoading from './plugin/loading'
 Vue.use(VueLoading, {
@@ -27,11 +24,6 @@ Vue.use(VueLoading, {
 })
 
 
-// Vue.use(Vant);
-
-import {Toast} from "mint-ui";
-
-Vue.use(Toast);
 
 import FastClick from 'fastclick';
 FastClick.attach(document.body);

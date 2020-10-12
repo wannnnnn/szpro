@@ -100,7 +100,6 @@ export default {
          getMyAssetsAPI(){
                 let that = this;
                 request.get(`/user/assets`).then((res=>{
-                        console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
                              this.fil = data.assets.fil;

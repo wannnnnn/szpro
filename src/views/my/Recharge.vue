@@ -80,7 +80,7 @@ import request from "../../api/request";
 import upLoaderImg from "../../api/upLoaderImg";
 let QRCode = require('js-qrcode');
 import VueClipboard from 'vue-clipboard2';
-import { Toast } from "vant";
+import {Toast} from "mint-ui";
 export default {
     name: "home",
     components: {
@@ -96,11 +96,11 @@ export default {
     },
     mounted(){
         this.getMyAssetsAPI();
-        this.makeCode(this.address);
-        // if (this.$route.query.address) {
-        //    this.address = this.$route.query.address;
-        //    this.makeCode(this.address);
-        // }
+        // this.makeCode(this.address);
+        if (this.$route.query.address) {
+           this.address = this.$route.query.address;
+           this.makeCode(this.address);
+        }
          if (this.$route.query.type) {
            this.type = this.$route.query.type;
         }
@@ -113,16 +113,12 @@ export default {
          handleCharge(){
              this.$router.push('/rechargeRecord');
          },
-         onCopy: function (e) {
-              this.$toast({
-                message: "复制成功"
-              });
+        onCopy: function (e) {
+              Toast("复制成功");  
 		},
 		onError: function (e) {
-			this.$toast({
-                message: "复制失败"
-              });
-        },
+            Toast("复制失败");  
+		},
         delImgAction(){
             this.uploadImgUrl = null;
         },
@@ -140,9 +136,7 @@ export default {
         },
         submitAPI(){
                 if(!this.uploadImgUrl){
-                    this.$toast({
-                        message: "请上传凭证"
-                    });
+                     Toast("请上传凭证");  
                     return;
                 }
                 
@@ -152,13 +146,9 @@ export default {
                 }).then((res=>{
                         console.log('res',res);
                         if (res.data.Code == 0) {
-                            this.$toast({
-                                message: "提交成功"
-                            });
+                            Toast("提交成功");  
                         }else{
-                             this.$toast({
-                                message: res.data.Msg
-                            });
+                           Toast(res.data.Msg);
                         }
                 }));
         },

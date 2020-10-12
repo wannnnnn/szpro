@@ -65,7 +65,7 @@
 import rules from "../../utils/rules";
 import { setToken, getToken } from "../../utils/auth";
 import request from "../../api/request";
-import {Toast} from "vant";
+import {Toast} from "mint-ui";
 export default {
   name: "login",
   data() {
@@ -127,13 +127,9 @@ export default {
                         that.isValidateing = false;
                       }
                     }, 1000);
-                    this.$toast({
-                      message: "发送成功!"
-                    });
+                    Toast("发送成功!");
                 }else{
-                    this.$toast({
-                      message: res.data.Msg
-                    });
+                   Toast(res.data.Msg);
                 }
         }));
     },
@@ -148,20 +144,14 @@ export default {
                console.log('res',res);
                let data = res.data.Data;
                if (res.data.Code == 0) {
-                   
-                    this.$toast({
-                      message: "注册成功!"
-                    });
+                    Toast("注册成功!");
                     this.$router.push('/appDownload');
                 }else{
-                    this.$toast({
-                      message: res.data.Msg
-                    });
+                   Toast(res.data.Msg);
                 }
         }));
     },
     inputevent(){
-       console.log('');
        if(this.userAccount.length==11&&this.userCode.length==6){
           this.isCanLogin = true;
        }else{

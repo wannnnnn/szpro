@@ -33,7 +33,7 @@ export default {
             pageIndex1:1,
             filList:[],
             newsList:[
-                {title:'【官方公告】河图超算服务器第一期...',time:'2020/10/11'},
+                {title:'【官方公告】河图超算服务器第一期...谢谢谢谢谢谢谢谢谢谢谢谢',time:'2020/10/11'},
                 {title:'【官方公告】洛书云算敬请期待',time:'2020/10/11'},
                 {title:'【官方公告】河图超算服务器第一期...',time:'2020/10/11'},
                 {title:'【官方公告】洛书云算敬请期待',time:'2020/10/11'},
@@ -144,6 +144,7 @@ export default {
             font-weight: 500;
             color: #343434;
             text-align: left;
+            overflow: hidden;
         }
         .newsItemRight{
             float: right;

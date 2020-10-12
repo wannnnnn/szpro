@@ -1,6 +1,6 @@
 //upLoaderImg.js
 import axios from "axios"; //引入axios
-import { Toast } from "vant"; //引入Toast
+import { Toast } from "mint-ui"; //引入Toast
 import { getToken } from "../utils/auth";
 import store from "../store/index";
 function upLoaderImg(file) {

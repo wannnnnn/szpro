@@ -1,7 +1,7 @@
 import store from "../store/index";
 import axios from "axios";
 import { getToken, removeToken } from "../utils/auth";
-import { Toast } from "vant";
+import { Toast } from "mint-ui";
 import Vue from 'vue';
 const request = axios.create({
   baseURL: "http://112.125.27.11/api/v1/", //网络请求
@@ -51,7 +51,7 @@ request.interceptors.response.use(
     return res;
   },
   err => {
-    Toast.fail("系统异常");
+    Toast("系统异常");
     console.log(err);
   }
 );

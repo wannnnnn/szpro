@@ -56,7 +56,7 @@
 import rules from "../../utils/rules";
 import { setToken, getToken } from "../../utils/auth";
 import request from "../../api/request";
-import {Toast} from "vant";
+import {Toast} from "mint-ui";
 export default {
   name: "register",
   data() {
@@ -112,13 +112,9 @@ export default {
                         that.isValidateing = false;
                       }
                     }, 1000);
-                    this.$toast({
-                      message: "发送成功!"
-                    });
+                    Toast('发送成功!');
                 }else{
-                    this.$toast({
-                      message: res.data.Msg
-                    });
+                    Toast(res.data.Msg);
                 }
         }));
     },
@@ -135,15 +131,11 @@ export default {
                if (res.data.Code == 0) {
                     setToken(data.token);
                     this.$store.commit("setToken", data.token);
-                    this.$toast({
-                      message: "注册成功!"
-                    });
+                    Toast('注册成功!');
                      localStorage.setItem('loginFlag','logined');
                     this.$router.push('/home');
                 }else{
-                    this.$toast({
-                      message: res.data.Msg
-                    });
+                    Toast(res.data.Msg);
                 }
         }));
     },

@@ -14,7 +14,7 @@
 
                         <!-- 轮播图片 -->
                         <div class="suffuterView">
-                               <swiper :options="swiperOption">
+                               <!-- <swiper :options="swiperOption">
                                     <swiper-slide v-for="n in 3" :key="n">
                                         <div class="bannerItem">
                                               <img src="../../assets/img/home/home_banner_01.png" alt="">
@@ -22,17 +22,17 @@
                                     </swiper-slide>
                                     <div class="swiper-pagination"  slot="pagination"></div>
                                     
-                               </swiper>
+                               </swiper> -->
 
-                               <!-- <mt-swipe :auto="4000" class="swipe">
+                               <mt-swipe :auto="4000" class="swipe">
                                     <mt-swipe-item v-for="n in 3" :key="n">
                                        <img src="../../assets/img/home/home_banner_01.png" alt="">
                                     </mt-swipe-item>
-                                </mt-swipe> -->
+                                </mt-swipe>
 
-                               <div class="pointView">
+                               <!-- <div class="pointView">
                                      <div class="pointItem" v-for="m in 3" :key="m"></div> 
-                               </div>    
+                               </div>     -->
                         </div>
                         <!-- 公告页面 -->
                         <div class="gonggaoView" @click="pushNewsList()">
@@ -139,8 +139,13 @@
 
 
 <script>
+import Vue from "vue";
 import AppTabBar from '../../component/TabBar/TabBar';
 import request from "../../api/request";
+import { Toast, Swipe, SwipeItem } from "mint-ui";
+Vue.component(Swipe.name, Swipe);
+Vue.component(SwipeItem.name, SwipeItem);
+
 export default {
     name: "home",
     components: {

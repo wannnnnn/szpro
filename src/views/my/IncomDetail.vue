@@ -70,7 +70,6 @@ export default {
             let that = this;
             this.pageIndex1 = 1;
             request.get(`/record/pool_list?index=1`).then((res=>{
-                console.log('res',res);
                 
                     if (res.data.Code == 0) {
                         var list =  res.data.Data;
@@ -87,7 +86,6 @@ export default {
             let that = this;
             this.pageIndex1 = this.pageIndex1+1;
             request.get(`/record/pool_list?index=`+this.pageIndex1).then((res=>{
-                console.log('res',res);
                 
                     if (res.data.Code == 0) {
                         

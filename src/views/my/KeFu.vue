@@ -27,12 +27,11 @@
 import Header from './common/NavView';
 let QRCode = require('js-qrcode');
 import VueClipboard from 'vue-clipboard2';
-import { Toast } from "vant";
+import {Toast} from "mint-ui";
 export default {
     name: "kefu",
     components: {
-        Header,
-        Toast
+        Header
     },
     data(){
         return{
@@ -47,14 +46,10 @@ export default {
              this.$router.go(-1);
          },
          onCopy: function (e) {
-              this.$toast({
-                message: "复制成功"
-              });
+              Toast("复制成功");  
 		},
 		onError: function (e) {
-			this.$toast({
-                message: "复制失败"
-              });
+            Toast("复制失败");  
 		},
          makeCode(text){
 			let dom=this.$refs.code;

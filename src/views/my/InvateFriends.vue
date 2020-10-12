@@ -73,7 +73,7 @@ import Header from './common/NavView';
 import request from "../../api/request";
 let QRCode = require('js-qrcode');
 import VueClipboard from 'vue-clipboard2';
-import { Toast } from "vant";
+import {Toast} from "mint-ui";
 export default {
     name: "invateFriend",
     components: {
@@ -109,14 +109,10 @@ export default {
 			qr.make(text);
          },
          onCopy: function (e) {
-              this.$toast({
-                message: "复制成功"
-              });
+              Toast("复制成功");  
 		},
 		onError: function (e) {
-			this.$toast({
-                message: "复制失败"
-              });
+            Toast("复制失败");  
 		},
          getShareInfoAPI(){
             let that = this;

@@ -79,7 +79,7 @@
 <script>
 import Header from './common/NavView';
 import request from "../../api/request";
-import { Toast } from "vant";
+import {Toast} from "mint-ui";
 export default {
     name: "home",
     components: {
@@ -125,7 +125,6 @@ export default {
          getMyAssetsAPI(){
                 let that = this;
                 request.get(`/user/assets`).then((res=>{
-                        console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
                              this.usdt = data.assets.usdt;
@@ -135,7 +134,6 @@ export default {
         getPowerPriceAPI(){
                 let that = this;
                 request.get(`/power/price`).then((res=>{
-                        console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
                              this.min_usdt = data.withdraw_fee;
@@ -144,28 +142,19 @@ export default {
         },
         tibiAPI(){
             if(this.coinNum<this.min_usdt){
-                 this.$toast({
-                    message: '提币不能低于'+this.min_usdt+'USDT'
-                });
-                
+                Toast('提币不能低于'+this.min_usdt+'USDT');
                 return;
             }
              if(this.coinNum>this.usdt){
-                 this.$toast({
-                    message: "提币数量大于资产数量"
-                });
+                Toast('提币数量大于资产数量');
                 return;
             }
             if(this.coinAddress.length==0){
-                 this.$toast({
-                    message: "请输入或粘贴钱包地址"
-                });
+                Toast('请输入或粘贴钱包地址');
                 return;
             }
             if(this.userCode.length!=6){
-                 this.$toast({
-                    message: "输入6位短信验证码"
-                });
+                Toast('输入6位短信验证码');
                 return;
             }
             
@@ -180,9 +169,7 @@ export default {
                    console.log('res',res);
                 
                     if (res.data.Code == 0) {
-                        this.$toast({
-                            message: "充值成功"
-                        });
+                        Toast('充值成功');
                         this.getMyAssetsAPI();
                     }else{
                         this.$toast({
@@ -195,7 +182,6 @@ export default {
             if(this.isDisabled){
                 return;
             }
-            
             let that = this;
             request.post(`/account/send_code`, 
             { 
@@ -217,13 +203,10 @@ export default {
                             that.isValidateing = false;
                         }
                         }, 1000);
-                        this.$toast({
-                        message: "发送成功!"
-                        });
+
+                        Toast('发送成功');
                     }else{
-                        this.$toast({
-                        message: res.data.Msg
-                        });
+                       Toast(res.data.Msg);
                     }
             }));
         },

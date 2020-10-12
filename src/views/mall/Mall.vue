@@ -302,7 +302,7 @@ Filecoin服务器合约挖矿收益以Filecoin结算，挖矿产出收益T+1进�
 <script>
 
 
-import { Dialog, Toast } from "vant";
+import {Toast} from "mint-ui";
 import AppTabBar from '../../component/TabBar/TabBar';
 import MallProgress from './MallProgress';
 import request from "../../api/request";
@@ -385,9 +385,7 @@ export default {
           if (this.amount > 0) {
             this.amount--;
           } else {
-            this.$toast({
-              message: "不能小于0"
-            });
+            Toast("不能小于0");
           }
     },
     //获取我的资产
@@ -407,9 +405,7 @@ export default {
     //购买
     buyPowerAPI(){
           if(!this.isAgree){
-               this.$toast({
-                  message: "请先阅读用户云算力租赁协议"
-                });
+                Toast("请先阅读用户云算力租赁协议");
                 return;
           }
           if(!this.loginFlag){
