@@ -114,7 +114,7 @@
                          <div class="precentBox">
                                <div class="precebtTip">总量：1000台</div>
                                <div class="precentView">
-                                    <MallProgress :progress="sz_exist_buy"></MallProgress>
+                                    <MallProgress :progress="0"></MallProgress>
                                </div>
                          </div>
                          <!-- end -->

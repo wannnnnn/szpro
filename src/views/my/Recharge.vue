@@ -52,13 +52,13 @@
                               <div class="botView">
                                    <div class="photoView">
                                        <div class="photoInner" v-if="!uploadImgUrl"><img src="../../assets/img/take_photo.png" alt="">
-                                            <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadFrontImgAPI($event)">
+                                            <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadFrontImgAPI($event)" v-if="ishowFile">
                                        </div>
                                        <div class="photoShow" v-if="uploadImgUrl">
                                            <img :src="uploadImgUrl" alt="">
                                            
-                                           <input type="file" accept="image/*" multiple="multiple" class="file" @change.stop="uploadFrontImgAPI($event)">
-                                           <div class="delIcon" @click.stop="delImgAction()"><img src="../../assets/img/close_gray_01.png" alt=""></div>
+                                           <input type="file" accept="image/*" multiple="multiple" class="file" @change.stop="uploadFrontImgAPI($event)" v-if="ishowFile">
+                                           <div class="delIcon" @click.stop="delImgAction()"><img src="../../assets/img/my/del.png" alt=""></div>
                                        </div>
                                    </div>
                               </div>
@@ -91,7 +91,7 @@ export default {
             address:'',
             type:1,//类型
             uploadImgUrl:null,
-            // uploadImgUrl:'https://hyys-1.oss-cn-beijing.aliyuncs.com/user/18137777189/pic/1602428354255.png',
+            ishowFile:true,
         }
     },
     mounted(){
@@ -126,8 +126,10 @@ export default {
              if(event.target.files.length>0){
                     let file = event.target.files[0]; // 对象，上传的文件
                     let that = this;
+                    this.ishowFile=false;
                     upLoaderImg(file).then((res=>{
                          let data = res.Data;
+                         that.ishowFile=true;
                          if (res.Code == 0) {
                             this.uploadImgUrl = data.url;
                          }

@@ -244,13 +244,13 @@ export default {
                             this.is_up = data.is_up;
                             
                             if(this.extend_buy>0){
-                                if(this.extend_buy>this.extend_buy_target){
+                                if(this.extend_buy>=this.extend_buy_target){
                                      this.extend_target_flag = true;
                                 }
                             }
 
                              if(this.self_buy>0){
-                                if(this.self_buy>this.self_buy_target){
+                                if(this.self_buy>=this.self_buy_target){
                                      this.self_buy_target_flag = true;
                                 }
                             }
@@ -385,11 +385,18 @@ export default {
                     .zigou{
                        font-size: 0.26rem;
                        color: #343434;
+                    //    max-width:1rem;
+                       max-width: 1.5rem;
+                       overflow: hidden;
+                       text-align: left;
                     }
                     .tuiguang{
                         margin-left: 0.5rem;
                         font-size: 0.26rem;
                        color: #343434;
+                        max-width: 1.5rem;
+                       overflow: hidden;
+                       text-align: left;
                     }
                     .promoteBox{
                         margin-left: 0.2rem;

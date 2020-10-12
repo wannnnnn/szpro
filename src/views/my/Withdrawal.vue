@@ -182,6 +182,10 @@ export default {
             if(this.isDisabled){
                 return;
             }
+            if (!(/^1[34578]\d{9}$/.test(this.userAccount))) {
+                Toast('请输入手机号')
+                return;
+            }
             let that = this;
             request.post(`/account/send_code`, 
             { 

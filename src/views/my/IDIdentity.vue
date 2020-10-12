@@ -22,23 +22,23 @@
                            <div class="idCardItem" v-if="!frontUrl">
                                <img src="../../assets/img/idcard/idcard_up.png" alt="">
                                <div class="btnTitle">拍摄正面</div>
-                               <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadFrontImgAPI($event)">
+                               <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadFrontImgAPI($event)" v-if="ishowFile">
                            </div>
                            <div class="idCardItem" v-if="frontUrl">
                                <div class="logo"><img :src="frontUrl" alt=""></div>
-                               <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadFrontImgAPI($event)">
-                               <div class="delIcon" @click.stop="delFrontImgAction()"><img src="../../assets/img/close_gray_01.png" alt=""></div>
+                               <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadFrontImgAPI($event)" v-if="ishowFile">
+                               <div class="delIcon" @click.stop="delFrontImgAction()"><img src="../../assets/img/my/del.png" alt=""></div>
                            </div>
                            <div class="idCardItem" v-if="!backUrl">
                                 <img src="../../assets/img/idcard/idcard_down.png" alt="">
                                 <div class="btnTitle">拍摄反面</div>
-                                <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadBackImgAPI($event)">
+                                <input type="file" accept="image/*" multiple="multiple" class="file" @change="uploadBackImgAPI($event)" v-if="ishowFile2">
                            </div>
                             <div class="idCardItem" v-if="backUrl">
                                <div class="logo"><img :src="backUrl" alt="">
                                </div>
-                               <input type="file" accept="image/*" multiple="multiple" class="file" @change.stop="uploadBackImgAPI($event)">
-                               <div class="delIcon" @click.stop="delBackImgAction()"><img src="../../assets/img/close_gray_01.png" alt=""></div>
+                               <input type="file" accept="image/*" multiple="multiple" class="file" @change.stop="uploadBackImgAPI($event)" v-if="ishowFile2">
+                               <div class="delIcon" @click.stop="delBackImgAction()"><img src="../../assets/img/my/del.png" alt=""></div>
                            </div>
                        </div>
                  </div>
@@ -111,6 +111,8 @@ export default {
             userID:'',
             frontUrl:null,
             backUrl:null,
+            ishowFile:true,
+            ishowFile2:true,
         }
     },
     mounted(){
@@ -130,8 +132,10 @@ export default {
              if(event.target.files.length>0){
                     let file = event.target.files[0]; // 对象，上传的文件
                     let that = this;
+                    this.ishowFile = false;
                     upLoaderImg(file).then((res=>{
                          let data = res.Data;
+                          this.ishowFile = true;
                          if (res.Code == 0) {
                             this.frontUrl = data.url;
                          }
@@ -142,8 +146,10 @@ export default {
              if(event.target.files.length>0){
                     let file = event.target.files[0]; // 对象，上传的文件
                     let that = this;
+                    this.ishowFile2 = false;
                     upLoaderImg(file).then((res=>{
                           let data = res.Data;
+                          this.ishowFile2 = true;
                          if (res.Code == 0) {
                             this.backUrl = data.url;
                          }
@@ -491,6 +497,7 @@ input:-ms-input-placeholder {
 }
 input:focus {
 //    border: 1px solid #383b45;
+   border: none;
 }
 
 
