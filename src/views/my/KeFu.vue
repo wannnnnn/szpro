@@ -10,10 +10,12 @@
                   <div class="kefuWX">在线客服（微信：{{wxName}}）</div>
                   <div class="kefuDes">工作时间：周一到周日9:00-21:00</div>
                   <div class="qrCodeBox">
-                     <div class="code" ref="code"></div>
+                     <!-- <div class="code" ref="code"></div> -->
+                     <img src="../../assets/img/my/kefuwx.jpg" alt="">
                   </div>
                   <div class="copyBtn" v-clipboard:copy="wxName" v-clipboard:success="onCopy" v-clipboard:error="onError">
-                      <div class="btnTxt">复制微信号并打开微信</div>
+                      <div class="btnTxt">复制微信号</div>
+                      <!-- <div class="btnTxt">复制微信号并打开微信</div> -->
                   </div>
                   <!-- end -->
             </div> 
@@ -25,7 +27,6 @@
 
 <script>
 import Header from './common/NavView';
-let QRCode = require('js-qrcode');
 import VueClipboard from 'vue-clipboard2';
 import {Toast} from "mint-ui";
 export default {
@@ -35,11 +36,8 @@ export default {
     },
     data(){
         return{
-           wxName:'1234578',
+           wxName:'A17630024777',
         }
-    },
-    mounted(){
-       this.makeCode(this.wxName);
     },
     methods:{
          handleLeft(){
@@ -50,16 +48,7 @@ export default {
 		},
 		onError: function (e) {
             Toast("复制失败");  
-		},
-         makeCode(text){
-			let dom=this.$refs.code;
-			var qr = new QRCode(dom, {
-				width: 168,
-				height: 168
-			});
-			qr.make(text);
-		}
-        
+		}, 
     }
 }
 </script>

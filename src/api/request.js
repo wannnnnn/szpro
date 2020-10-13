@@ -1,5 +1,6 @@
 import store from "../store/index";
 import axios from "axios";
+import router from '../routers/'
 import { getToken, removeToken } from "../utils/auth";
 import { Toast } from "mint-ui";
 import Vue from 'vue';
@@ -40,9 +41,10 @@ request.interceptors.response.use(
       //   type: "error",
       //   duration: 1000
       // });
+      
       if (res.data.Code == 2000) {
         removeToken();
-        Vue.push('/login');
+        router.push('/login');
         // store.dispatch("user/resetToken").then(() => {
         //   location.reload();
         //   Vue.push('/login');

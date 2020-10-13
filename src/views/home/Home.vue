@@ -14,16 +14,6 @@
 
                         <!-- 轮播图片 -->
                         <div class="suffuterView">
-                               <!-- <swiper :options="swiperOption">
-                                    <swiper-slide v-for="n in 3" :key="n">
-                                        <div class="bannerItem">
-                                              <img src="../../assets/img/home/home_banner_01.png" alt="">
-                                        </div>
-                                    </swiper-slide>
-                                    <div class="swiper-pagination"  slot="pagination"></div>
-                                    
-                               </swiper> -->
-
                                <mt-swipe :auto="4000" class="swipe">
                                     <mt-swipe-item v-for="n in 1" :key="n">
                                        <img src="../../assets/img/home/home_banner_01.png" alt="">
@@ -36,6 +26,9 @@
                                   <img src="../../assets/img/home/home_gonggao.png" alt="">
                              </div>
                              <div class="ggInfoView">【官方公告】河图超算服务器第一期上线通知</div>
+                             <div class="ggHud">
+                                 <img src="../../assets/img/my/hud_right.png" alt="">
+                             </div>
                         </div>
                         <!-- 选项box -->
                         <div class="itemBox">
@@ -71,7 +64,8 @@
                                   <div class="itemLogo"><img src="../../assets/img/home/pledge.png" alt=""></div>
                                   <div  class="itemCount">
                                         <!-- {{pledge_now}}<span style="font-size:0.13rem;">FIL</span> -->
-                                        31858
+                                        <!-- 31858 -->
+                                        {{pledge_now}}
                                    </div>
                                    <div class="itemDes">总账户数</div>
                               </div>
@@ -193,11 +187,14 @@ export default {
              }else if(index==2){
                 this.$router.push('/awardPool');
              }else{
-                this.$router.push('/my');
+                // this.$router.push('/my');
+                this.$router.push('/idIdentity');
              }
         },
         pushNewsList(){
-           this.$router.push('/newsList');
+        //    this.$router.push('/newsList');
+            
+           this.$router.push('/invateFriends');
             // var canvas,content;
             // var img = new Image();
             // img.src = "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg";
@@ -432,6 +429,20 @@ export default {
             font-weight: 500;
             color: #010101;
             text-align: left;
+        }
+        .ggHud{
+            position: absolute;
+            right: 0.3rem;
+            top: 0;
+            width:0.3rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                width: 0.14rem;
+                height: 0.24rem;
+            }
         }
     }
     .wrapTxt .itemBox{

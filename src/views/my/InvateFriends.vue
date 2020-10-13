@@ -20,7 +20,7 @@
                             </div>
                     </div>
                 </div>
-                 <div class="downloadApp" >
+                 <div class="downloadApp" @click="savePhoto()">
                     <div class="btnTxt">保存个人专属二维码</div>
                 </div>
                 <!-- end -->
@@ -44,7 +44,7 @@
                     </div> -->
 
                     <!-- 分享 -->
-                   <div class="shareImgLogo">
+                   <div class="shareImgLogo" ref="shareImgLogo">
                          <div class="friends">
                                 <div class="h-title"></div>
                                 <div class="subtitle">构建数据价值  |  助力新基建</div>
@@ -64,14 +64,16 @@
                             </div>
                    </div>
                    <!-- 保存的图片 -->
-                   <div id="saveImg">
-                             <!-- <img id="exportedImage" v-if="flag" @click="flag=false"/> -->
+                   <div id="saveImg" >
+                             <img id="exportedImage" />
                     </div>
+
+                    <canvas id="myCanvas" width="165px" height="145px" style="background:red;z-index:999999;"></canvas>
 
                    <!-- end -->
 
         </div> 
-
+       
 
          <!-- 分享 -->
          <!-- <div id="shareModel" v-show="isShowShareModel">
@@ -90,7 +92,7 @@
                      <div class="qucanlBtn" @click="isShowShareModel=false">取消分享</div>
                </div>
                <div class="maskView" @click="isShowShareModel=false"></div>
-         </div> -->
+         </div>  -->
          
    
     </div>
@@ -102,6 +104,7 @@ import Header from './common/NavView';
 import request from "../../api/request";
 let QRCode = require('js-qrcode');
 import VueClipboard from 'vue-clipboard2';
+import html2canvas from "html2canvas";
 import {Toast} from "mint-ui";
 export default {
     name: "invateFriend",
@@ -110,17 +113,28 @@ export default {
     },
     data(){
         return{
-           invite_code:'',
+           invite_code:'11',
            isShowShareModel:false,
            share_url:'',
            share_num:'--',
            share_buy_num:'--',
            share_income:'--',
+           shareImageData:'',
         }
     },
     mounted(){
-        this.getShareInfoAPI();
+        // this.getShareInfoAPI();
         this.makeCode('s');
+
+        var canvas = document.getElementById('myCanvas')
+        var context = canvas.getContext("2d");
+        var image = new Image();
+        image.src = "https://t11.baidu.com/it/u=325467646,2038125382&fm=173&app=25&f=JPEG?w=640&h=400&s=86C5934A860724F63F52BBBA0300F01D";
+        image.onload = function () {
+            context.drawImage(image,0,0);
+        }
+       document.addEventListener("deviceready",onDeviceReady);
+
     },
     methods:{
          handleLeft(){
@@ -148,7 +162,48 @@ export default {
 		},
 		onError: function (e) {
             Toast("复制失败");  
-		},
+        },
+        savePhoto(){
+            //    this.$refs.shareImgLogo.style.display = "";
+               
+            //     let table = this.$refs.shareImgLogo;
+            //     // Toast('11')
+            //     var that = this;
+            //     html2canvas(table).then(canvas => {
+            //         var url = canvas.toDataURL("image/jpeg");
+            //         Toast(url)
+            //         that.shareImageData = url;
+            //         that.saveImgToAndroid(url);
+
+            //         document.getElementById("exportedImage").src = url;
+            //         // this.flag = true;
+            //     });
+            this.saveImgToAndroid();
+        },
+        saveImgToAndroid(){
+                // Toast('ssss')
+                 
+                window.canvas2ImagePlugin.saveImageDataToLibrary(
+                    function(msg){
+                        console.log(msg);
+                    },
+                    function(err){
+                        console.log(err);
+                    },
+                    'myCanvas'
+                );
+
+                
+               
+
+                // cordova.exec(function (msg){
+                //     Toast('保存成功');
+                // },function (err){
+                //     Toast('保存失败');
+                // }, 'Canvas2ImagePlugin',
+                // 'saveImageDataToLibrary',
+                // [imageData]);
+        },
          getShareInfoAPI(){
             let that = this;
             request.get(`/user/invite_code`).then((res=>{
@@ -202,7 +257,7 @@ export default {
 .friends {
     width: 100%;
     overflow: hidden;
-    border: 1px solid #000;
+    // border: 1px solid #000;
     .h-title {
         margin: 0 auto;
         margin-top:0.78rem;

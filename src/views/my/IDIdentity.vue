@@ -127,18 +127,18 @@ export default {
     },
     data(){
         return{
-            status:4,//1、审核中  2、审核成功  3、审核失败 4、未认证
+            status:1,//1、审核中  2、审核成功  3、审核失败 4、未认证
             userName:'',
             userID:'',
             frontUrl:null,
             backUrl:null,
             ishowFile:true,
             ishowFile2:true,
-            isIos:true, 
+            isIos:fasle, 
         }
     },
     mounted(){
-        this.getIdentifyAPI();
+        // this.getIdentifyAPI();
         const u = navigator.userAgent;
         const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
         if (isiOS) {

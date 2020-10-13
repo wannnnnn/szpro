@@ -79,7 +79,12 @@ export default {
   },
   methods: {
     goBack(){
-         this.$router.go(-1);
+         if (window.history.length <= 1) {
+            this.$router.push({ path: "/home" });
+            return false;
+          } else {
+            this.$router.go(-1);
+          }
     },
     getMsgAPI(){
         if(this.isDisabled){
@@ -247,6 +252,7 @@ export default {
             }
             input:focus {
             //    border: 1px solid #383b45;
+                border: none;
             }
            .inputVal{
                 outline: none;
@@ -289,7 +295,7 @@ export default {
                color: #cccccc;
             }
             input:focus {
-            //    border: 1px solid #383b45;
+               border: none;
             }
            .inputVal{
                 outline: none;
