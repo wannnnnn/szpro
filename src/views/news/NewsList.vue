@@ -33,10 +33,9 @@ export default {
             pageIndex1:1,
             filList:[],
             newsList:[
-                {title:'【官方公告】河图超算服务器第一期...谢谢谢谢谢谢谢谢谢谢谢谢',time:'2020/10/11'},
-                {title:'【官方公告】洛书云算敬请期待',time:'2020/10/11'},
-                {title:'【官方公告】河图超算服务器第一期...',time:'2020/10/11'},
-                {title:'【官方公告】洛书云算敬请期待',time:'2020/10/11'},
+                {title:'矿池上线成功',time:'2020/10/13',id:0},
+                {title:'关于河图超算服务器——第1批上线公告',time:'2020/10/13',id:1},
+                {title:'Filecoin官方：148888区块高度近在咫尺，主网启动倒计时。',time:'2020/10/13',id:2},
             ]
         }
     },
@@ -55,8 +54,8 @@ export default {
              return '';
          },
          pushNewsDetail(obj){
-            this.$router.push('/newsDetail');
-            this.$router.push({ path: '/newsDetail', query: { title:obj.title}});
+            // this.$router.push('/newsDetail');
+            this.$router.push({ path: '/newsDetail', query: { title:obj.title,id:obj.id}});
          },
          getWithDrawListAPI(){
             let that = this;

@@ -25,7 +25,7 @@
                              <div class="ggIcon">
                                   <img src="../../assets/img/home/home_gonggao.png" alt="">
                              </div>
-                             <div class="ggInfoView">【官方公告】河图超算服务器第一期上线通知</div>
+                             <div class="ggInfoView">关于河图超算服务器——第1批上线公告</div>
                              <div class="ggHud">
                                  <img src="../../assets/img/my/hud_right.png" alt="">
                              </div>
@@ -42,7 +42,7 @@
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/award.png" alt=""></div>
                                    <div  class="itemCount">
-                                       {{reward_per_block}}<span style="font-size:0.13rem;">FIL</span>
+                                       {{reward_per_block}}<span style="font-size:0.13rem;">FIL/TB</span>
                                    </div>
                                    <div class="itemDes">平均挖矿收益</div>
                               </div>
@@ -90,7 +90,7 @@
                                        </div>
                                        <div class="poolCountItem">
                                             <div class="text">24H平均收益</div>
-                                            <div class="count">{{pool_reward_per24h}}<span>FiL</span></div>
+                                            <div class="count">{{pool_reward_per24h}}<span>FIL/TB</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                              <div class="text">Fil质押量</div>
@@ -187,38 +187,13 @@ export default {
              }else if(index==2){
                 this.$router.push('/awardPool');
              }else{
-                // this.$router.push('/my');
-                this.$router.push('/idIdentity');
+                this.$router.push('/my');
+
              }
         },
         pushNewsList(){
-        //    this.$router.push('/newsList');
-            
-           this.$router.push('/invateFriends');
-            // var canvas,content;
-            // var img = new Image();
-            // img.src = "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg";
-            // canvas = document.getElementById('myCanvas');
-            // img.onload = function () {
-            //     canvas.width = img.width;
-            //     canvas.height = img.height;
-            //     context = canvas.getContext('2d');
-            //     context.drawImage(img, 0, 0);
-            //     try {
-            //         window.canvas2ImagePlugin.saveImageDataToLibrary(
-            //             function(msg){
-            //                 console.log('保存成功');
-            //             },
-            //             function(err){
-            //                 console.log('保存失败');       
-            //             },
-            //             document.getElementById('myCanvas')
-            //     );
-            //     }
-            //     catch (e) {
-            //         console.log(e.message);            
-            //     }
-            // }   
+           this.$router.push('/newsList');
+        //    this.$router.push('/invateFriends');
         },
          getHpDataAPI(){
                 let that = this;

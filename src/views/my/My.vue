@@ -15,9 +15,9 @@
                                  <div class="userInfoLevel">
                                       <div class="phoneNum">{{getPhoneDes()}}</div>
                                       <div class="level0Icon" v-show="level==0"><img src="../../assets/img/awardPool/level0.png" alt=""></div>
-                                      <div class="levelIcon" v-show="level==1"><img src="../../assets/img/awardPool/V1@2x.png" alt=""></div>
-                                      <div class="levelIcon" v-show="level==2"><img src="../../assets/img/awardPool/v2@2x.png" alt=""></div>
-                                      <div class="levelIcon" v-show="level==3"><img src="../../assets/img/awardPool/v3@2x.png" alt=""></div>
+                                      <div class="levelIcon" v-show="level==1"><img src="../../assets/img/my/mylevel1_icon.png" alt=""></div>
+                                      <div class="levelIcon" v-show="level==2"><img src="../../assets/img/my/mylevel2_icon.png" alt=""></div>
+                                      <div class="levelIcon" v-show="level==3"><img src="../../assets/img/my/mylevel3_icon.png" alt=""></div>
                                  </div>
                                  <div class="userInfoPromote">
                                       <div class="zigou">自购 <span>{{self_buy}}/{{self_buy_target}}</span></div>
@@ -356,8 +356,8 @@ export default {
                     }
                     .levelIcon{
                         margin-left: 0.2rem;
-                        width: 0.6rem;
-                        height: 0.6rem;
+                        width: 0.7rem;
+                        height: 0.3rem;
                         img{
                             max-width: 100%;
                             max-height: 100%;

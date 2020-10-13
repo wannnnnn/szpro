@@ -13,6 +13,8 @@ import * as filters from './filters/';
 import Echarts from "echarts";
 Vue.prototype.$echarts = Echarts;
 
+Vue.isCordova = window.location.protocol.match(/^file/)
+
 import './styles/main.less';
 
 // import Vant from 'vant';

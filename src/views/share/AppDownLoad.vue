@@ -18,7 +18,7 @@
                         </div>
                         <div class="appText">
                               <div class="appTxt1">Android 版下载</div>
-                              <div class="appTxt2">版本号：1.0.1&nbsp;&nbsp;大小：8.96M</div>
+                              <div class="appTxt2">版本号：1.0.1&nbsp;&nbsp;大小：3.98M</div>
                         </div>
                     </a>
             </div>

@@ -2,6 +2,34 @@
     <div class="page">
          <Header title="邀请好友"  @handleLeft="handleLeft()" ></Header>
          <!-- <Header title="邀请好友" :isShowRight="true" @handleLeft="handleLeft()" @handleShare="handleShare()"></Header> -->
+        
+           <!-- 分享 -->
+        <div class="shareImgLogo" ref="shareImgLogo" >
+                <div class="friends">
+                    <div class="h-title"></div>
+                    <div class="subtitle">构建数据价值  |  助力新基建</div>
+                    <div class="friends-box">
+                            <div class="title">
+                                我的邀请码
+                            </div>
+                            <div class="shareCode">{{invite_code}}</div>
+                            <div class="line"></div>
+                            <div class="qrCodeBox">
+                                <div class="code" ref="code1"></div>
+                            </div>
+                            <div class="notice">
+                                长按图片即可保存个人专属二维码
+                            </div>
+                    </div>
+                </div>
+        </div>
+        <!-- 保存的图片 -->
+        <div id="saveImg" v-if="flag">
+                    <img id="exportedImage" />
+        </div>
+
+
+
         <div class="wrap">
                <div class="friends">
                     <div class="h-title"></div>
@@ -43,36 +71,23 @@
                             </div>
                     </div> -->
 
-                    <!-- 分享 -->
-                   <div class="shareImgLogo" ref="shareImgLogo">
-                         <div class="friends">
-                                <div class="h-title"></div>
-                                <div class="subtitle">构建数据价值  |  助力新基建</div>
-                                <div class="friends-box">
-                                        <div class="title">
-                                            我的邀请码
-                                        </div>
-                                        <div class="shareCode">{{invite_code}}</div>
-                                        <div class="line"></div>
-                                        <div class="qrCodeBox">
-                                            <div class="code" ref="code1"></div>
-                                        </div>
-                                        <div class="notice">
-                                            长按图片即可保存个人专属二维码
-                                        </div>
-                                </div>
-                            </div>
-                   </div>
-                   <!-- 保存的图片 -->
-                   <div id="saveImg" >
-                             <img id="exportedImage" />
-                    </div>
+                  
 
-                    <canvas id="myCanvas" width="165px" height="145px" style="background:red;z-index:999999;"></canvas>
+                    
 
                    <!-- end -->
 
         </div> 
+
+
+            <!-- 分享的图片 -->
+            <div id="shareImgModal" v-show="isShowImgModal">
+                <div class="modelContent">
+                      <img id="exportedImage2" />
+                </div>
+                <div class="maskView" @click="isShowImgModal=false"></div>
+             </div> 
+       
        
 
          <!-- 分享 -->
@@ -120,16 +135,20 @@ export default {
            share_buy_num:'--',
            share_income:'--',
            shareImageData:'',
+           flag:false,
+           isShowImgModal:false,
         }
     },
     mounted(){
-        // this.getShareInfoAPI();
+        this.getShareInfoAPI();
         this.makeCode('s');
 
       
        document.addEventListener("deviceready",function(){
 
        });
+      
+      
 
     },
     methods:{
@@ -146,12 +165,12 @@ export default {
 				height: 138
 			});
             qr.make(text);
-            // let dom1=this.$refs.code1;
-			// var qr1 = new QRCode(dom1, {
-			// 	width: 138,
-			// 	height: 138
-			// });
-			// qr1.make(text);
+            let dom1=this.$refs.code1;
+			var qr1 = new QRCode(dom1, {
+				width: 138,
+				height: 138
+			});
+			qr1.make(text);
          },
          onCopy: function (e) {
               Toast("复制成功");  
@@ -161,46 +180,53 @@ export default {
         },
         savePhoto(){
             //    this.$refs.shareImgLogo.style.display = "";
+                
                
                 let table = this.$refs.shareImgLogo;
-                // Toast('11')
                 var that = this;
+                 that.flag = true;
                 html2canvas(table).then(canvas => {
                     var url = canvas.toDataURL("image/jpeg");
                     that.shareImageData = url;
-                    that.saveImgToAndroid(url);
+                     if(that.$isCordova){
+                          
+                          that.saveImgToAndroid(url);
+                     }else{
+                          that.isShowImgModal = true;
+                     }
+                   
 
                     document.getElementById("exportedImage").src = url;
-                    // this.flag = true;
+                    document.getElementById('exportedImage2').src = url;
+                    that.flag = false;
                 });
-            // this.saveImgToAndroid();
+
+        },
+        saveAs(Url){
+            var blob=new Blob([''], {type:'application/octet-stream'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = Url;
+            a.download = Url.replace(/(.*\/)*([^.]+.*)/ig,"$2").split("?")[0];
+            var e = document.createEvent('MouseEvents');
+            e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dispatchEvent(e);
+            URL.revokeObjectURL(url);
         },
         onDeviceReady(){
             console.log("onDeviceReady");
         },
         saveImgToAndroid(imageData){
-                // Toast('ssss')
-                 
-                // window.canvas2ImagePlugin.saveImageDataToLibrary(
-                //     function(msg){
-                //         console.log(msg);
-                //     },
-                //     function(err){
-                //         console.log(err);
-                //     },
-                //     'myCanvas'
-                // );
-
-                
                
-
-                cordova.exec(function (msg){
+                var imageData_new = imageData.replace(/data:image\/jpeg;base64,/, '');
+                console.log('s',imageData_new);
+                cordova.exec(function succ(msg){
                     Toast('保存成功');
-                },function (err){
+                },function error(err){
                     Toast('保存失败');
                 }, 'Canvas2ImagePlugin',
                 'saveImageDataToLibrary',
-                imageData);
+                [imageData_new]);
         },
          getShareInfoAPI(){
             let that = this;
@@ -227,6 +253,7 @@ export default {
 .page{
    background: rgba(239, 240, 249, 1);
    background: #fff;
+   position: relative;
 }
 
 .header{
@@ -414,7 +441,7 @@ export default {
   .friends {
     width: 100%;
     overflow: hidden;
-    border: 1px solid #000;
+    // border: 1px solid #000;
     .h-title {
         margin: 0 auto;
         margin-top:0.78rem;
@@ -489,7 +516,52 @@ export default {
 }
 }
 
-
+//推出登录的modal
+#shareImgModal{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1991;
+  //弹窗内容
+  .modelContent{
+     z-index:1992;
+     position: absolute;
+     left:50%;
+     top: 0.5rem;
+     width:6.5rem;
+     height:13.34rem;
+     margin-left:-3.25rem;
+    //  margin-top: -4.5rem;
+    //  background: #fff;
+     animation: contentViewKeyAnimation 0.5s;
+     img{
+         width: 100%;
+         height: 100%;
+     }
+    
+     
+  }
+  @keyframes  contentViewKeyAnimation{
+      0%{
+         transform: scale(0);
+      }
+      150%{
+         transform: scale(1)z
+      }
+  }
+  .maskView{
+     position: absolute;
+     z-index: -1;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     opacity: 0.3;
+  }
+}
 //分享的modal
 #shareModel{
   position: fixed;

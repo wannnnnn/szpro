@@ -96,6 +96,9 @@ export default {
         if (this.$route.query.code) {
            this.shareCode = this.$route.query.code;
         }
+        if (this.$route.query.invite_code) {
+           this.shareCode = this.$route.query.invite_code;
+        }
   },
   methods: {
     goBack(){
