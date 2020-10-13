@@ -17,13 +17,13 @@
                          <div class="mallTitleBox">
                                <div class="mallTitleLeft">
                                     <div class="titleBox">
-                                          <div class="title">河图超算服务器Filecoin 160T/台   可扩展 | 永久产权</div>
+                                          <div class="title">河图超算 160T/台   可扩展 | 永久产权</div>
                                           <div class="icon"><img src="../../assets/img/orders/HOT@2x.png" alt=""></div>
                                     </div>
                                     <div class="des">可扩展到576T，含1台机器加1年托管运维费用</div>
                                </div>
                                <div class="mallTitleRight" @click="isShowIpfsModel=true">
-                                     <a class="heyueLink">合约详情</a>
+                                     <a class="heyueLink">产品详情</a>
                                </div>
                          </div>
                          <!-- end -->
@@ -39,7 +39,7 @@
                                </div>
                                <div class="tipItem">
                                      <div class="tipTitle">一年一签</div>
-                                     <div class="tipDes">合约期限</div>
+                                     <div class="tipDes">托管期限</div>
                                </div>
                                <div class="tipItem">
                                       <div class="tipTitle">30.00%</div>
@@ -101,7 +101,7 @@
                                      <div class="tipDes">结算周期</div>
                                </div>
                                <div class="tipItem">
-                                     <div class="tipTitle">一年一签</div>
+                                     <div class="tipTitle">365天</div>
                                      <div class="tipDes">合约期限</div>
                                </div>
                                <div class="tipItem">
@@ -153,13 +153,13 @@
                               <div class="closeInner"><img src="../../assets/img/close_gray.png" alt=""></div>
                          </div>
                     </div>
-                    <div class="txtItemTwoLine" style="margin-top:0.3rem;">
+                    <div class="txtItem" style="margin-top:0.3rem;">
                          <div class="textItemLeft">合约名称：</div>
                          <div class="textItemVal">
-                                河图超算服务器Filecoin 160T/台 <br>可扩展 | 永久产权 </div>
+                                河图超算 160T/台   可扩展 | 永久产权</div>
                     </div>
                      <div class="txtItem">
-                         <div class="textItemLeft">合约期限：</div>
+                         <div class="textItemLeft">托管期限：</div>
                          <div class="textItemVal">一年一签，服务器物权属于用户</div>
                     </div>
                      <div class="txtItem">
@@ -194,7 +194,7 @@
                            </div>
                            <div class="xieyiTitle">
                                 我已阅读并同意
-                                <span style="color:#7288FE;" @click="pushAction(4)">《用户云算力租赁协议》</span>
+                                <span style="color:#7288FE;" @click="pushAction(4)">《用户托管协议》</span>
                             </div> 
                     </div>
                      <div class="buyBtn" @click="buyPowerAPI()">
@@ -379,13 +379,13 @@ export default {
     },
     addCount() {
           this.amount++;
-          this.getCurrentRate(this.amount);
+        //   this.getCurrentRate(this.amount);
     },
     reduceCount() {
-          if (this.amount > 0) {
+          if (this.amount > 1) {
             this.amount--;
           } else {
-            Toast("不能小于0");
+            Toast("不能小于1");
           }
     },
     //获取我的资产
@@ -492,18 +492,18 @@ export default {
         .mallTitleBox{
             margin-left: 0.2rem;
             margin-right: 0.2rem;
-            height: 1.81rem;
+            height: 1.61rem;
             border-bottom:1px solid #E6E6E6;
             .mallTitleLeft{
                float: left;
                margin-top: 0.3rem;
-               height: 0.8rem;
+               height: 0.6rem;
                .titleBox{
-                   height: 0.8rem;
+                   height: 0.6rem;
                   .title{
                       float: left;
                       max-width: 4.6rem;
-                      height: 0.8rem;
+                      height: 0.6rem;
                       font-size: 0.28rem;
                       font-family: Source Han Sans CN;
                       font-weight: bold;

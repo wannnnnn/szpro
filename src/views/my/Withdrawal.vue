@@ -26,7 +26,7 @@
                         <div class="inputClass">
                             <input  type="number" class="inputVal" v-model="coinNum" placeholder="请输入提币数量">
                         </div>
-                         <div class="regionBox">
+                         <div class="regionBox" @click="qbtxAction()">
                             全部提取
                         </div>
                     </div> 
@@ -70,6 +70,19 @@
         </div> 
 
 
+            <!-- 推出登录 -->
+            <div id="identityModel" v-show="isShowIdentityModel">
+                <div class="modelContent">
+                        <div class="title">您未实名请先去实名认证</div>
+                        <div class="btnBox">
+                            <div class="btnItem" style="border-right: 1px  solid #F7F8FC;" @click="isShowIdentityModel=false">取消</div>
+                            <div class="btnItem" style="color: #007AFF;" @click="pushIdIdentityRouter()">去认证</div>
+                        </div>
+                </div>
+                <div class="maskView" @click="isShowIdentityModel=false"></div>
+            </div>
+
+
            
    
     </div>
@@ -100,6 +113,7 @@ export default {
             usdtTypeListIndex:0,//
             coin_type:'ETH',
             min_usdt:3,
+            isShowIdentityModel:false,
         }
     },
     mounted(){
@@ -113,6 +127,9 @@ export default {
          },
          handleWithDrawl(){
              this.$router.push('/withdrawalRecord');
+         },
+         qbtxAction(){
+             this.coinNum = this.usdt;
          },
          changeUsetType(index){
              this.usdtTypeListIndex = index;
@@ -140,6 +157,11 @@ export default {
                         }
                 }));
         },
+        //push
+        pushIdIdentityRouter(){
+            this.isShowIdentityModel = false;
+            this.$router.push('/idIdentity');
+        },
         tibiAPI(){
             if(this.coinNum<this.min_usdt){
                 Toast('提币不能低于'+this.min_usdt+'USDT');
@@ -159,18 +181,27 @@ export default {
             }
             
             let that = this;
+
+            var cointype_index = 1;
+            if(this.coin_type=='ETH'){
+                 cointype_index = 1;
+            }else{
+                 cointype_index = 2;
+            }
             request.post(`/withdraw/commit`, 
             { 
               amount:parseFloat(this.coinNum),
               to_address:this.coinAddress, 
               code:this.userCode,
-              coin_type:this.coin_type
+              coin_type:cointype_index
             }).then((res=>{
                    console.log('res',res);
                 
                     if (res.data.Code == 0) {
                         Toast('充值成功');
                         this.getMyAssetsAPI();
+                    }else if(res.data.Code == 3003){
+                        this.isShowIdentityModel = true;
                     }else{
                         this.$toast({
                         message: res.data.Msg
@@ -180,10 +211,6 @@ export default {
         },
          getMsgAPI(){
             if(this.isDisabled){
-                return;
-            }
-            if (!(/^1[34578]\d{9}$/.test(this.userAccount))) {
-                Toast('请输入手机号')
                 return;
             }
             let that = this;
@@ -567,7 +594,71 @@ input:focus {
 //    border: 1px solid #383b45;
 }
 
-
+//认证的modal
+#identityModel{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1991;
+  //弹窗内容
+  .modelContent{
+     z-index:1992;
+     position: absolute;
+     left:50%;
+     top: 50%;;
+     width:5.4rem;
+     height:2.8rem; 
+     margin-left: -2.7rem;
+     margin-top: -1.4rem;
+     border-radius: 0.15rem ;
+     background: #fff;
+     animation: contentViewKeyAnimation 0.5s;
+     overflow: hidden;
+     .title{
+        width: 100%;
+        height: 1.92rem;
+        line-height: 1.92rem;
+        text-align: center;
+        border-bottom: 1px  solid #F7F8FC;
+     }
+     .btnBox{
+        width: 100%;
+        height: 0.88rem;
+        display: flex;
+        align-items: center;
+        .btnItem{
+            flex: 1;
+            height: 100%;
+            color:#70747C;
+            font-size: 0.34rem;
+            line-height: 0.88rem;
+            text-align: center;
+            font-weight: bold;
+        }
+     }
+     
+  }
+  @keyframes  contentViewKeyAnimation{
+      0%{
+         transform: scale(0);
+      }
+      150%{
+         transform: scale(1)z
+      }
+  }
+  .maskView{
+     position: absolute;
+     z-index: -1;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     opacity: 0.3;
+  }
+}
 
 
 </style>

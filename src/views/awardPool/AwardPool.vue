@@ -57,7 +57,7 @@
                                     <div class="text">达标人数</div>
                                 </div>
                                 <div class="item">
-                                    <div class="count">{{obj.pool_rate}} U</div>
+                                    <div class="count">{{fil_price.toFixed(2)}} U</div>
                                     <div class="text">Fil当前价</div>
                                 </div>
                           </div>
@@ -104,6 +104,7 @@ export default {
       level1_pool_rate:0,
       level2_pool_rate:0,
       level3_pool_rate:0,
+      fil_price:0,
     };
   },
   components: {
@@ -142,6 +143,7 @@ export default {
                     console.log('res',res);
                     let data = res.data.Data;
                     if (res.data.Code == 0) {
+                        this.fil_price = data.fil_price;
                         this.sell_num = data.sell_num;
                         this.level_list = data.level_list;
                         var list = data.level_list; 

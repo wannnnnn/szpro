@@ -8,7 +8,7 @@
                     <div class="mallTitleBox">
                         <div class="mallTitleLeft">
                             <div class="titleBox">
-                                <div class="title">合盈云算 Filecoin(第一期)</div>
+                                <div class="title">河图超算服务器 (第一批)</div>
                             </div>
                         </div>
                         <div class="mallTitleRight">

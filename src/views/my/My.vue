@@ -26,6 +26,7 @@
                                           <img src="../../assets/img/my/weidabiao.png" v-show="!self_buy_target_flag">
                                       </div>
                                       <div class="tuiguang">推广 <span>{{extend_buy}}/{{extend_buy_target}}</span></div>
+                                      <!-- <div class="tuiguang">推广 100/2000</div> -->
                                       <div class="promoteBox">
                                           <img src="../../assets/img/my/yidaobiao.png" v-show="extend_target_flag">
                                           <img src="../../assets/img/my/weidabiao.png" v-show="!extend_target_flag">
@@ -383,20 +384,21 @@ export default {
                     display: flex;
                     align-items: center;
                     .zigou{
-                       font-size: 0.26rem;
+                       font-size: 0.24rem;
                        color: #343434;
                     //    max-width:1rem;
-                       max-width: 1.5rem;
+                       max-width: 1.9rem;
                        overflow: hidden;
                        text-align: left;
                     }
                     .tuiguang{
-                        margin-left: 0.5rem;
-                        font-size: 0.26rem;
-                       color: #343434;
-                        max-width: 1.5rem;
+                        margin-left: 0.3rem;
+                        font-size: 0.24rem;
+                        color: #343434;
+                        max-width: 1.9rem;
                        overflow: hidden;
                        text-align: left;
+                    //    border: 1px solid #000;
                     }
                     .promoteBox{
                         margin-left: 0.2rem;

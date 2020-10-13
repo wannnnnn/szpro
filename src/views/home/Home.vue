@@ -1,7 +1,7 @@
 <template>
       <div class="page">
             <div class="homeNav">
-                    <div class="navTxt">合盈云算</div>
+                    <div class="navTxt" >合盈矿池</div>
                      <!-- <div class="lanaguageItem" @click="isShowLaunagleModel=true">
                           <div class="logo"><img src="../../assets/img/language.png" alt=""></div>
                           <div class="logoTxt">语言</div>
@@ -25,14 +25,10 @@
                                </swiper> -->
 
                                <mt-swipe :auto="4000" class="swipe">
-                                    <mt-swipe-item v-for="n in 3" :key="n">
+                                    <mt-swipe-item v-for="n in 1" :key="n">
                                        <img src="../../assets/img/home/home_banner_01.png" alt="">
                                     </mt-swipe-item>
                                 </mt-swipe>
-
-                               <!-- <div class="pointView">
-                                     <div class="pointItem" v-for="m in 3" :key="m"></div> 
-                               </div>     -->
                         </div>
                         <!-- 公告页面 -->
                         <div class="gonggaoView" @click="pushNewsList()">
@@ -46,7 +42,7 @@
                               <div class="item">
                                    <div class="itemLogo"><img src="../../assets/img/home/power.png" alt=""></div>
                                    <div  class="itemCount">
-                                        {{total_power}}<span style="font-size:0.13rem;">PB</span>
+                                        {{total_power}}<span style="font-size:0.13rem;">TB</span>
                                    </div>
                                    <div class="itemDes">全网算力</div>
                               </div>
@@ -55,28 +51,29 @@
                                    <div  class="itemCount">
                                        {{reward_per_block}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
-                                   <div class="itemDes">每区奖励</div>
+                                   <div class="itemDes">平均挖矿收益</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/count.png" alt=""></div>
                                    <div  class="itemCount">
-                                        {{num_per24h}}<span style="font-size:0.13rem;">FIL</span>
+                                         ${{fil_price.toFixed(2)}}
                                    </div>
-                                   <div class="itemDes">24H区块产出量</div>
+                                   <div class="itemDes">最新价格</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/24H.png" alt=""></div>
                                    <div  class="itemCount">
-                                        {{reward_per24h}}
+                                        {{reward_per24h}}<span style="font-size:0.13rem;">FIL</span>
                                    </div>
                                    <div class="itemDes">24H区块奖励</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/pledge.png" alt=""></div>
                                   <div  class="itemCount">
-                                        {{pledge_now}}<span style="font-size:0.13rem;">FIL</span>
+                                        <!-- {{pledge_now}}<span style="font-size:0.13rem;">FIL</span> -->
+                                        31858
                                    </div>
-                                   <div class="itemDes">当前质押量</div>
+                                   <div class="itemDes">总账户数</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/Fil.png" alt=""></div>
@@ -95,7 +92,7 @@
                                 <div class="poolCountItemBox">
                                        <div class="poolCountItem">
                                            <div class="text">矿池有效算力</div>
-                                           <div class="count">{{pool_power}}<span>FiL</span></div>
+                                           <div class="count">{{pool_power}}<span>TB</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                             <div class="text">24H平均收益</div>
@@ -132,6 +129,8 @@
                 </div>
                 <div class="maskView" @click="isShowLaunagleModel=false"></div>
             </div>
+
+            <canvas id="myCnavas"></canvas>
       </div>
 
       
@@ -175,6 +174,7 @@ export default {
             pool_reward_per24h:0, //24H平均收益
             pool_pledge:0, //FIL质押量
             pool_num_per24h:0,//24H产出量
+            fil_price:0,
             isShowLaunagleModel:false,
             langList:['简体中文','English'],
             langTxt:'简体中文',
@@ -182,6 +182,7 @@ export default {
     },
     mounted(){
         this.getHpDataAPI();
+        
     },
     methods:{
         tabAction(index){
@@ -197,6 +198,30 @@ export default {
         },
         pushNewsList(){
            this.$router.push('/newsList');
+            // var canvas,content;
+            // var img = new Image();
+            // img.src = "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg";
+            // canvas = document.getElementById('myCanvas');
+            // img.onload = function () {
+            //     canvas.width = img.width;
+            //     canvas.height = img.height;
+            //     context = canvas.getContext('2d');
+            //     context.drawImage(img, 0, 0);
+            //     try {
+            //         window.canvas2ImagePlugin.saveImageDataToLibrary(
+            //             function(msg){
+            //                 console.log('保存成功');
+            //             },
+            //             function(err){
+            //                 console.log('保存失败');       
+            //             },
+            //             document.getElementById('myCanvas')
+            //     );
+            //     }
+            //     catch (e) {
+            //         console.log(e.message);            
+            //     }
+            // }   
         },
          getHpDataAPI(){
                 let that = this;
@@ -213,7 +238,7 @@ export default {
                             this.pool_reward_per24h = this.getValDelRem(data.pool_reward_per24h);
                             this.pool_pledge = this.getValDelRem(data.pool_pledge);
                             this.pool_num_per24h = this.getValDelRem(data.pool_num_per24h);
-
+                            this.fil_price = data.fil_price;
                             
                         }else{
                           

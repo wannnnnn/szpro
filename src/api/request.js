@@ -4,7 +4,8 @@ import { getToken, removeToken } from "../utils/auth";
 import { Toast } from "mint-ui";
 import Vue from 'vue';
 const request = axios.create({
-  baseURL: "http://112.125.27.11/api/v1/", //网络请求
+  baseURL: "/api/v1/", //网络请求
+  // baseURL: "http://112.125.27.11/api/v1/", //网络请求
   //192.168.1.124:5002
   // baseURL: "http://192.168.0.106:5002/api/v1/", //网络请求
   // baseURL:'/api',//本地json数据

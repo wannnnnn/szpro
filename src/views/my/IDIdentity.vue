@@ -18,7 +18,8 @@
                            </div>
                        </div>
                        <div class="tipTxt">请拍摄并上传你的身份证照片</div>
-                       <div class="idCardBox">
+                       <!-- ios的显示 -->
+                       <div class="idCardBox" v-if="isIos">
                            <div class="idCardItem" v-if="!frontUrl">
                                <img src="../../assets/img/idcard/idcard_up.png" alt="">
                                <div class="btnTitle">拍摄正面</div>
@@ -41,9 +42,29 @@
                                <div class="delIcon" @click.stop="delBackImgAction()"><img src="../../assets/img/my/del.png" alt=""></div>
                            </div>
                        </div>
+                       <!-- android 的显示 -->
+                       <div class="idCardBox" v-else>
+                           <div class="idCardItem" v-if="!frontUrl" @click="uploadAndoridFrintImg()">
+                               <img src="../../assets/img/idcard/idcard_up.png" alt="">
+                               <div class="btnTitle">拍摄正面</div>
+                           </div>
+                           <div class="idCardItem" v-if="frontUrl" @click="uploadAndoridFrintImg()">
+                               <div class="logo"><img :src="frontUrl" alt=""></div>
+                               <div class="delIcon" @click.stop="delFrontImgAction()"><img src="../../assets/img/my/del.png" alt=""></div>
+                           </div>
+                           <div class="idCardItem" v-if="!backUrl" @click="uploadAndoridBackImg()">
+                                <img src="../../assets/img/idcard/idcard_down.png" alt="">
+                                <div class="btnTitle">拍摄反面</div>
+                           </div>
+                            <div class="idCardItem" v-if="backUrl" @click="uploadAndoridBackImg()">
+                               <div class="logo"><img :src="backUrl" alt="">
+                               </div>
+                               <div class="delIcon" @click.stop="delBackImgAction()"><img src="../../assets/img/my/del.png" alt=""></div>
+                           </div>
+                       </div>
                  </div>
                  <!-- end -->
-                 <div class="tipBox">
+                 <div class="tipBox" >
                         <div class="title">拍摄身份证要求：</div>
                         <div class="dex">
                             大陆公民持有的本人有效二代身份证；<br>
@@ -113,10 +134,19 @@ export default {
             backUrl:null,
             ishowFile:true,
             ishowFile2:true,
+            isIos:true, 
         }
     },
     mounted(){
         this.getIdentifyAPI();
+        const u = navigator.userAgent;
+        const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if (isiOS) {
+            // return "ios";
+        } else {
+            // return "andriod";
+        }
+        document.addEventListener("deviceready",onDeviceReady);
     },
     methods:{
          handleLeft(){
@@ -127,6 +157,65 @@ export default {
          },
          delFrontImgAction(){
              this.frontUrl = null;
+         },
+         uploadAndoridFrintImg(){
+              var cameraOptions= {
+                quality : 75,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType : Camera.PictureSourceType.CAMERA,     //照相机类型
+                allowEdit : false,
+                encodingType : Camera.EncodingType.JPEG,
+                targetWdith : 100,
+                targetHeight : 100,
+                popoverOptions : CameraPopoverOptions,
+                saveToPhotoAlbum : false
+            }
+            navigator.camera.getPicture(function suncc(imageURL){
+                  this.frontUrl = "data:image/jpeg;base64," + imageURL;
+                  var file = this.dataURLtoFile(this.frontUrl,'1111');
+                  upLoaderImg(file).then((res=>{
+                          let data = res.Data;
+                         
+                         if (res.Code == 0) {
+                            this.frontUrl = data.url;
+                         }
+                    }));
+            },function onError(){
+                  console.log('onError')
+            },cameraOptions);
+         },
+         uploadAndoridBackImg(){
+              var cameraOptions= {
+                quality : 75,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType : Camera.PictureSourceType.CAMERA,     //照相机类型
+                allowEdit : false,
+                encodingType : Camera.EncodingType.JPEG,
+                targetWdith : 100,
+                targetHeight : 100,
+                popoverOptions : CameraPopoverOptions,
+                saveToPhotoAlbum : false
+            }
+            let that = this;
+            navigator.camera.getPicture(function suncc(imageURL){
+                  that.backUrl = "data:image/jpeg;base64," + imageURL;
+                  Toast(that.backUrl);
+                  var file = that.dataURLtoFile(that.backUrl,'1111');
+                  
+                  Toast(file);
+                  if(!file){
+                      return;
+                  }
+                  upLoaderImg(file).then((res=>{
+                          let data = res.Data;
+                         
+                         if (res.Code == 0) {
+                            that.backUrl = data.url;
+                         }
+                    }));
+            },function onError(){
+                  console.log('onError')
+            },cameraOptions);
          },
           uploadFrontImgAPI(event){
              if(event.target.files.length>0){
@@ -166,7 +255,15 @@ export default {
                         }
                 }));
         },
-          submitAPI(){
+        dataURLtoFile(dataurl, filename) {//将base64转换为文件
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, {type:mime});
+        },
+        submitAPI(){
                 if(!this.frontUrl){
                     Toast("请上传正面身份证");
                     return;
@@ -176,6 +273,7 @@ export default {
                     return;
                 }
                 let that = this;
+               
                 request.post(`/user/identify`,{
                     card_id:this.userID,
                     card_name:this.userName,
@@ -189,7 +287,7 @@ export default {
                             Toast(res.data.Msg);
                         }
                 }));
-        },
+         },
     }
 }
 </script>
@@ -402,11 +500,9 @@ export default {
         .photoItem{
             flex: 1;
             height: 100%;
-            // border: 1px solid #000;
             .logo{
                 width: 1.6rem;
                 height: 1.4rem;
-                // border: 1px solid #000;
                 img{
                     width: 100%;
                     height: 100%;

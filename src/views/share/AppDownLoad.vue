@@ -8,8 +8,9 @@
        </div>
        <div class="wrapTxt">
             <div class="logo">
-                <img src="../../assets/img/logo/app_logo.png" alt="" />
+                <img src="../../assets/img/my/app_download_icon.png" alt="" />
             </div>
+            <!-- <div class="appLogoTitle">合盈矿池</div> -->
             <div class="downloadBox">
                     <a href="http://112.125.27.11/hyys.apk" class="downAndroid"  style="width:80%;">
                         <div class="LeftIcon">
@@ -136,11 +137,24 @@ export default {
         margin: 0 auto;
         margin-top: 3.2rem;
         width: 2.24rem;
-        height: 2.88rem;
+        height: 2.24rem;
+        border: 0.05rem solid #F5F5F5;
+        border-radius:50%;
+        overflow: hidden;
         img {
             width: 100%;
             height: 100%;
         }
+    }
+    .appLogoTitle{
+        margin: 0 auto;
+        margin-top: 0.3rem;
+        height: 0.5rem;
+        line-height: 0.5rem;
+        font-size: 0.34rem;
+        font-family: Source Han Sans CN;
+        font-weight: 500;
+        color: #121319;
     }
     .downloadBox{
          margin: 0 auto;

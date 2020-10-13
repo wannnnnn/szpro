@@ -28,7 +28,7 @@ const IDIdentity = () => import('@/views/my/IDIdentity');
 const Login = () => import('@/views/login/Login');
 const Register = () => import('@/views/login/Register');
 const Error = () => import('@/views/error');
-const TestPool = () => import('@/views/awardPool/testpool');
+
 Vue.use(Router);
 
 const originalPush = Router.prototype.push
@@ -62,14 +62,6 @@ const routes = [{
     path: '/awardPool',
     name: 'awardPool',
     component: AwardPool,
-    meta: {
-      title: '奖励池',
-      requireAuth: true
-    }
-  },{
-    path: '/testPool',
-    name: 'testPool',
-    component: TestPool,
     meta: {
       title: '奖励池',
       requireAuth: true

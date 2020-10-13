@@ -1,8 +1,8 @@
 <template>
       <div class="page">
-           <Header title="云算力租赁协议" @handleLeft="handleLeft()"></Header>
+           <Header title="用户托管协议" @handleLeft="handleLeft()"></Header>
            <div class="wrap">
-                <div class="txt">云算力租赁协议</div>
+                <div class="txt">用户托管协议</div>
                 <div class="text2">矿机租赁、委托管理服务协议（电子签约版）</div>
                 <div class="dex">
                      

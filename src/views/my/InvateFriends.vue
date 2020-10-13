@@ -42,11 +42,39 @@
                                 </div>
                             </div>
                     </div> -->
+
+                    <!-- 分享 -->
+                   <div class="shareImgLogo">
+                         <div class="friends">
+                                <div class="h-title"></div>
+                                <div class="subtitle">构建数据价值  |  助力新基建</div>
+                                <div class="friends-box">
+                                        <div class="title">
+                                            我的邀请码
+                                        </div>
+                                        <div class="shareCode">{{invite_code}}</div>
+                                        <div class="line"></div>
+                                        <div class="qrCodeBox">
+                                            <div class="code" ref="code1"></div>
+                                        </div>
+                                        <div class="notice">
+                                            长按图片即可保存个人专属二维码
+                                        </div>
+                                </div>
+                            </div>
+                   </div>
+                   <!-- 保存的图片 -->
+                   <div id="saveImg">
+                             <!-- <img id="exportedImage" v-if="flag" @click="flag=false"/> -->
+                    </div>
+
+                   <!-- end -->
+
         </div> 
 
 
          <!-- 分享 -->
-         <div id="shareModel" v-show="isShowShareModel">
+         <!-- <div id="shareModel" v-show="isShowShareModel">
                <div class="modelContent">
                      <div class="shareTitle1">分享</div>
                      <div class="shareBoxs">
@@ -62,7 +90,8 @@
                      <div class="qucanlBtn" @click="isShowShareModel=false">取消分享</div>
                </div>
                <div class="maskView" @click="isShowShareModel=false"></div>
-         </div>
+         </div> -->
+         
    
     </div>
 </template>
@@ -106,7 +135,13 @@ export default {
 				width: 138,
 				height: 138
 			});
-			qr.make(text);
+            qr.make(text);
+            // let dom1=this.$refs.code1;
+			// var qr1 = new QRCode(dom1, {
+			// 	width: 138,
+			// 	height: 138
+			// });
+			// qr1.make(text);
          },
          onCopy: function (e) {
               Toast("复制成功");  
@@ -167,6 +202,7 @@ export default {
 .friends {
     width: 100%;
     overflow: hidden;
+    border: 1px solid #000;
     .h-title {
         margin: 0 auto;
         margin-top:0.78rem;
@@ -315,6 +351,90 @@ export default {
   }
 }
 
+
+.shareImgLogo {
+  width: 100%;
+  height: 13.34rem;
+  background: url(../../assets/img/register_bg.png) no-repeat center; 
+  background-size: 100% 100%;
+  position: relative;
+  .friends {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #000;
+    .h-title {
+        margin: 0 auto;
+        margin-top:0.78rem;
+        width: 3.23rem;
+        height: 0.88rem;
+        background: url(../../assets/img/friends/top.png) no-repeat center;
+        background-size: 100% 100%;
+    }
+    .subtitle {
+        margin: 0 auto;
+        width:4.29rem;
+        height: 0.6rem;
+        margin-top: 0.47rem;
+        background: url(../../assets/img/friends/bTop.png) no-repeat center;
+        background-size: 100% 100%;
+        margin-bottom: 0.15rem;
+        text-align: center;
+        color: #fff;
+        font-size: 0.3rem;
+        line-height: 0.6rem;
+    }
+}
+
+.friends-box {
+    margin: 0 auto;
+    margin-top: 1.1rem;
+    width: 6.75rem;
+    height: 6.63rem;
+    background: url(../../assets/img/friends/img_box.png) no-repeat center;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .title {
+        margin-top:0.85rem;
+        color: #0c0d13;
+        font-size: 0.28rem;
+        font-weight: bold;
+    }
+    .shareCode{
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.48rem;
+        margin-top: 0.25rem;
+        width: 2.73rem;
+        height: 0.77rem;
+        background: linear-gradient(90deg, #307af4, #84c4ff);
+        border-radius: 0.39rem;
+        text-align: center;
+        line-height: 0.77rem;
+    }
+    .line{
+        margin: 0 auto;
+        margin-top: 0.2rem;
+        width:3.79rem;
+        height: 0.01rem;
+        background:  #DCDCDC;
+    }
+    .qrCodeBox{
+        margin: 0 auto;
+        margin-top: 0.26rem;
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    .notice {
+        color: #b6b4b9;
+        font-size: 0.22rem;
+        margin-top: 0.21rem;
+    }
+}
+}
 
 
 //分享的modal
