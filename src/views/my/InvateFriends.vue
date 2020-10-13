@@ -180,6 +180,9 @@ export default {
             //     });
             this.saveImgToAndroid();
         },
+        onDeviceReady(){
+            console.log("onDeviceReady");
+        },
         saveImgToAndroid(){
                 // Toast('ssss')
                  

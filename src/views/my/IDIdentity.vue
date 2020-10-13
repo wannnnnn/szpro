@@ -127,7 +127,7 @@ export default {
     },
     data(){
         return{
-            status:1,//1、审核中  2、审核成功  3、审核失败 4、未认证
+            status:4,//1、审核中  2、审核成功  3、审核失败 4、未认证
             userName:'',
             userID:'',
             frontUrl:null,
