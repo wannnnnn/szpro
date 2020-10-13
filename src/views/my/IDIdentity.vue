@@ -134,7 +134,7 @@ export default {
             backUrl:null,
             ishowFile:true,
             ishowFile2:true,
-            isIos:fasle, 
+            isIos:false, 
         }
     },
     mounted(){

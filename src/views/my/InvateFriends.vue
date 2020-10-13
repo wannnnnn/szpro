@@ -126,14 +126,10 @@ export default {
         // this.getShareInfoAPI();
         this.makeCode('s');
 
-        var canvas = document.getElementById('myCanvas')
-        var context = canvas.getContext("2d");
-        var image = new Image();
-        image.src = "https://t11.baidu.com/it/u=325467646,2038125382&fm=173&app=25&f=JPEG?w=640&h=400&s=86C5934A860724F63F52BBBA0300F01D";
-        image.onload = function () {
-            context.drawImage(image,0,0);
-        }
-       document.addEventListener("deviceready",onDeviceReady);
+      
+       document.addEventListener("deviceready",function(){
+
+       });
 
     },
     methods:{
@@ -166,46 +162,45 @@ export default {
         savePhoto(){
             //    this.$refs.shareImgLogo.style.display = "";
                
-            //     let table = this.$refs.shareImgLogo;
-            //     // Toast('11')
-            //     var that = this;
-            //     html2canvas(table).then(canvas => {
-            //         var url = canvas.toDataURL("image/jpeg");
-            //         Toast(url)
-            //         that.shareImageData = url;
-            //         that.saveImgToAndroid(url);
+                let table = this.$refs.shareImgLogo;
+                // Toast('11')
+                var that = this;
+                html2canvas(table).then(canvas => {
+                    var url = canvas.toDataURL("image/jpeg");
+                    that.shareImageData = url;
+                    that.saveImgToAndroid(url);
 
-            //         document.getElementById("exportedImage").src = url;
-            //         // this.flag = true;
-            //     });
-            this.saveImgToAndroid();
+                    document.getElementById("exportedImage").src = url;
+                    // this.flag = true;
+                });
+            // this.saveImgToAndroid();
         },
         onDeviceReady(){
             console.log("onDeviceReady");
         },
-        saveImgToAndroid(){
+        saveImgToAndroid(imageData){
                 // Toast('ssss')
                  
-                window.canvas2ImagePlugin.saveImageDataToLibrary(
-                    function(msg){
-                        console.log(msg);
-                    },
-                    function(err){
-                        console.log(err);
-                    },
-                    'myCanvas'
-                );
+                // window.canvas2ImagePlugin.saveImageDataToLibrary(
+                //     function(msg){
+                //         console.log(msg);
+                //     },
+                //     function(err){
+                //         console.log(err);
+                //     },
+                //     'myCanvas'
+                // );
 
                 
                
 
-                // cordova.exec(function (msg){
-                //     Toast('保存成功');
-                // },function (err){
-                //     Toast('保存失败');
-                // }, 'Canvas2ImagePlugin',
-                // 'saveImageDataToLibrary',
-                // [imageData]);
+                cordova.exec(function (msg){
+                    Toast('保存成功');
+                },function (err){
+                    Toast('保存失败');
+                }, 'Canvas2ImagePlugin',
+                'saveImageDataToLibrary',
+                imageData);
         },
          getShareInfoAPI(){
             let that = this;
