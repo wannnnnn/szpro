@@ -36,7 +36,7 @@ export default {
     },
     data(){
         return{
-           wxName:'A17630024777',
+           wxName:'IPFSSOnet',
         }
     },
     methods:{

@@ -145,7 +145,6 @@ export default {
         }));
     },
     inputevent(){
-       console.log('');
        if(this.userAccount.length==11&&this.userCode.length==6){
           this.isCanLogin = true;
        }else{

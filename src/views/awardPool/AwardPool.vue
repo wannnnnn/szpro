@@ -228,9 +228,12 @@ export default {
             return width;
     },
     liquidFill() {
-      let level1_pool_rate_01 = this.level1_pool_rate+0.03;
-      let level1_pool_rate_02 = this.level1_pool_rate+0.07;
-      let level1_pool_rate_03 = this.level1_pool_rate+0.11;
+      // let level1_pool_rate_01 = this.level1_pool_rate+0.03;
+      // let level1_pool_rate_02 = this.level1_pool_rate+0.07;
+      // let level1_pool_rate_03 = this.level1_pool_rate+0.11;
+       let level1_pool_rate_01 = this.level1_pool_rate*(1+0.01);
+       let level1_pool_rate_02 = this.level1_pool_rate*(1+0.05);
+       let level1_pool_rate_03 = this.level1_pool_rate*(1+0.1);
 
       //方法
       var liquid = this.$echarts.init(document.getElementById("liquidFill"));
@@ -313,9 +316,12 @@ export default {
       });
     },
     liquidFills() {
-       let level1_pool_rate_01 = this.level2_pool_rate+0.03;
-      let level1_pool_rate_02 = this.level2_pool_rate+0.07;
-      let level1_pool_rate_03 = this.level2_pool_rate+0.11;
+      //  let level1_pool_rate_01 = this.level2_pool_rate+0.03;
+      //  let level1_pool_rate_02 = this.level2_pool_rate+0.07;
+      //  let level1_pool_rate_03 = this.level2_pool_rate+0.11;
+       let level1_pool_rate_01 = this.level2_pool_rate*(1+0.01);
+       let level1_pool_rate_02 = this.level2_pool_rate*(1+0.05);
+       let level1_pool_rate_03 = this.level2_pool_rate*(1+0.1);
       //方法
       var liquid = this.$echarts.init(document.getElementById("level"));
       liquid.setOption({
@@ -390,9 +396,12 @@ export default {
       });
     },
     liquidFillss() {
-       let level1_pool_rate_01 = this.level3_pool_rate+0.03;
-      let level1_pool_rate_02 = this.level3_pool_rate+0.07;
-      let level1_pool_rate_03 = this.level3_pool_rate+0.11;
+      //  let level1_pool_rate_01 = this.level3_pool_rate+0.03;
+      // let level1_pool_rate_02 = this.level3_pool_rate+0.07;
+      // let level1_pool_rate_03 = this.level3_pool_rate+0.11;
+      let level1_pool_rate_01 = this.level3_pool_rate*(1+0.01);
+       let level1_pool_rate_02 = this.level3_pool_rate*(1+0.05);
+       let level1_pool_rate_03 = this.level3_pool_rate*(1+0.1);
       //方法
       var liquid = this.$echarts.init(document.getElementById("liquidFill3"));
       liquid.setOption({
@@ -482,9 +491,13 @@ export default {
 
 <style scoped lang="scss">
 .awardPool {
-  width: 100%;
-  height: auto;
-  overflow: hidden;
+  position: relative;
+  left: 0;
+  top: 0;
+  bottom: 1.24rem;
+  // border: 1px solid #000;
+  width: 100%;  
+  overflow: auto;
 }
 
 .wrap {

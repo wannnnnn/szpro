@@ -2,45 +2,52 @@
       <div class="page">
            <Header title="订单管理" @handleLeft="handleLeft()"></Header>
             <div class="wrap">
-            <!-- 内容部分 -->
-            <div class="wrapTxt">
-                <div class="mallBox" v-for="(obj,index) in list" :key="index">
-                    <div class="mallTitleBox">
-                        <div class="mallTitleLeft">
-                            <div class="titleBox">
-                                <div class="title">河图超算服务器 (第一批)</div>
+                <!-- 内容部分 -->
+                <div class="wrapTxt" v-if="list.length>0">
+                    <div class="mallBox" v-for="(obj,index) in list" :key="index">
+                        <div class="mallTitleBox">
+                            <div class="mallTitleLeft">
+                                <div class="titleBox">
+                                    <div class="title">河图超算服务器 (第一批)</div>
+                                </div>
+                            </div>
+                            <div class="mallTitleRight">
+                                <div class="titleBox">
+                                    <div class="title">完成</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="mallTitleRight">
-                            <div class="titleBox">
-                                <div class="title">完成</div>
+
+                        <div class="tipBox">
+                            <div class="tipItem">
+                                <div class="tipTitle">订单时间：</div>
+                                <div class="tipDes">{{getTimeFormater(obj.create_time)}}</div>
+                            </div>
+                            <div class="tipItem">
+                                    <div class="tipTitle">单价：</div>
+                                    <div class="tipDes">{{obj.price}} USDT/TB</div>
+                            </div>
+                            <div class="tipItem">
+                                    <div class="tipTitle">数量：</div>
+                                    <div class="tipDes">{{obj.miner_num}}</div>
+                            </div>
+                            <div class="tipItem">
+                                    <div class="tipTitle">支付金额：</div>
+                                    <div class="tipDes">{{obj.usdt_amount}} USDT</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="tipBox">
-                        <div class="tipItem">
-                            <div class="tipTitle">订单时间：</div>
-                            <div class="tipDes">{{getTimeFormater(obj.create_time)}}</div>
+                    <div class="loadingMoreBtn" v-show="isLoadingMore1" @click="getListMoreAPI()">加载更多</div>
+                
+                </div> 
+
+                 <!-- 没有数据 -->
+                <div class="noDataView" v-else-if="list.length==0">
+                        <div class="noDataImg">
+                            <div class="txt">暂无订单，快去逛逛吧~</div>
                         </div>
-                        <div class="tipItem">
-                                <div class="tipTitle">单价：</div>
-                                <div class="tipDes">{{obj.price}} USDT/TB</div>
-                        </div>
-                        <div class="tipItem">
-                                <div class="tipTitle">数量：</div>
-                                <div class="tipDes">{{obj.miner_num}}</div>
-                        </div>
-                        <div class="tipItem">
-                                <div class="tipTitle">支付金额：</div>
-                                <div class="tipDes">{{obj.usdt_amount}} USDT</div>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="loadingMoreBtn" v-show="isLoadingMore1" @click="getListMoreAPI()">加载更多</div>
-            
-            </div> 
         </div> 
       </div>
 
@@ -141,7 +148,7 @@ export default {
 .wrap{
     position: absolute;
     left: 0;
-    top: 1.2rem;
+    top: 1.04rem;
     bottom: 0;
     width: 100%;
     overflow: auto;
@@ -159,6 +166,34 @@ export default {
         img{
             width: 100%;
             height: 100%;
+        }
+    }
+}
+.noDataView{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    bottom: 0;  
+    background: #fff;
+    .noDataImg{
+        margin: 0 auto;
+        margin-top: 30%;
+        width: 5.54rem;
+        height: 4.09rem;
+        background: url(../../assets/img/orders/no_data.png) no-repeat center;
+        background-size: 100% 100%;
+        overflow: hidden;
+        .txt{
+            margin: 0 auto;
+            margin-top: 3.28rem;
+            width: 100%;
+            font-size: 0.3rem;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: #666666;
+            line-height:0.4rem;
+            text-align: center;
         }
     }
 }

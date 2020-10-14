@@ -1,9 +1,9 @@
 <template>
     <div class="page">
-        <div class="header">
+        <div class="header" :class="{headerNav:isShowDepNav}">
                 产品
          </div>
-         <div class="wrap">
+         <div class="wrap" ref="pageWrap">
              <!-- 背景部分 -->
               <div class="wrapBg">
                   <div class="warpBgImg">
@@ -324,6 +324,7 @@ export default {
       isAgree:false,//是否同意
       loginFlag:false,
       isShowBuySuccessModel:false,
+      isShowDepNav:false,
     };
   },
   mounted(){
@@ -333,7 +334,18 @@ export default {
         }else{
             this.loginFlag = false;
         }
-        window.addEventListener('scroll',this.handleScroll)
+        // window.addEventListener('scroll',this.handleScroll)
+
+        let pageWrap = this.$refs.pageWrap
+        var $this = this
+        // 监听这个dom的scroll事件
+        pageWrap.onscroll  = () => {
+            $this.handleScroll()
+        }
+
+  },
+  destroyed() {
+		window.removeEventListener("scroll", this.handleScroll); //销毁滚动事件
   },
   methods: {
     tabAction(index){
@@ -348,12 +360,12 @@ export default {
           }
     },
     handleScroll(){
-          let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop // 滚动条偏移量
-          if (scrollTop >= 160) {
-              console.log('~~~~~~~');
-          } else {
-             console.log('++++++++');
-          }
+             let box = this.$refs.pageWrap;
+             if(box.scrollTop>=30){
+                 this.isShowDepNav = true;
+             }else{
+                 this.isShowDepNav = false;
+             }
     },
     changeAgree(){
         this.isAgree = !this.isAgree;
@@ -447,8 +459,10 @@ export default {
     font-size: 0.36rem;
     font-weight: 500;
     color: #fff;
-    // background: #2F94F8;
     z-index: 100;
+}
+.headerNav{
+    background:#2F79F4;
 }
 .wrap{
     position: absolute;
