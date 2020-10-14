@@ -1,7 +1,7 @@
 <template>
       <div class="page">
            <Header title="实名认证" @handleLeft="handleLeft()"></Header>
-            <div class="wrap" v-if="status==4">
+            <div class="wrap" v-if="status==4||status==3">
                  <div class="inputWrap">
                        <!-- 姓名 -->
                        <div class="inputBox">
@@ -62,6 +62,10 @@
                                <div class="delIcon" @click.stop="delBackImgAction()"><img src="../../assets/img/my/del.png" alt=""></div>
                            </div>
                        </div>
+                       <!-- 失败原因 -->
+                       <div class="farilResonView">
+                           {{fail_reason}}
+                       </div>
                  </div>
                  <!-- end -->
                  <div class="tipBox" >
@@ -103,7 +107,6 @@
                      <div class="noDataImg">
                           <div class="txt" v-show="status==1">实名认证审核中</div>
                           <div class="txt" v-show="status==2">已通过实名认证！</div>
-                          <div class="txt" v-show="status==3">实名认证审核失败</div>
                       </div>
            </div>
 
@@ -135,10 +138,11 @@ export default {
             ishowFile:true,
             ishowFile2:true,
             isIos:true, 
+            fail_reason:null,
         }
     },
     mounted(){
-        // this.getIdentifyAPI();
+        this.getIdentifyAPI();
         const u = navigator.userAgent;
         const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
         if (isiOS) {
@@ -252,6 +256,11 @@ export default {
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
                               this.status = data.status;
+                              this.frontUrl = data.front_url;
+                              this.backUrl = data.back_url;
+                              this.userName = data.card_name;
+                              this.userID = data.card_id;
+                              this.fail_reason = data.fail_reason;
                         }
                 }));
         },
@@ -283,6 +292,7 @@ export default {
                         console.log('res',res);
                         if (res.data.Code == 0) {
                             Toast("提交成功");
+                            this.getIdentifyAPI();
                         }else{
                             Toast(res.data.Msg);
                         }
@@ -324,10 +334,11 @@ export default {
 .inputWrap{
     margin: 0 auto;
     width: 6.9rem;
-    height: 6.16rem;
+    // height: 6.16rem;
     background: #FFFFFF;
     box-shadow: 0px 0px 0.23rem 0.04rem rgba(119, 119, 119, 0.1);
     border-radius: 0.15rem;
+    padding-bottom: 0.3rem;
     overflow: hidden;
     .inputBox{
         margin-left: 0.2rem;
@@ -455,6 +466,19 @@ export default {
             }
         }
     }
+    .farilResonView{
+         margin-top: 0.2rem;
+         margin-left: 0.2rem;
+        margin-right: 0.2rem;
+        margin-top: 0.45rem;
+        // height: 0.3rem;
+        font-size: 0.26rem;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        color: red;
+        line-height: 0.5rem;
+        text-align: left;
+    }
 }
 .tipBox{
      margin: 0 auto;
@@ -547,7 +571,7 @@ export default {
     bottom: 0;
     width: 100%;
     overflow: auto;
-    border: 1px solid #000;
+    // border: 1px solid #000;
     background: #fff;
     .noDataImg{
         margin: 0 auto;

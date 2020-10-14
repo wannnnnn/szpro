@@ -1,83 +1,86 @@
 <template>
   <div class="awardPool">
-    <div class="wrap">
-      <div class="banner">
-        <div class="contentTxt">
-          <div class="awardPool-title"></div>
-          <div class="buy" @click="pushBuy()">立即<br />抢购</div>
-          <div class="buyProgressBox">
-            <div class="buyProgressTop">
-              <div class="textLeft">
-                <span style="font-size: 0.24rem">已售</span>{{sell_num}}
+      
+      <div class="poolWrap">
+            <div class="wrap">
+              <div class="banner">
+                <div class="contentTxt">
+                  <div class="awardPool-title"></div>
+                  <div class="buy" @click="pushBuy()">立即<br />抢购</div>
+                  <div class="buyProgressBox">
+                    <div class="buyProgressTop">
+                      <div class="textLeft">
+                        <span style="font-size: 0.24rem">已售</span>{{sell_num}}
+                      </div>
+                      <div class="textRig">{{sell_num}}/1000</div>
+                    </div>
+                    <div class="buyProgressBot">
+                      <div class="progress" :style="{width:getProgressVal()+'%'}"></div>
+                    </div>
+                  </div>
+                  <p>
+                    限1000台存储服务器，1000台存储服务器销售完毕后，统计达标用户数量，达标用户将享受不同奖励池的永久奖励。
+                  </p>
+                </div>
+              
               </div>
-              <div class="textRig">{{sell_num}}/1000</div>
-            </div>
-            <div class="buyProgressBot">
-               <div class="progress" :style="{width:getProgressVal()+'%'}"></div>
-            </div>
-          </div>
-          <p>
-            限1000台存储服务器，1000台存储服务器销售完毕后，统计达标用户数量，达标用户将享受不同奖励池的永久奖励。
-          </p>
-        </div>
-       
-      </div>
-      <!-- end -->
+        <!-- end -->
 
-   
-    </div>
-       <div class="luboView">
-        <swiper :options="swiperOption">
-          <swiper-slide v-for="(obj,index) in level_list" :key="index">
-               <div class="swipePageView firstPage" :class="getPoolPageStyle(obj.level)">
-                         <div class="titile">
-                            <div class="img" :class="getLevelImg(obj.level)"></div>
-                            V{{obj.level}} 奖励池
-                          </div>
-                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill" v-if="obj.level==1">
-                               
-                          </div> 
-                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="level" v-else-if="obj.level==2">
-                               
-                          </div> 
-                          <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill3" v-else-if="obj.level==3">
-                               
-                          </div> 
-                          <div class="group">
-                                <div class="item">
-                                    <div class="count">{{obj.today_fil}} Fil</div>
-                                    <div class="text">今日新增</div>
-                                </div>
-                                <div class="item">
-                                    <div class="count">{{obj.all_fil}} Fil</div>
-                                    <div class="text">奖池累计</div>
-                                </div>
-                                <div class="item">
-                                    <div class="count">{{obj.target_num}} 人</div>
-                                    <div class="text">达标人数</div>
-                                </div>
-                                <div class="item">
-                                    <div class="count">{{fil_price.toFixed(2)}} U</div>
-                                    <div class="text">Fil当前价</div>
-                                </div>
-                          </div>
-                          <div class="condition">
-                                <div class="condition-title">达标条件</div>
-                                <div class="line" :class="getLevelLine(obj.level)"></div>
-                                <p v-if="obj.level==1">
-                                  自购3台存储服务器，累计推广业绩20台存储<br />服务器。
-                                </p>
-                                 <p v-if="obj.level==2">
-                                   自购5台存储服务器，累计推广业绩100台存储<br />服务器。
-                                </p>
-                                 <p v-if="obj.level==3">
-                                  自购10台存储服务器，累计推广业绩200台存储<br />服务器。
-                                </p>
-                          </div>
-               </div>
-          </swiper-slide>
-         
-        </swiper>
+    
+         </div>
+          <div class="luboView">
+            <swiper :options="swiperOption">
+              <swiper-slide v-for="(obj,index) in level_list" :key="index">
+                  <div class="swipePageView firstPage" :class="getPoolPageStyle(obj.level)">
+                            <div class="titile">
+                                <div class="img" :class="getLevelImg(obj.level)"></div>
+                                V{{obj.level}} 奖励池
+                              </div>
+                              <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill" v-if="obj.level==1">
+                                  
+                              </div> 
+                              <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="level" v-else-if="obj.level==2">
+                                  
+                              </div> 
+                              <div class="poolPercent" :class="getLevelPoolPercent(obj.level)" id="liquidFill3" v-else-if="obj.level==3">
+                                  
+                              </div> 
+                              <div class="group">
+                                    <div class="item">
+                                        <div class="count">{{obj.today_fil}} Fil</div>
+                                        <div class="text">今日新增</div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="count">{{obj.all_fil}} Fil</div>
+                                        <div class="text">奖池累计</div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="count">{{obj.target_num}} 人</div>
+                                        <div class="text">达标人数</div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="count">{{fil_price.toFixed(2)}} U</div>
+                                        <div class="text">Fil当前价</div>
+                                    </div>
+                              </div>
+                              <div class="condition">
+                                    <div class="condition-title">达标条件</div>
+                                    <div class="line" :class="getLevelLine(obj.level)"></div>
+                                    <p v-if="obj.level==1">
+                                      自购3台存储服务器，累计推广业绩20台存储<br />服务器。
+                                    </p>
+                                    <p v-if="obj.level==2">
+                                      自购5台存储服务器，累计推广业绩100台存储<br />服务器。
+                                    </p>
+                                    <p v-if="obj.level==3">
+                                      自购10台存储服务器，累计推广业绩200台存储<br />服务器。
+                                    </p>
+                              </div>
+                  </div>
+              </swiper-slide>
+            
+            </swiper>
+          </div>
       </div>
 
     <AppTabBar :tabIndex="2" @tabAction="tabAction"></AppTabBar>
@@ -491,13 +494,21 @@ export default {
 
 <style scoped lang="scss">
 .awardPool {
-  position: relative;
-  left: 0;
-  top: 0;
-  bottom: 1.24rem;
-  // border: 1px solid #000;
-  width: 100%;  
-  overflow: auto;
+  // position: relative;
+  // left: 0;
+  // top: 0;
+  // bottom: 1.04rem;
+  // width: 100%;  
+  // overflow: auto;
+  background: #fff;
+}
+.poolWrap{
+    position: absolute;
+    left: 0;
+    top:0;
+    bottom: 1.04rem;
+    width: 100%;
+    overflow: auto;
 }
 
 .wrap {
