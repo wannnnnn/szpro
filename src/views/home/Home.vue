@@ -176,6 +176,9 @@ export default {
     },
     mounted(){
         this.getHpDataAPI();
+        if(typeof(cordova) == "object"){
+            console.log("You're on a mobile device～～～～～");
+        }
         
     },
     methods:{
