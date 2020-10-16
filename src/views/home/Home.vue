@@ -41,14 +41,14 @@
                               <div class="item">
                                    <div class="itemLogo"><img src="../../assets/img/home/power.png" alt=""></div>
                                    <div  class="itemCount">
-                                        {{total_power}}<span style="font-size:0.13rem;">TB</span>
+                                        {{total_power}}<span style="font-size:0.13rem;">{{unit_01}}</span>
                                    </div>
                                    <div class="itemDes">全网算力</div>
                               </div>
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/award.png" alt=""></div>
                                    <div  class="itemCount">
-                                       {{reward_per_block}}<span style="font-size:0.13rem;">FIL/TB</span>
+                                       {{reward_per_block}}<span style="font-size:0.13rem;">{{unit_02}}</span>
                                    </div>
                                    <div class="itemDes">平均挖矿收益</div>
                               </div>
@@ -78,7 +78,7 @@
                               <div class="item">
                                   <div class="itemLogo"><img src="../../assets/img/home/Fil.png" alt=""></div>
                                   <div  class="itemCount">
-                                       {{total_pledge}}<span style="font-size:0.13rem;">FIL</span>
+                                       {{total_pledge}}<span style="font-size:0.13rem;">{{unit_04}}</span>
                                    </div>
                                    <div class="itemDes">Fil质押量</div>
                               </div>
@@ -92,19 +92,19 @@
                                 <div class="poolCountItemBox">
                                        <div class="poolCountItem">
                                            <div class="text">矿池有效算力</div>
-                                           <div class="count">{{pool_power}}<span>TB</span></div>
+                                           <div class="count">{{pool_power}}<span>{{unit_05}}</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                             <div class="text">24H平均收益</div>
-                                            <div class="count">{{pool_reward_per24h}}<span>FIL/TB</span></div>
+                                            <div class="count">{{pool_reward_per24h}}<span>{{unit_06}}</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                              <div class="text">Fil质押量</div>
-                                             <div class="count">{{pool_pledge}}<span>FiL</span></div>
+                                             <div class="count">{{pool_pledge}}<span>{{unit_07}}</span></div>
                                        </div>
                                        <div class="poolCountItem">
                                               <div class="text">24H产出量</div>
-                                              <div class="count">{{pool_num_per24h}}<span>FiL</span></div>
+                                              <div class="count">{{pool_num_per24h}}<span>{{unit_08}}</span></div>
                                        </div>
                                     
                                 </div>
@@ -175,6 +175,15 @@ export default {
             pool_pledge:0, //FIL质押量
             pool_num_per24h:0,//24H产出量
             fil_price:0,
+            unit_01:'',
+            unit_02:'',
+            unit_03:'',
+            unit_04:'',
+            unit_05:'',
+            unit_06:'',
+            unit_07:'',
+            unit_08:'',
+            unit_09:'',
             isShowLaunagleModel:false,
             langList:['简体中文','English'],
             langTxt:'简体中文',
@@ -236,21 +245,106 @@ export default {
                         console.log('res',res);
                         let data = res.data.Data;
                         if (res.data.Code == 0) {
-                            this.total_power = this.getValDelRem(data.total_power);
-                            this.reward_per_block = this.getValDelRem(data.reward_per_block);
-                            this.reward_per24h = this.getValDelRem(data.reward_per24h);
-                            this.num_per24h = this.getValDelRem(data.num_per24h);
-                            this.pledge_now = this.getValDelRem(data.pledge_now);
-                            this.pool_power = this.getValDelRem(data.pool_power);
-                            this.pool_reward_per24h = this.getValDelRem(data.pool_reward_per24h);
-                            this.pool_pledge = this.getValDelRem(data.pool_pledge);
-                            this.pool_num_per24h = this.getValDelRem(data.pool_num_per24h);
+                            // this.total_power = this.getValDelRem(data.total_power);
+                            // this.reward_per_block = this.getValDelRem(data.reward_per_block);
+                            // this.reward_per24h = this.getValDelRem(data.reward_per24h);
+                            // this.num_per24h = this.getValDelRem(data.num_per24h);
+                            // this.pledge_now = this.getValDelRem(data.pledge_now);
+                            // this.pool_power = this.getValDelRem(data.pool_power);
+                            // this.pool_reward_per24h = this.getValDelRem(data.pool_reward_per24h);
+                            // this.pool_pledge = this.getValDelRem(data.pool_pledge);
+                            // this.pool_num_per24h = this.getValDelRem(data.pool_num_per24h);
                             this.fil_price = data.fil_price;
+
+                            var list1 = this.getDataValAdnRem(data.total_power);
+                            if(list1.length==2){
+                                  this.total_power = list1[0];
+                                  this.unit_01 = list1[1];
+                            }else{
+                                  this.total_power = list1[0];
+                                  this.unit_01 = '';
+                            }
+
+                            var list2 = this.getDataValAdnRem(data.reward_per_block);
+                            if(list2.length==2){
+                                  this.reward_per_block = list2[0];
+                                  this.unit_02 = list2[1];
+                            }else{
+                                  this.reward_per_block = list2[0];
+                                  this.unit_02 = '';
+                            }
+
+                            var list3 = this.getDataValAdnRem(data.reward_per24h);
+                            if(list3.length==2){
+                                  this.reward_per24h = list3[0];
+                                  this.unit_03 = list3[1];
+                            }else{
+                                  this.reward_per24h = list3[0];
+                                  this.unit_03 = '';
+                            }
+
+                            this.pledge_now = data.pledge_now;
+
+                            var list4 = this.getDataValAdnRem(data.total_pledge);
+                            if(list4.length==2){
+                                  this.total_pledge = list4[0];
+                                  this.unit_04 = list4[1];
+                            }else{
+                                  this.total_pledge = list4[0];
+                                  this.unit_04 = '';
+                            }
+
+                            var list5 = this.getDataValAdnRem(data.pool_power);
+                            if(list5.length==2){
+                                  this.pool_power = list5[0];
+                                  this.unit_05 = list5[1];
+                            }else{
+                                  this.pool_power = list5[0];
+                                  this.unit_05 = '';
+                            }
+
+                             var list6 = this.getDataValAdnRem(data.pool_reward_per24h);
+                            if(list6.length==2){
+                                  this.pool_reward_per24h = list6[0];
+                                  this.unit_06 = list6[1];
+                            }else{
+                                  this.pool_reward_per24h = list6[0];
+                                  this.unit_06 = '';
+                            }
+
+
+                             var list7 = this.getDataValAdnRem(data.pool_pledge);
+                            if(list7.length==2){
+                                  this.pool_pledge = list7[0];
+                                  this.unit_07 = list7[1];
+                            }else{
+                                  this.pool_pledge = list7[0];
+                                  this.unit_07 = '';
+                            }
+
+                             var list8 = this.getDataValAdnRem(data.pool_num_per24h);
+                            if(list8.length==2){
+                                  this.pool_num_per24h = list8[0];
+                                  this.unit_08 = list8[1];
+                            }else{
+                                  this.pool_num_per24h = list8[0];
+                                  this.unit_08 = '';
+                            }
+
+
                             
                         }else{
                           
                         }
                 }));
+        },
+        getDataValAdnRem(val){
+            var list = val.split(" "); 
+            if(list.length>0){
+                return list;
+            }else{
+                return list;
+            } 
         },
         getValDelRem(val){
            
@@ -507,7 +601,7 @@ export default {
                 width: 100%;
                 padding-left: 0.27rem;
                 margin-top: 0.36rem;
-                font-size: 0.36rem;
+                font-size: 0.3rem;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #2D3A5C;
